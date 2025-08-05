@@ -8,6 +8,7 @@ public class AlfaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AlfaApplication.class, args);
+		System.out.println("Hola Mundo");
 	}
 
 }
