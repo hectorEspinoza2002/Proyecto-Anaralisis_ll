@@ -1,0 +1,39 @@
+import { UsuarioService } from './../../service/usuario.service';
+import { Component } from '@angular/core';
+import { Usuario } from '../../entity/usuario';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  standalone: false,
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
+})
+export class LoginComponent {
+
+  usuario: Usuario = new Usuario();
+  errorMessage: string = '';
+
+
+  constructor(private usuarioService:UsuarioService, private router:Router){}
+
+  iniciarSesion() {
+    this.errorMessage = '';
+
+    this.usuarioService.login(this.usuario).subscribe(response => {
+      if (response) {
+        alert("Login exitoso");
+        this.router.navigate(['/principal']);
+      } else {
+        this.errorMessage = "Usuario o contraseña incorrectos";
+      }
+    }, error => {
+      console.error("Error al iniciar sesión", error);
+      this.errorMessage = "Ocurrió un error en el servidor";
+    });
+  }
+
+  registrar() {
+    this.router.navigate(['/registro']);
+  }
+}

@@ -4,8 +4,7 @@ import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,36 +17,29 @@ import lombok.Data;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "IdUsuario")
     private String idUsuario;
 
-    @Column(name = "nombre")
+    @Column(name = "Nombre")
     private String nombre;
 
-    @Column(name = "apellido")
+    @Column(name = "Apellido")
     private String apellido;
 
     @Column(name = "FechaNacimiento")
     private Date fechaNacimiento;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdStatusUsuario")
     private StatusUsuario idStatusUsuario;
-
-    // @Column(name = "IdStatusUsuario")
-    // private Integer IdStatusUsuario;
 
     @Column(name = "Password")
     private String password;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdGenero")
     private Genero idGenero;
-
-    // @Column(name = "IdGenero")
-    // private Integer IdGenero;
 
     @Column(name = "UltimaFechaIngreso")
     private Date ultimaFechaIngreso;
@@ -81,6 +73,10 @@ public class Usuario {
 
     @Column(name = "respuesta")
     private String respuesta;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IdRole")
+    private Role idRole;
 
     @Column(name = "FechaCreacion")
     private Date fechaCreacion;

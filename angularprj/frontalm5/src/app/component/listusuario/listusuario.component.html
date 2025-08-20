@@ -1,0 +1,60 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="text-primary mb-0">Listado de Usuarios</h2>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <!-- Card por cada usuario -->
+        <div class="col-12 col-md-6 col-lg-4 mb-3" *ngFor="let usuario of usuarios">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-start">
+                <div class="me-3">
+                  <!-- Mostrar foto si existe, sino un placeholder -->
+                  <img *ngIf="usuario.fotografia; else noFoto"
+                       [src]="usuario.fotografia"
+                       class="rounded" style="width:72px;height:72px;object-fit:cover" alt="foto usuario">
+                  <ng-template #noFoto>
+                    <div class="bg-secondary text-white rounded d-flex justify-content-center align-items-center"
+                         style="width:72px;height:72px">No foto</div>
+                  </ng-template>
+                </div>
+
+                <div class="flex-grow-1">
+                  <h5 class="card-title mb-1">{{ usuario.nombre }} {{ usuario.apellido }}</h5>
+                  <small class="text-muted">ID: {{ usuario.idUsuario }}</small>
+                </div>
+              </div>
+
+              <hr>
+
+              <ul class="list-unstyled mb-2">
+                <li><strong>F. Nacimiento:</strong> {{ usuario.fechaNacimiento }}</li>
+                <li><strong>Contraseña:</strong> {{ usuario.password }}</li>
+                <li><strong>Género:</strong> {{ usuario.idGenero }}</li>
+                <li><strong>F. Ingreso:</strong> {{ usuario.ultimaFechaIngreso }}</li>
+                <li><strong>Correo:</strong> {{ usuario.correoElectronico }}</li>
+                <li><strong>Teléfono:</strong> {{ usuario.telefonoMovil }}</li>
+                <li><strong>Estado:</strong> {{ usuario.idStatusUsuario }}</li>
+                <li><strong>Pregunta:</strong> {{ usuario.pregunta }}</li>
+                <li><strong>Respuesta:</strong> {{ usuario.respuesta }}</li>
+                <li><strong>F. Creación:</strong> {{ usuario.fechaCreacion }}</li>
+                <li><strong>Creado por:</strong> {{ usuario.usuarioCreacion }}</li>
+              </ul>
+
+
+            </div>
+          </div>
+        </div>
+        <!-- Fin card -->
+      </div>
+
+      <!-- Mensaje si no hay usuarios -->
+      <div *ngIf="!usuarios || usuarios.length === 0" class="text-center text-muted py-4">
+        No hay usuarios para mostrar.
+      </div>
+    </div>
+  </div>
+</div>

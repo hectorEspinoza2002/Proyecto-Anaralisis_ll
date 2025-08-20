@@ -21,7 +21,7 @@ public class Genero {
     @Column(name = "IdGenero")
     private Integer idGenero;
 
-    @Column(name = "nombre")
+    @Column(name = "Nombre")
     private String nombre;
 
     @Column(name = "FechaCreacion")

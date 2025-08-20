@@ -22,18 +22,18 @@ public class StatusUsuario {
     private Integer idStatusUsuario;
 
     @Column(name = "nombre")
-    private String Nombre;
+    private String nombre;
 
     @Column(name = "FechaCreacion")
-    private Date FechaCreacion;
+    private Date fechaCreacion;
 
     @Column(name = "UsuarioCreacion")
-    private String UsuarioCreacion;
+    private String usuarioCreacion;
 
     @Column(name = "FechaModificacion")
-    private Date FechaModificacion;
+    private Date fechaModificacion;
 
     @Column(name = "UsuarioModificacion")
-    private String UsuarioModificado;
+    private String usuarioModificado;
 
 }

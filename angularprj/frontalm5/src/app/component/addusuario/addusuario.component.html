@@ -1,0 +1,143 @@
+<div class="container col-md-6">
+  <div class="card">
+    <div class="card-header">
+       <h2>Agregar Autor</h2>
+    </div>
+    <div class="card-body">
+      <form id="addauthorforms" class="needs-validation" novalidate>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Usuario:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.idUsuario" type="text" name="name" id="name" class="form-control" placeholder="Ingrese IDUsuario" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Nombre:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.nombre" type="text" name="name" id="name" class="form-control" placeholder="Ingrese nombre" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Apellido:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.apellido" type="text" name="name" id="name" class="form-control" placeholder="Ingrese apellido" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Fecha De Nacimiento:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.fechaNacimiento" type="text" name="name" id="name" class="form-control" placeholder="Ingrese Fecha De Nacimiento" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="status">Estatus Usuario:</label>
+          </div>
+          <div class="mb-2">
+            <select class="form-select" name="status" id="status" [(ngModel)]="selectedStatus" required>
+              <option [ngValue]="''" disabled selected>Seleccione el status</option>
+              <option *ngFor="let status of statuDisponibles" [value]="status.idStatusUsuario">
+                {{ status.nombre}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Contraseña:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.password" type="text" name="name" id="name" class="form-control" placeholder="Ingrese una Contraseña" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="genero">Genero:</label>
+          </div>
+          <div class="mb-2">
+            <select class="form-select" id="genero" name="genero" [(ngModel)]="selectedGenero" required="">
+              <option [ngValue]="''" disabled selected>Seleccione un genero</option>
+              <option *ngFor="let genero of generoDisponibles" [value]="genero.idGenero">
+                {{genero.nombre}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Correo Electronico:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.correoElectronico" type="text" name="name" id="name" class="form-control" placeholder="Ingrese un correo Electronico" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Fotografia:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.fotografia" type="text" name="name" id="name" class="form-control" placeholder="Ingrese una fotografia" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Telefono:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.telefonoMovil" type="text" name="name" id="name" class="form-control" placeholder="Ingrese un numero de telefono" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Sucursal:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.idSucursal" type="text" name="name" id="name" class="form-control" placeholder="Seleccione una sucursal" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Pregunta:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.pregunta" type="text" name="name" id="name" class="form-control" placeholder="Responda la Pregunta abajo" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Respuesta:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="usuario.respuesta" type="text" name="name" id="name" class="form-control" placeholder="Responda la respuesta" required>
+          </div>
+        </div>
+
+        <button (click)="save(usuario)" type="button" class="btn btn-outline-success">Guardar</button>
+        <span style="margin-left:1em"></span>
+        <button (click)="Cancel()" type="button" class="btn btn-outline-danger">Cancelar</button>
+      </form>
+    </div>
+  </div>
+</div>
