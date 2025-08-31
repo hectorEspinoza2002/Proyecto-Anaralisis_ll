@@ -19,7 +19,7 @@ export class EmpresaService {
   }
 
   searchEmpresa(id:String){
-    return this.http.get<Empresa>(this.Url + '/list_empresa/'+id);
+    return this.http.get<Empresa>(this.Url + '/list_empresas/'+id);
   }
 
   editEmpresa(empreId:String, updateEmp:Empresa){
