@@ -1,5 +1,6 @@
 package com.proyecto_analisis.alfa.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,11 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyecto_analisis.alfa.model.entity.LoginRequest;
 import com.proyecto_analisis.alfa.model.entity.StatusUsuario;
 import com.proyecto_analisis.alfa.service.StatusUsuarioService;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:5500", "https://localhost:9090"})
+@CrossOrigin(origins = {"http://localhost:5500", "http://localhost:9090"})
 public class StatusUsuarioController {
 
     @Autowired
@@ -25,7 +27,7 @@ public class StatusUsuarioController {
 
     @GetMapping("/list_status_usuarios")
     public List<StatusUsuario> listarTodos(){
-        return statusUsuService.getAllstatusUsuarios();
+        return statusUsuService.findAll();
     }
 
     @GetMapping("/list_status_usuarios/{sid}")
@@ -38,6 +40,8 @@ public class StatusUsuarioController {
         if (suId.getIdStatusUsuario() != null && statusUsuService.findById(suId.getIdStatusUsuario()).isPresent()) {
             return null;            
         } else {
+            suId.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
+            suId.setFechaCreacion(LocalDateTime.now());
             return statusUsuService.save(suId);
         }
     }
@@ -48,7 +52,9 @@ public class StatusUsuarioController {
         Optional<StatusUsuario> suOptional = statusUsuService.findById(sId);
         if (suOptional.isPresent()) {
             StatusUsuario stus = suOptional.get();
-            stus.setNombre(updateS.getNombre());
+            stus.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
+        //Acuatlizamos la hora
+            stus.setFechaModificacion(LocalDateTime.now());
             return statusUsuService.save(stus);
         } else {
             return null;

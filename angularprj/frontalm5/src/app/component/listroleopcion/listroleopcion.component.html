@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="card-header">
+    <h2 class="text-primary">Listado de Roles Opciones</h2>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped table-responsive-sm">
+      <thead>
+        <tr class="text-center">
+          <th>ID Rol</th>
+          <th>ID Opcion</th>
+          <th>Alta</th>
+          <th>Baja</th>
+          <th>Cambio</th>
+          <th>Imprimir</th>
+          <th>Exportar</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rol of rolOpc" class="text-center">
+          <td>{{rol.role}}</td>
+          <td>{{rol.opcion}}</td>
+          <td>{{rol.alta}}</td>
+          <td>{{rol.baja}}</td>
+          <td>{{rol.cambio}}</td>
+          <td>{{rol.imprimir}}</td>
+          <td>{{rol.exportar}}</td>
+      </tbody>
+    </table>
+
+  </div>
+</div>

@@ -1,50 +1,203 @@
 <!-- Solo muestra barra si NO estamos en /login -->
 <div *ngIf="router.url !== '/login'">
-  <h1 class="text-center text-success bg-warning">Analisis De Sistemas ll (Demo)</h1>
+  <h1 class="text-center text-success bg-warning">
+    Analisis De Sistemas ll (Demo)
+  </h1>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" routerLink="/principal">Inicio</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false"
-              aria-label="Toggle navigation">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- Menú Usuarios -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownP" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownUsuarios"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               Usuarios
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" routerLink="/listusuarios">Listar</a></li>
-              <li><a class="dropdown-item" routerLink="/addusuarios">Agregar</a></li>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownUsuarios">
+              <li>
+                <a class="dropdown-item" routerLink="/listusuarios">Listar</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/addusuarios">Agregar</a>
+              </li>
             </ul>
           </li>
-        </ul>
-      </div>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- Menú Roles -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownP" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownRoles"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               Roles
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" routerLink="/listrole">Listar</a></li>
-              <li><a class="dropdown-item" routerLink="/addrole">Agregar</a></li>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownRoles">
+              <li>
+                <a class="dropdown-item" routerLink="/listrole">Listar</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/addrole">Agregar</a>
+              </li>
             </ul>
           </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownRoles"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Sucursales
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownRoles">
+              <li>
+                <a class="dropdown-item" routerLink="/listsucursal">Listar</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/addsucursal">Agregar</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownRoles"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Empresa
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownRoles">
+              <li>
+                <a class="dropdown-item" routerLink="/listempresa">Listar</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/addempresa">Agregar</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownRoles"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Modulo
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownRoles">
+              <li>
+                <a class="dropdown-item" routerLink="/listmodulo">Listar</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/addmodulo">Agregar</a>
+              </li>
+            </ul>
+          </li>
+
+           <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownRoles"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Menu
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownRoles">
+              <li>
+                <a class="dropdown-item" routerLink="/listmenu">Listar</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/addmenu">Agregar</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownRoles"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Opcion
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownRoles">
+              <li>
+                <a class="dropdown-item" routerLink="/listopcion">Listar</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/addopcion">Agregar</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownRoles"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Rol_Opcion
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownRoles">
+              <li>
+                <a class="dropdown-item" routerLink="/listrolopcion">Listar</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/addrolopcion">Agregar</a>
+              </li>
+            </ul>
+          </li>
+
+
         </ul>
       </div>
 
-
-
+      <a class="navbar-brand" routerLink="/login">Salir</a>
     </div>
   </nav>
 </div>
 
 <!-- Aquí se renderizan las rutas -->
 <router-outlet></router-outlet>
-

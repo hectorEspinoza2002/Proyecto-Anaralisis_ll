@@ -19,4 +19,8 @@ export class GeneroService {
     return this.http.get<any[]>(this.Url+"/list_generos")
   }
 
+  deleteGenero(genero:Genero){
+      return this.http.delete(this.Url+"/delete_genero/{id}"+genero.idGenero,{responseType: 'text'});
+    }
+
 }

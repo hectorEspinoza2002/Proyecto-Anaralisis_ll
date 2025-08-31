@@ -1,0 +1,34 @@
+<div class="container col-md-6">
+  <div class="card">
+    <div class="card-header">
+       <h2>Agregar Sucursal</h2>
+    </div>
+    <div class="card-body">
+      <form id="addcursosforms" class="needs-validation" novalidate>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Nombre:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="sucursal.nombre" type="text" name="curso" id="name" class="form-control" placeholder="Ingrese el Nombre de la Sucursal" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name">Direccion:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="sucursal.direccion" type="text" name="curso" id="name" class="form-control" placeholder="Ingrese direccion sucursal" required>
+          </div>
+        </div>
+
+
+        <button (click)="guardar(sucursal)" type="button" class="btn btn-outline-success">Guardar</button>
+        <span style="margin-left:1em"></span>
+        <button (click)="Cancelar()" type="button" class="btn btn-outline-danger">Cancelar</button>
+      </form>
+    </div>
+  </div>
+</div>

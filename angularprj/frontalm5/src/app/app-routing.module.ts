@@ -7,17 +7,41 @@ import { ListusuarioComponent } from './component/listusuario/listusuario.compon
 import { AddusuarioComponent } from './component/addusuario/addusuario.component';
 import { ListroleComponent } from './component/listrole/listrole.component';
 import { AddroleComponent } from './component/addrole/addrole.component';
+import { ListsucursalesComponent } from './component/listsucursales/listsucursales.component';
+import { ListempresaComponent } from './component/listempresa/listempresa.component';
+import { ListmoduloComponent } from './component/listmodulo/listmodulo.component';
+import { ListmenuComponent } from './component/listmenu/listmenu.component';
+import { ListopcionComponent } from './component/listopcion/listopcion.component';
+import { ListroleopcionComponent } from './component/listroleopcion/listroleopcion.component';
+import { AddempresaComponent } from './component/addempresa/addempresa.component';
+import { AddsucursalComponent } from './component/addsucursal/addsucursal.component';
+import { AddmoduloComponent } from './component/addmodulo/addmodulo.component';
+import { AddmenuComponent } from './component/addmenu/addmenu.component';
+import { AddopcionComponent } from './component/addopcion/addopcion.component';
+import { EditempresaComponent } from './component/editempresa/editempresa.component';
 
 const routes: Routes = [
+  {    path: "editempresa", component:EditempresaComponent },
+  {    path: "addopcion", component:AddopcionComponent },
+  {    path: "addmenu", component:AddmenuComponent },
+  {    path: "addmodulo", component:AddmoduloComponent },
+  {    path: "addsucursal", component:AddsucursalComponent },
+  {    path: "addempresa", component:AddempresaComponent },
+  {    path: "listrolopcion", component:ListroleopcionComponent },
+  {    path: "listopcion", component:ListopcionComponent  },
+  {    path: "listmenu", component:ListmenuComponent  },
+  {    path: "listmodulo", component:ListmoduloComponent  },
+  {    path: "listempresa", component:ListempresaComponent  },
+  {    path: "listsucursal", component:ListsucursalesComponent  },
   {    path: "listrole", component:ListroleComponent  },
   {    path: "addrole", component:AddroleComponent  },
   {    path: "listusuarios", component:ListusuarioComponent  },
   {    path: "addusuarios", component:AddusuarioComponent  },
   {    path: "menu", component:MenuComponent  },
   {    path: "principal", component: PrincipalComponent  },
-  {    path: "principal", component: LoginComponent  },
-  {    path: "", redirectTo: "principal", pathMatch: "full"  },
-  {    path: "**", redirectTo: "principal", pathMatch: "full"  }
+  {    path: "login", component: LoginComponent  },
+  {    path: "", redirectTo: "login", pathMatch: "full"  },
+  {    path: "**", redirectTo: "login", pathMatch: "full"  }
 ];
 
 @NgModule({

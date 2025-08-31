@@ -10,20 +10,48 @@ import { Router } from '@angular/router';
   styleUrl: './listusuario.component.css'
 })
 export class ListusuarioComponent implements OnInit{
-  usuarios!: Usuario[];
-
-  constructor(private uService: UsuarioService, private router:Router){}
-  ngOnInit(): void {
-      this.uService.listUsuarios().subscribe(data =>{
-        this.usuarios = data;
-      })
+  usuarios: Usuario[] = [];
+  constructor(private userService: UsuarioService, private router:Router){}
+    ngOnInit(): void {
+    this.cargarUsuarios();
   }
 
-  deleteUsuario(us: Usuario){
-    var valida = confirm("Estas seguro que deseas eliminar el usuario?");
-    if(valida == true){
-//      this.uService.
+  cargarUsuarios(): void {
+    this.userService.listUsuarios().subscribe({
+      next: (data) => {
+        this.usuarios = data;
+      },
+      error: (error) => {
+        console.error('Error al cargar usuarios:', error);
+        alert('Error al cargar la lista de usuarios');
+      }
+    });
+  }
+
+  deleteUser(us: Usuario): void {
+    const validar = confirm(`¿Está seguro que desea eliminar al usuario ${us.nombre} ${us.apellido}?`);
+
+    if (validar) {
+      this.userService.deleteUsuario(us.idUsuario.toString()).subscribe({
+        next: (result) => {
+          this.usuarios = this.usuarios.filter(x => x.idUsuario !== us.idUsuario);
+          alert('Usuario eliminado correctamente');
+        },
+        error: (error) => {
+          console.error('Error al eliminar:', error);
+          alert('Ha ocurrido un error al eliminar el usuario. Verifique que no existan dependencias.');
+        }
+      });
     }
+  }
+
+  selectUser(usr: Usuario): void {
+    localStorage.setItem("selectedUserId", usr.idUsuario.toString());
+    this.router.navigate(['/editar-usuario', usr.idUsuario]);
+  }
+
+  crearNuevoUsuario(): void {
+    this.router.navigate(['/addusuarios']);
   }
 
 }

@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="card-header">
+    <h2 class="text-primary">Listado de Sucursales</h2>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped table-responsive-sm">
+      <thead>
+        <tr class="text-center">
+          <th>ID</th>
+          <th>Nombre Sucursal</th>
+          <th>Direccion</th>
+          <th>Empresa</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sucursal of sucursales" class="text-center">
+          <td>{{sucursal.idSucursal}}</td>
+          <td>{{sucursal.nombre}}</td>
+          <td>{{sucursal.direccion}}</td>
+          <td>{{sucursal.empresa.nombre}}</td>
+
+          <td class="text-center">
+            <button (click)="selectSucur(sucursal)" class="btn btn-warning btn-sm">Editar</button>
+            <span style="margin-trim:1em"></span>
+            <button (click)="deleteSucursal(sucursal)" class="btn btn-danger btn-sm">Borrar</button>
+            <span style="margin-trim:1em"></span>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+

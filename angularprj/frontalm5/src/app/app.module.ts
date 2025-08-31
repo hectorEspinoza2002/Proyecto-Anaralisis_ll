@@ -11,6 +11,19 @@ import { ListusuarioComponent } from './component/listusuario/listusuario.compon
 import { AddusuarioComponent } from './component/addusuario/addusuario.component';
 import { ListroleComponent } from './component/listrole/listrole.component';
 import { AddroleComponent } from './component/addrole/addrole.component';
+import { PassowrdValidatorDirective } from './service/passowrd-validator.directive';
+import { ListsucursalesComponent } from './component/listsucursales/listsucursales.component';
+import { ListempresaComponent } from './component/listempresa/listempresa.component';
+import { ListmoduloComponent } from './component/listmodulo/listmodulo.component';
+import { ListmenuComponent } from './component/listmenu/listmenu.component';
+import { ListopcionComponent } from './component/listopcion/listopcion.component';
+import { ListroleopcionComponent } from './component/listroleopcion/listroleopcion.component';
+import { AddempresaComponent } from './component/addempresa/addempresa.component';
+import { AddsucursalComponent } from './component/addsucursal/addsucursal.component';
+import { AddmoduloComponent } from './component/addmodulo/addmodulo.component';
+import { AddmenuComponent } from './component/addmenu/addmenu.component';
+import { AddopcionComponent } from './component/addopcion/addopcion.component';
+import { EditempresaComponent } from './component/editempresa/editempresa.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +34,20 @@ import { AddroleComponent } from './component/addrole/addrole.component';
     ListusuarioComponent,
     AddusuarioComponent,
     ListroleComponent,
-    AddroleComponent
+    AddroleComponent,
+    PassowrdValidatorDirective,
+    ListsucursalesComponent,
+    ListempresaComponent,
+    ListmoduloComponent,
+    ListmenuComponent,
+    ListopcionComponent,
+    ListroleopcionComponent,
+    AddempresaComponent,
+    AddsucursalComponent,
+    AddmoduloComponent,
+    AddmenuComponent,
+    AddopcionComponent,
+    EditempresaComponent
   ],
   imports: [
     BrowserModule,

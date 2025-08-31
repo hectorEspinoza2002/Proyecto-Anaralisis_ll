@@ -1,6 +1,6 @@
 package com.proyecto_analisis.alfa.model.entity;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,20 +18,20 @@ public class StatusUsuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    @Column(name = "IdStatususuario")
+    @Column(name = "IdStatusUsuario")
     private Integer idStatusUsuario;
 
-    @Column(name = "nombre")
+    @Column(name = "Nombre")
     private String nombre;
 
     @Column(name = "FechaCreacion")
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "UsuarioCreacion")
     private String usuarioCreacion;
 
     @Column(name = "FechaModificacion")
-    private Date fechaModificacion;
+    private LocalDateTime fechaModificacion;
 
     @Column(name = "UsuarioModificacion")
     private String usuarioModificado;

@@ -6,107 +6,121 @@ import { GeneroService } from '../../service/genero.service';
 import { StatusUsuarioService } from '../../service/status-usuario.service';
 import { Genero } from '../../entity/genero';
 import { StatusUsuario } from '../../entity/statusUsuario';
+import { Sucursal } from '../../entity/Sucursal';
+import { Role } from '../../entity/Role';
 
 @Component({
   selector: 'app-addusuario',
   standalone: false,
   templateUrl: './addusuario.component.html',
-  styleUrl: './addusuario.component.css'
+  styleUrl: './addusuario.component.css',
 })
-export class AddusuarioComponent implements OnInit{
-  usuario = new Usuario;
+export class AddusuarioComponent implements OnInit {
+  usuario: Usuario = {} as Usuario;
 
-  selectedStatus: string = '';
-  selectedGenero: string = '';
-  generoDisponibles: Genero [] = [];
-  statuDisponibles: StatusUsuario [] = [];
+  generosDisponibles: Genero[] = [];
+  statusDisponibles: StatusUsuario[] = [];
+  sucursalesDisponibles: Sucursal[] = [];
+  rolesDisponibles: Role[] = [];
+  reglasEmpresa: any = {};
+
+  selectedGenero: number = 0;
+  selectedStatus: number = 0;
+  selectedSucursal: number = 0;
+  selectedRole: number = 0;
 
   constructor(
-    private uService:UsuarioService,
-    private router:Router,
-    private generoService:GeneroService,
-    private statusService:StatusUsuarioService
-
-  ){}
+    private userService: UsuarioService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-
-    this.generoService.getAll().subscribe(generos => {
-      this.generoDisponibles = generos;
-    });
-
-    this.statusService.getAll().subscribe(statusU => {
-      this.statuDisponibles = statusU;
-    });
-
+    this.cargarDatosIniciales();
   }
 
-    Cancel(){
-      this.router.navigate(["listusuarios"]);
+  cargarDatosIniciales(): void {
+    // Cargar géneros
+    this.userService.getGeneros().subscribe({
+      next: (generos) => this.generosDisponibles = generos,
+      error: (error) => console.error('Error cargando géneros:', error)
+    });
+
+    // Cargar status
+    this.userService.getStatusUsuarios().subscribe({
+      next: (status) => this.statusDisponibles = status,
+      error: (error) => console.error('Error cargando status:', error)
+    });
+
+    // Cargar sucursales
+    this.userService.getSucursales().subscribe({
+      next: (sucursales) => this.sucursalesDisponibles = sucursales,
+      error: (error) => console.error('Error cargando sucursales:', error)
+    });
+
+    // Cargar roles
+    this.userService.getRoles().subscribe({
+      next: (roles) => this.rolesDisponibles = roles,
+      error: (error) => console.error('Error cargando roles:', error)
+    });
+  }
+
+  onSucursalChange(): void {
+    if (this.selectedSucursal) {
+      this.userService.getReglasEmpresa(this.selectedSucursal).subscribe({
+        next: (reglas) => this.reglasEmpresa = reglas,
+        error: (error) => console.error('Error cargando reglas:', error)
+      });
     }
+  }
 
-  save(usuario:Usuario){
+  Cancel(): void {
+    this.router.navigate(['/listusuarios']);
+  }
 
-    if(!this.selectedStatus && !this.selectedGenero){
-      alert("Debe seleccionar estatus o genero del usuario");
+  guardarUser(): void {
+    if (!this.validarFormulario()) {
+      alert('Por favor complete todos los campos obligatorios');
       return;
     }
 
-    const statusIdStr = this.selectedStatus.toString();
-    const generoIdStr = this.selectedGenero.toString();
+    // Asignar valores seleccionados
+    this.usuario.idGenero = this.generosDisponibles.find(g => g.idGenero === this.selectedGenero)!;
+    this.usuario.idStatusUsuario = this.statusDisponibles.find(s => s.idStatusUsuario === this.selectedStatus)!;
+    this.usuario.idSucursal = this.sucursalesDisponibles.find(s => s.idSucursal === this.selectedSucursal)!;
+    this.usuario.idRole = this.rolesDisponibles.find(r => r.idRole === this.selectedRole)!;
 
-    this.usuario.idGenero = {idGenero: +this.selectedGenero} as any;
-    this.usuario.idStatusUsuario = {idStatusUsuario: + this.selectedStatus} as any;
-
+    // Configurar valores por defecto
     this.usuario.fechaCreacion = new Date();
-    this.usuario.usuarioCreacion = 'system';
+    this.usuario.usuarioCreacion = 'Administrador';
+    this.usuario.intentosDeAcceso = 0;
+    this.usuario.requiereCambiarPassword = 1;
 
-    this.uService.addUsuarios(this.usuario).subscribe(res => {
-      if(res != null){
-        alert("Usuario registrado con exito");
-        this.router.navigate(["listusuarios"]);
-      } else {
-        alert("El usuario ya existe u ocurrio un error");
-
+    this.userService.addUsuarios(this.usuario).subscribe({
+      next: (result) => {
+        alert(`Usuario ${result.nombre} ${result.apellido} creado correctamente!`);
+        this.router.navigate(['/listusuarios']);
+      },
+      error: (error) => {
+        console.error('Error creando usuario:', error);
+        alert('Error al crear usuario: ' + (error.error?.message || error.message));
       }
-    })
-
-    //buscar genero por id
-    /*
-    this.generoService.buscarGenero(generoIdStr).subscribe(genero => {
-      usuario.idGenero = genero;
-
-      this.statusService.buscarStatusU(statusIdStr).subscribe(status => {
-        usuario.idStatusUsuario = status;
-
-
-
-        //Guardar
-        this.uService.addUsuarios(usuario).subscribe(result => {
-          if(result != null){
-            alert("Usuario: "+usuario.correoElectronico+" registrado exitosamente");
-            this.router.navigate(["listusuarios"]);
-          } else {
-            alert("El usuario ya existe o ocurrio un error");
-          }
-        });
-      });
     });
-    */
-
-    /*
-    if(typeof(usuario.idUsuario) != "undefined"){
-      this.uService.addUsuarios(usuario).subscribe(result => {
-        if(result != null){
-          alert("Usuario Ingreado Correctamente");
-          this.router.navigate(["listusuarios"]);
-        } else {
-          alert("Usario ya existente");
-        }
-      });
-    } else {
-      alert("Debe ingresar los datos");
-    }*/
   }
 
+  private validarFormulario(): boolean {
+    return !!(
+      this.usuario.idUsuario &&
+      this.usuario.nombre &&
+      this.usuario.apellido &&
+      this.usuario.fechaNacimiento &&
+      this.selectedGenero &&
+      this.selectedStatus &&
+      this.usuario.password &&
+      this.usuario.correoElectronico &&
+      this.selectedSucursal &&
+      this.selectedRole &&
+      this.usuario.pregunta &&
+      this.usuario.respuesta
+    );
+  }
 }

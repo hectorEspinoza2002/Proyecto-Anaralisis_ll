@@ -21,12 +21,6 @@ export class AddroleComponent {
 
   guardar(role:Role){
     if(typeof(role.nombre) != "undefined"){
-
-      // se aguarda primero la fecha
-      role.fechaCreacion = new Date();
-      role.usuarioCreacion = "Administrador";
-      role.fechaModificacion =  new Date();
-      role.usuarioModificacion = "Administrador";
       this.service.addRole(role).subscribe(result => {
         if(result != null){
           alert("Rol: "+role.nombre+" ingresado correctamente!");

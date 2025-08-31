@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="card-header">
+    <h2 class="text-primary">Listado de Opciones</h2>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped table-responsive-sm">
+      <thead>
+        <tr class="text-center">
+          <th>ID</th>
+          <th>Nombre Menu</th>
+          <th>Nombre</th>
+          <th>Orden Menu</th>
+          <th>Pagina</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let op of opciones" class="text-center">
+          <td>{{op.idOpcion}}</td>
+          <td>{{op.menu.nombre}}</td>
+          <td>{{op.nombre}}</td>
+          <td>{{op.ordenMenu}}</td>
+          <td>{{op.pagina}}</td>
+
+          <td class="text-center">
+            <button (click)="selectOp(op)" class="btn btn-warning btn-sm">Editar</button>
+            <span style="margin-trim:1em"></span>
+            <button (click)="deleteOpcion(op)" class="btn btn-danger btn-sm">Borrar</button>
+            <span style="margin-trim:1em"></span>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

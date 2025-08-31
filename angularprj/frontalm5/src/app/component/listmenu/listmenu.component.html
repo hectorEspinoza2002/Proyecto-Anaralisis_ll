@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="card-header">
+    <h2 class="text-primary">Listado de Menu</h2>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped table-responsive-sm">
+      <thead>
+        <tr class="text-center">
+          <th>ID</th>
+          <th>Nombre Modulo</th>
+          <th>Nombre</th>
+          <th>Orden Menu</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mod of menus" class="text-center">
+          <td>{{mod.idMenu}}</td>
+          <td>{{mod.modulo.nombre}}</td>
+          <td>{{mod.nombre}}</td>
+          <td>{{mod.ordenMenu}}</td>
+
+          <td class="text-center">
+            <button (click)="selectMenu(mod)" class="btn btn-warning btn-sm">Editar</button>
+            <span style="margin-trim:1em"></span>
+            <button (click)="deleteMenu(mod)" class="btn btn-danger btn-sm">Borrar</button>
+            <span style="margin-trim:1em"></span>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

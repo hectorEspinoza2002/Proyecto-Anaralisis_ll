@@ -1,26 +1,29 @@
 import { Genero } from './genero';
+import { Role } from './Role';
 import { StatusUsuario } from './statusUsuario';
+import { Sucursal } from './Sucursal';
 
 export class Usuario {
 
-  idUsuario!: String;
-  nombre!: String;
-  apellido!: String;
+  idUsuario!: string;
+  nombre!: string;
+  apellido!: string;
   fechaNacimiento!: Date;
   idStatusUsuario!: StatusUsuario;
-  password!: String;
+  password!: string;
   idGenero!: Genero;
   ultimaFechaIngreso!: Date;
   intentosDeAcceso!: Number;
-  sesionActual!: String;
+  sesionActual!: string;
   ultimaFechaCambioPassword!: Date;
-  correoElectronico!: String;
+  correoElectronico!: string;
   requiereCambiarPassword!: Number;
   fotografia!: String;
   telefonoMovil!: String;
-  idSucursal!: Number;
+  idSucursal!: Sucursal;
   pregunta!: String;
   respuesta!: String;
+  idRole!: Role;
   fechaCreacion!: Date;
   usuarioCreacion!: String;
   fechaModificacion!: Date;

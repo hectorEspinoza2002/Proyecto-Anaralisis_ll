@@ -17,7 +17,7 @@ public class GeneroService {
         this.generoRepo = gRepo;
     }
 
-    public List<Genero> listarGeneros(){
+    public List<Genero> findAll(){
         return generoRepo.findAll();
     }
 

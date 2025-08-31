@@ -17,7 +17,7 @@ public class StatusUsuarioService {
         this.statusUsRepo = sur;
     }
 
-    public List<StatusUsuario> getAllstatusUsuarios(){
+    public List<StatusUsuario> findAll(){
         return (List<StatusUsuario>) statusUsRepo.findAll();
     }
 

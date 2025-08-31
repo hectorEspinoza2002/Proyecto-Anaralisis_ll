@@ -1,0 +1,31 @@
+<div class="container col-md-6">
+  <div class="card">
+    <div class="card-header">
+       <h2>Agregar Modulo</h2>
+    </div>
+    <div class="card-body">
+      <form id="addcursosforms" class="needs-validation" novalidate>
+        <div class="form-group">
+
+          <div class="mb-2">
+            <label for="name">Nombre:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="mod.nombre" type="text" name="curso" id="name" class="form-control" placeholder="Ingrese el Nombre del Modulo" required>
+          </div>
+
+          <div class="mb-2">
+            <label for="name">Ingrese numero de Orden-Menu:</label>
+          </div>
+          <div class="mb-2">
+            <input [(ngModel)]="mod.ordenMenu" type="text" name="curso" id="name" class="form-control" placeholder="Ingrese un numero de orden" required>
+          </div>
+
+        </div>
+        <button (click)="guardar(mod)" type="button" class="btn btn-outline-success">Guardar</button>
+        <span style="margin-left:1em"></span>
+        <button (click)="Cancelar()" type="button" class="btn btn-outline-danger">Cancelar</button>
+      </form>
+    </div>
+  </div>
+</div>

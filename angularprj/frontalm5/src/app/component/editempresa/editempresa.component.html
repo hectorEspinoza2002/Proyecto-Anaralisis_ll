@@ -1,0 +1,123 @@
+<div class="container col-md-6">
+  <div class="card">
+    <div class="card-header">
+       <h2>Modificar Empresa</h2>
+    </div>
+       <div class="card-body">
+        <form>
+
+          <div class="form-group">
+            <div class="mb-2">
+              <label for="">ID del Empresa:</label>
+            </div>
+            <div class="mb-2">
+              <input [(ngModel)]="emps.idEmpresa"  type="text" name="id"  disabled  id="id"  class="form-control" placeholder="ID" required>
+            </div>
+          </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Nombre del la Empresa:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.nombre" type="text" name="name"  id="name" #myFocus class="form-control" placeholder="Ingrese nombre del la empresa" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Direccion:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.direccion" type="text" name="direccion"  id="name" #myFocus class="form-control" placeholder="Ingrese la Direccion" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Nit:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.nit" type="text" name="nit"  id="nit" #myFocus class="form-control" placeholder="Ingrese el nit " required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Letras Mayusculas:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.passwordCantidadMayusculas" type="text" name="nit"  id="nit" #myFocus class="form-control" placeholder="Ingrese la cantidad de mayusculas " required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Letras Minusculas:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.passwordCantidadMinusculas" type="text" name="nit"  id="nit" #myFocus class="form-control" placeholder="Ingrese la cantidad de minusculas" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Caracteres Especiales:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.passwordCantidadCaracteresEspeciales" type="text" name="nit"  id="nit" #myFocus class="form-control" placeholder="Ingrese la cantidad de caracteres especiales" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Caducidad de dias:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.passwordCantidadCaducidadDias" type="text" name="nit"  id="nit" #myFocus class="form-control" placeholder="Ingrese la cantidad de dias de caducidad" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Largo contraseña:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.passwordLargo" type="text" name="nit"  id="nit" #myFocus class="form-control" placeholder="Ingrese el largo de la contraseña" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Intentos de Bloqueo:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.passwordIntentosAntesDeBloquear" type="text" name="nit"  id="nit" #myFocus class="form-control" placeholder="Ingrese intentos antes de bloquearse" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Cantidad de numeros:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.passwordCantidadNumeros" type="text" name="nit"  id="nit" #myFocus class="form-control" placeholder="Ingrese la cantidad de numeros de la contraseña" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="mb-2">
+                <label for="">Preguntas:</label>
+              </div>
+              <div class="mb-2">
+                <input [(ngModel)]="emps.passwordCantidadPreguntasValidar" type="text" name="nit"  id="nit" #myFocus class="form-control" placeholder="Ingrese la cantidad de preguntas a validar" required>
+              </div>
+            </div>
+
+            <button (click)="editEmpresa(emps)" class="btn btn-outline-success" type="button">Guardar</button>
+          <span style="margin-left:1em"></span>
+          <button (click)="Cancel()" class="btn btn-outline-danger"  type="button">Cancelar</button>
+        </form>
+       </div>
+    </div>
+  </div>

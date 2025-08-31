@@ -1,6 +1,6 @@
 package com.proyecto_analisis.alfa.model.entity;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,13 +25,13 @@ public class Genero {
     private String nombre;
 
     @Column(name = "FechaCreacion")
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "UsuarioCreacion")
     private String usuarioCreacion;
 
     @Column(name = "FechaModificacion")
-    private Date fechaModificacion;
+    private LocalDateTime fechaModificacion;
 
     @Column(name = "UsuarioModificacion")
     private String usuarioModificacion;

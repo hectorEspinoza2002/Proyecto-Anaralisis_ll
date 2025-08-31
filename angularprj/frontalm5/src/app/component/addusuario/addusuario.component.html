@@ -1,142 +1,128 @@
-<div class="container col-md-6">
+<div class="container">
   <div class="card">
     <div class="card-header">
-       <h2>Agregar Autor</h2>
+      <h2>Crear Nuevo Usuario</h2>
     </div>
+
     <div class="card-body">
-      <form id="addauthorforms" class="needs-validation" novalidate>
+      <form #usuarioForm="ngForm" class="needs-validation" novalidate>
 
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Usuario:</label>
+        <!-- Campos básicos -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">ID Usuario *</label>
+            <input [(ngModel)]="usuario.idUsuario" name="idUsuario" class="form-control" required>
           </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.idUsuario" type="text" name="name" id="name" class="form-control" placeholder="Ingrese IDUsuario" required>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Contraseña *</label>
+            <input [(ngModel)]="usuario.password" name="password" type="password" class="form-control" required>
+            <small class="form-text text-muted">
+              La contraseña debe cumplir con las reglas de seguridad
+            </small>
           </div>
         </div>
 
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Nombre:</label>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nombre *</label>
+            <input [(ngModel)]="usuario.nombre" name="nombre" class="form-control" required>
           </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.nombre" type="text" name="name" id="name" class="form-control" placeholder="Ingrese nombre" required>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Apellido *</label>
+            <input [(ngModel)]="usuario.apellido" name="apellido" class="form-control" required>
           </div>
         </div>
 
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Apellido:</label>
+        <!-- Selectores -->
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Género *</label>
+            <select [(ngModel)]="selectedGenero" name="genero" class="form-select" required>
+              <option value="">Seleccione género</option>
+              <option *ngFor="let genero of generosDisponibles" [value]="genero.idGenero">
+                {{ genero.nombre }}
+              </option>
+            </select>
           </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.apellido" type="text" name="name" id="name" class="form-control" placeholder="Ingrese apellido" required>
-          </div>
-        </div>
 
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Fecha De Nacimiento:</label>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Status *</label>
+            <select [(ngModel)]="selectedStatus" name="status" class="form-select" required>
+              <option value="">Seleccione status</option>
+              <option *ngFor="let status of statusDisponibles" [value]="status.idStatusUsuario">
+                {{ status.nombre }}
+              </option>
+            </select>
           </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.fechaNacimiento" type="text" name="name" id="name" class="form-control" placeholder="Ingrese Fecha De Nacimiento" required>
-          </div>
-        </div>
 
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="status">Estatus Usuario:</label>
-          </div>
-          <div class="mb-2">
-            <select class="form-select" name="status" id="status" [(ngModel)]="selectedStatus" required>
-              <option [ngValue]="''" disabled selected>Seleccione el status</option>
-              <option *ngFor="let status of statuDisponibles" [value]="status.idStatusUsuario">
-                {{ status.nombre}}
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Rol *</label>
+            <select [(ngModel)]="selectedRole" name="role" class="form-select" required>
+              <option value="">Seleccione rol</option>
+              <option *ngFor="let role of rolesDisponibles" [value]="role.idRole">
+                {{ role.nombre }}
               </option>
             </select>
           </div>
         </div>
 
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Contraseña:</label>
-          </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.password" type="text" name="name" id="name" class="form-control" placeholder="Ingrese una Contraseña" required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="genero">Genero:</label>
-          </div>
-          <div class="mb-2">
-            <select class="form-select" id="genero" name="genero" [(ngModel)]="selectedGenero" required="">
-              <option [ngValue]="''" disabled selected>Seleccione un genero</option>
-              <option *ngFor="let genero of generoDisponibles" [value]="genero.idGenero">
-                {{genero.nombre}}
+        <!-- Sucursal y reglas -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Sucursal *</label>
+            <select [(ngModel)]="selectedSucursal" name="sucursal" class="form-select"
+                    (change)="onSucursalChange()" required>
+              <option value="">Seleccione sucursal</option>
+              <option *ngFor="let sucursal of sucursalesDisponibles" [value]="sucursal.idSucursal">
+                {{ sucursal.nombre }} - {{ sucursal.empresa.nombre }}
               </option>
             </select>
           </div>
-        </div>
 
-
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Correo Electronico:</label>
-          </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.correoElectronico" type="text" name="name" id="name" class="form-control" placeholder="Ingrese un correo Electronico" required>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha Nacimiento *</label>
+            <input [(ngModel)]="usuario.fechaNacimiento" name="fechaNacimiento" type="date" class="form-control" required>
           </div>
         </div>
 
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Fotografia:</label>
+        <!-- Contacto -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Correo Electrónico *</label>
+            <input [(ngModel)]="usuario.correoElectronico" name="correo" type="email" class="form-control" required>
           </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.fotografia" type="text" name="name" id="name" class="form-control" placeholder="Ingrese una fotografia" required>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Teléfono Móvil</label>
+            <input [(ngModel)]="usuario.telefonoMovil" name="telefono" class="form-control">
           </div>
         </div>
 
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Telefono:</label>
+        <!-- Seguridad -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Pregunta de Seguridad *</label>
+            <input [(ngModel)]="usuario.pregunta" name="pregunta" class="form-control" required>
           </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.telefonoMovil" type="text" name="name" id="name" class="form-control" placeholder="Ingrese un numero de telefono" required>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Respuesta *</label>
+            <input [(ngModel)]="usuario.respuesta" name="respuesta" class="form-control" required>
           </div>
         </div>
 
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Sucursal:</label>
-          </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.idSucursal" type="text" name="name" id="name" class="form-control" placeholder="Seleccione una sucursal" required>
-          </div>
+        <!-- Botones -->
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button (click)="Cancel()" type="button" class="btn btn-secondary me-md-2">
+            Cancelar
+          </button>
+          <button (click)="guardarUser()" type="button" class="btn btn-primary"
+                  [disabled]="!usuarioForm.form.valid">
+            Guardar Usuario
+          </button>
         </div>
-
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Pregunta:</label>
-          </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.pregunta" type="text" name="name" id="name" class="form-control" placeholder="Responda la Pregunta abajo" required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Respuesta:</label>
-          </div>
-          <div class="mb-2">
-            <input [(ngModel)]="usuario.respuesta" type="text" name="name" id="name" class="form-control" placeholder="Responda la respuesta" required>
-          </div>
-        </div>
-
-        <button (click)="save(usuario)" type="button" class="btn btn-outline-success">Guardar</button>
-        <span style="margin-left:1em"></span>
-        <button (click)="Cancel()" type="button" class="btn btn-outline-danger">Cancelar</button>
       </form>
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Role } from '../entity/Role';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,14 @@ export class RoleService {
 
   deleteRole(role:Role){
     return this.http.delete(this.Url+"/delete_role/{id}"+role.idRole,{responseType: 'text'});
+  }
+
+  buscarRol(id:String){
+      return this.http.get<Role>(this.Url+"/list_roles/"+id);
+    }
+
+  getAll(): Observable<any[]> {
+    return this.http.get<any[]>(this.Url+"/list_roles")
   }
 
 }

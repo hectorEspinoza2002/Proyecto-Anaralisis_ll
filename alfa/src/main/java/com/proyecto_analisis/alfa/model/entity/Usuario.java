@@ -1,10 +1,15 @@
 package com.proyecto_analisis.alfa.model.entity;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -14,9 +19,11 @@ import lombok.Data;
 @Table(name = "usuario")
 @Entity
 @Data
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Usuario {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "IdUsuario")
     private String idUsuario;
@@ -30,19 +37,19 @@ public class Usuario {
     @Column(name = "FechaNacimiento")
     private Date fechaNacimiento;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdStatusUsuario")
     private StatusUsuario idStatusUsuario;
 
     @Column(name = "Password")
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdGenero")
     private Genero idGenero;
 
     @Column(name = "UltimaFechaIngreso")
-    private Date ultimaFechaIngreso;
+    private LocalDateTime ultimaFechaIngreso;
 
     @Column(name = "IntentosDeAcceso")
     private Integer intentosDeAcceso;
@@ -59,27 +66,28 @@ public class Usuario {
     @Column(name = "RequiereCambiarPassword")
     private Integer requiereCambiarPassword;
 
-    @Column(name = "fotografia")
+    @Column(name = "Fotografia")
     private String fotografia;
 
     @Column(name = "TelefonoMovil")
     private String telefonoMovil;
 
-    @Column(name = "IdSucursal")
-    private Integer idSucursal;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdSucursal")
+    private Sucursal sucursal;
 
-    @Column(name = "pregunta")
+    @Column(name = "Pregunta")
     private String pregunta;
 
-    @Column(name = "respuesta")
+    @Column(name = "Respuesta")
     private String respuesta;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdRole")
     private Role idRole;
 
     @Column(name = "FechaCreacion")
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "UsuarioCreacion")
     private String usuarioCreacion;
