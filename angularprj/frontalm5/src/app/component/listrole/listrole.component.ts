@@ -25,7 +25,7 @@ export class ListroleComponent implements OnInit{
       this.rolService.deleteRole(rol).subscribe({
         next: (result) => {
           this.roles = this.roles.filter(x => x !== rol);
-          alert(result);
+          alert(result + rol.nombre +" a sido eliminado!");
         },
         error: () => {
           alert("Ha ocurrido un error al eliminar el rol.\nVerifique que no existan usuarios");

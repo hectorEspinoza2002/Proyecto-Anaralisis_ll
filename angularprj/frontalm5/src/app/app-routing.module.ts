@@ -9,7 +9,7 @@ import { ListroleComponent } from './component/listrole/listrole.component';
 import { AddroleComponent } from './component/addrole/addrole.component';
 import { ListsucursalesComponent } from './component/listsucursales/listsucursales.component';
 import { ListempresaComponent } from './component/listempresa/listempresa.component';
-import { ListmoduloComponent } from './component/listmodulo/listmodulo.component';
+import { Listmodulo2Component } from './component/listmodulo2/listmodulo2.component';
 import { ListmenuComponent } from './component/listmenu/listmenu.component';
 import { ListopcionComponent } from './component/listopcion/listopcion.component';
 import { ListroleopcionComponent } from './component/listroleopcion/listroleopcion.component';
@@ -19,8 +19,10 @@ import { AddmoduloComponent } from './component/addmodulo/addmodulo.component';
 import { AddmenuComponent } from './component/addmenu/addmenu.component';
 import { AddopcionComponent } from './component/addopcion/addopcion.component';
 import { EditempresaComponent } from './component/editempresa/editempresa.component';
+import { Editmodulo2Component } from './component/editmodulo2/editmodulo2.component';
 
 const routes: Routes = [
+  {    path: "editmodulo", component:Editmodulo2Component },
   {    path: "editempresa", component:EditempresaComponent },
   {    path: "addopcion", component:AddopcionComponent },
   {    path: "addmenu", component:AddmenuComponent },
@@ -30,7 +32,7 @@ const routes: Routes = [
   {    path: "listrolopcion", component:ListroleopcionComponent },
   {    path: "listopcion", component:ListopcionComponent  },
   {    path: "listmenu", component:ListmenuComponent  },
-  {    path: "listmodulo", component:ListmoduloComponent  },
+  {    path: "listmodulo", component:Listmodulo2Component  },
   {    path: "listempresa", component:ListempresaComponent  },
   {    path: "listsucursal", component:ListsucursalesComponent  },
   {    path: "listrole", component:ListroleComponent  },

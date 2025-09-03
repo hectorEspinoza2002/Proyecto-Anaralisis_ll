@@ -22,8 +22,8 @@ export class EmpresaService {
     return this.http.get<Empresa>(this.Url + '/list_empresas/'+id);
   }
 
-  editEmpresa(empreId:String, updateEmp:Empresa){
-    return this.http.put<Empresa>(this.Url+"/update_empresa/"+empreId,updateEmp);
+  editEmpresa(id:String, updateEmp:Empresa){
+    return this.http.put<Empresa>(this.Url+"/update_empresa/"+id,updateEmp);
   }
 
   addEmpresa(emp:Empresa){
@@ -31,6 +31,6 @@ export class EmpresaService {
     }
 
   deleteEmpresa(emp: Empresa) {
-    return this.http.delete(this.Url + '/delete_empresas/{id}' + emp.idEmpresa, { responseType: 'text' });
+    return this.http.delete(this.Url + '/delete_empresa/' + emp.idEmpresa, { responseType: 'text' });
   }
 }

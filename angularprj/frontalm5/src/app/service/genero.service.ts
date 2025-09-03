@@ -20,7 +20,7 @@ export class GeneroService {
   }
 
   deleteGenero(genero:Genero){
-      return this.http.delete(this.Url+"/delete_genero/{id}"+genero.idGenero,{responseType: 'text'});
+      return this.http.delete(this.Url+"/delete_genero/"+genero.idGenero,{responseType: 'text'});
     }
 
 }

@@ -26,9 +26,15 @@ export class UsuarioService {
     return this.http.post<any>(`${this.Url}/login`, loginRequest);
   }
 
+  /*
   addUsuarios(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.Url}/usuarios`, usuario);
+    return this.http.post<Usuario>(`${this.Url}/create_usuario`, usuario);
   }
+     */
+
+  addUsuario(usuarios:Usuario){
+        return this.http.post<Usuario>(this.Url+"/create_usuario",usuarios);
+      }
 
   deleteUsuario(id: string): Observable<any> {
     return this.http.delete(`${this.Url}/${id}`, { responseType: 'text' });
@@ -41,20 +47,20 @@ export class UsuarioService {
 
   // Método para obtener sucursales (necesario para el formulario)
   getSucursales(): Observable<Sucursal[]> {
-    return this.http.get<Sucursal[]>(`${this.Url}/sucursales`);
+    return this.http.get<Sucursal[]>(`${this.Url}/list_sucursal`);
   }
 
   // Método para obtener roles (necesario para el formulario)
   getRoles(): Observable<Role[]> {
-    return this.http.get<Role[]>(`${this.Url}/roles`);
+    return this.http.get<Role[]>(`${this.Url}/list_roles`);
   }
 
   getGeneros(): Observable<Genero[]>{
-    return this.http.get<Genero[]>(`${this.Url}/generos`);
+    return this.http.get<Genero[]>(`${this.Url}/list_generos`);
   }
 
   getStatusUsuarios(): Observable<StatusUsuario[]>{
-    return this.http.get<StatusUsuario[]>(`${this.Url}/statusUsuarios`);
+    return this.http.get<StatusUsuario[]>(`${this.Url}/list_status_usuarios`);
   }
 
 }

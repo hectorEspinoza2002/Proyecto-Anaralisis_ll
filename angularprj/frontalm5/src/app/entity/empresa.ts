@@ -12,9 +12,5 @@ export class Empresa {
   passwordIntentosAntesDeBloquear! : Number;
   passwordCantidadNumeros! : Number;
   passwordCantidadPreguntasValidar! : Number;
-  //FechaCreacion! : Date;
-  //UsuarioCreacion! : String;
-  //FechaModificacion! : Date;
-  //UsuarioModificacion! : ;
 
 }

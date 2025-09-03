@@ -25,7 +25,7 @@ export class OpcionService {
 
   deleteOpcion(opc: Opcion) {
     return this.http.delete(
-      this.Url + '/delete_mudulos/{id}' + opc.idOpcion,
+      this.Url + '/delete_mudulos/' + opc.idOpcion,
       { responseType: 'text' }
     );
   }

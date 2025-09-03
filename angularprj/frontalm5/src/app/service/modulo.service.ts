@@ -4,10 +4,9 @@ import { Modulo } from '../entity/modulo';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ModuloService {
-
   constructor(private http: HttpClient) {}
   Url = 'http://localhost:9090';
 
@@ -19,14 +18,24 @@ export class ModuloService {
     return this.http.get<any[]>(this.Url + '/list_modulos');
   }
 
-  addModulo(m:Modulo){
-      return this.http.post<Modulo>(this.Url+"/create_modulo",m);
-    }
+  addModulo(m: Modulo) {
+    return this.http.post<Modulo>(this.Url + '/create_modulo', m);
+  }
+
+  searchModulo(id: String) {
+    return this.http.get<Modulo>(this.Url + '/list_modulos/' + id);
+  }
+
+  editModulo(id: String, updateModulo: Modulo) {
+    return this.http.put<Modulo>(
+      this.Url + '/update_modulo/' + id,
+      updateModulo
+    );
+  }
 
   deleteModulo(mod: Modulo) {
-    return this.http.delete(
-      this.Url + '/delete_modulos/{id}' + mod.idModulo,
-      { responseType: 'text' }
-    );
+    return this.http.delete(this.Url + '/delete_modulos/' + mod.idModulo, {
+      responseType: 'text',
+    });
   }
 }

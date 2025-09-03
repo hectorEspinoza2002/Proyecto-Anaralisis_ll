@@ -16,18 +16,25 @@ import { Role } from '../../entity/Role';
   styleUrl: './addusuario.component.css',
 })
 export class AddusuarioComponent implements OnInit {
-  usuario: Usuario = {} as Usuario;
+  usuario = new Usuario;
+  /*
+  genero = new Genero;
+  status = new StatusUsuario;
+  role = new Role;
+  sucursal = new Sucursal;
+  */
 
   generosDisponibles: Genero[] = [];
   statusDisponibles: StatusUsuario[] = [];
   sucursalesDisponibles: Sucursal[] = [];
   rolesDisponibles: Role[] = [];
+  mensaje: String = '';
   reglasEmpresa: any = {};
 
-  selectedGenero: number = 0;
-  selectedStatus: number = 0;
-  selectedSucursal: number = 0;
-  selectedRole: number = 0;
+  selectedGenero!: number;
+  selectedStatus!: number;
+  selectedSucursal!: number;
+  selectedRole!: number;
 
   constructor(
     private userService: UsuarioService,
@@ -41,28 +48,39 @@ export class AddusuarioComponent implements OnInit {
   cargarDatosIniciales(): void {
     // Cargar géneros
     this.userService.getGeneros().subscribe({
-      next: (generos) => this.generosDisponibles = generos,
-      error: (error) => console.error('Error cargando géneros:', error)
+      next: (generos) => {
+        this.generosDisponibles = generos
+      },
+      error: (err) => {
+        this.mensaje = 'Error al traer generos',err;
+      }
     });
 
     // Cargar status
     this.userService.getStatusUsuarios().subscribe({
-      next: (status) => this.statusDisponibles = status,
+      next: (status) => {
+        this.statusDisponibles = status
+      },
       error: (error) => console.error('Error cargando status:', error)
     });
 
     // Cargar sucursales
     this.userService.getSucursales().subscribe({
-      next: (sucursales) => this.sucursalesDisponibles = sucursales,
+      next: (sucursales) => {
+        this.sucursalesDisponibles = sucursales
+      },
       error: (error) => console.error('Error cargando sucursales:', error)
     });
 
     // Cargar roles
     this.userService.getRoles().subscribe({
-      next: (roles) => this.rolesDisponibles = roles,
+      next: (roles) => {
+        this.rolesDisponibles = roles
+      },
       error: (error) => console.error('Error cargando roles:', error)
     });
   }
+
 
   onSucursalChange(): void {
     if (this.selectedSucursal) {
@@ -73,38 +91,40 @@ export class AddusuarioComponent implements OnInit {
     }
   }
 
+
+  resetForm(): void {
+
+    this.usuario = new Usuario();
+    this.selectedGenero = null!;
+    this.selectedSucursal = null!;
+    this.selectedStatus = null!;
+    this.selectedRole = null!;
+  }
+
   Cancel(): void {
     this.router.navigate(['/listusuarios']);
   }
 
-  guardarUser(): void {
-    if (!this.validarFormulario()) {
-      alert('Por favor complete todos los campos obligatorios');
-      return;
+  guardarUser(usuario:Usuario) {
+
+    // Vincular objetos relacionados con solo el id seleccionado
+    usuario.idGenero = { idGenero: this.selectedGenero } as Partial<Genero> as Genero;
+    usuario.idStatusUsuario = { idStatusUsuario: this.selectedStatus } as Partial<StatusUsuario> as StatusUsuario;
+    usuario.idSucursal = { idSucursal: this.selectedSucursal } as Partial<Sucursal> as Sucursal;
+    usuario.idRole = { idRol: this.selectedRole } as Partial<Role> as Role;
+
+    if (this.validarFormulario()) {
+      this.userService.addUsuario(usuario).subscribe((result) => {
+        if (result != null) {
+          alert('Usuario: ' + usuario.nombre + ' ingresado correctamente!');
+          this.router.navigate(['listusuarios']);
+        }
+        this.resetForm();
+      });
+    } else {
+      alert('Debe ingresar todos los datos obligatorios!');
     }
 
-    // Asignar valores seleccionados
-    this.usuario.idGenero = this.generosDisponibles.find(g => g.idGenero === this.selectedGenero)!;
-    this.usuario.idStatusUsuario = this.statusDisponibles.find(s => s.idStatusUsuario === this.selectedStatus)!;
-    this.usuario.idSucursal = this.sucursalesDisponibles.find(s => s.idSucursal === this.selectedSucursal)!;
-    this.usuario.idRole = this.rolesDisponibles.find(r => r.idRole === this.selectedRole)!;
-
-    // Configurar valores por defecto
-    this.usuario.fechaCreacion = new Date();
-    this.usuario.usuarioCreacion = 'Administrador';
-    this.usuario.intentosDeAcceso = 0;
-    this.usuario.requiereCambiarPassword = 1;
-
-    this.userService.addUsuarios(this.usuario).subscribe({
-      next: (result) => {
-        alert(`Usuario ${result.nombre} ${result.apellido} creado correctamente!`);
-        this.router.navigate(['/listusuarios']);
-      },
-      error: (error) => {
-        console.error('Error creando usuario:', error);
-        alert('Error al crear usuario: ' + (error.error?.message || error.message));
-      }
-    });
   }
 
   private validarFormulario(): boolean {
@@ -118,9 +138,10 @@ export class AddusuarioComponent implements OnInit {
       this.usuario.password &&
       this.usuario.correoElectronico &&
       this.selectedSucursal &&
-      this.selectedRole &&
+      this.selectedRole
+      /*&&
       this.usuario.pregunta &&
-      this.usuario.respuesta
+      this.usuario.respuesta*/
     );
   }
 }

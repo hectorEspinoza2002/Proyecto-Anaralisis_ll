@@ -6,12 +6,24 @@
     <div class="card-body">
       <form id="addcursosforms" class="needs-validation" novalidate>
 
+
+          <div class="col-md-4 mb-3">
+  <label class="form-label">Modulo *</label>
+  <select [(ngModel)]="selectedModulo" name="modulo" class="form-select" required>
+    <option [ngValue]="null">Seleccione módulo</option>
+    <option *ngFor="let mod of moduloDisponibles" [ngValue]="mod.idModulo">
+      {{ mod.nombre }}
+    </option>
+  </select>
+</div>
+
+
         <div class="form-group">
           <div class="mb-2">
             <label for="name">Nombre:</label>
           </div>
           <div class="mb-2">
-            <input [(ngModel)]="men.nombre" type="text" name="curso" id="name" class="form-control" placeholder="Ingrese el Nombre del Menu" required>
+            <input [(ngModel)]="menus.nombre" type="text" name="curso" id="name" class="form-control" placeholder="Ingrese el Nombre del Menu" required>
           </div>
         </div>
 
@@ -20,12 +32,12 @@
             <label for="name">Orden-Menu:</label>
           </div>
           <div class="mb-2">
-            <input [(ngModel)]="men.ordenMenu" type="text" name="curso" id="name" class="form-control" placeholder="Ingrese numero de Orden-Menu" required>
+            <input [(ngModel)]="menus.ordenMenu" type="text" name="curso" id="name" class="form-control" placeholder="Ingrese numero de Orden-Menu" required>
           </div>
         </div>
 
 
-        <button (click)="guardar(men)" type="button" class="btn btn-outline-success">Guardar</button>
+        <button (click)="guardar(menus)" type="button" class="btn btn-outline-success">Guardar</button>
         <span style="margin-left:1em"></span>
         <button (click)="Cancelar()" type="button" class="btn btn-outline-danger">Cancelar</button>
       </form>

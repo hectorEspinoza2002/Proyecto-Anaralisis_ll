@@ -25,7 +25,7 @@ export class ListempresaComponent implements OnInit{
       this.empresaService.deleteEmpresa(empr).subscribe({
         next: (result) => {
           this.empresas = this.empresas.filter(x => x !== empr);
-          alert(result);
+          alert(result +empr.nombre+" eliminada correctamente");
         },
         error: () => {
           alert("Ha ocurrido un error al eliminar el Empresa.\nVerifique que no existan sucursales");

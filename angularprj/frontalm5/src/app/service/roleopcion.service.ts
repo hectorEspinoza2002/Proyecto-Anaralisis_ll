@@ -18,4 +18,5 @@ export class RoleopcionService {
   getAll(): Observable<any[]> {
     return this.http.get<any[]>(this.Url + '/list_roleOp');
   }
+
 }

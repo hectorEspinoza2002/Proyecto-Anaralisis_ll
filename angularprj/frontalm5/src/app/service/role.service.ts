@@ -20,7 +20,7 @@ export class RoleService {
   }
 
   deleteRole(role:Role){
-    return this.http.delete(this.Url+"/delete_role/{id}"+role.idRole,{responseType: 'text'});
+    return this.http.delete(this.Url+"/delete_role/"+role.idRole,{responseType: 'text'});
   }
 
   buscarRol(id:String){

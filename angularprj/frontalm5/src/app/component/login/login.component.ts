@@ -18,24 +18,32 @@ export class LoginComponent {
   iniciarSesion() {
     this.errorMessage = '';
 
-      console.log("Datos que envío: ", this.usuario);
+    // 1️⃣ Validar campos vacíos antes de enviar
+    if (!this.usuario.idUsuario || !this.usuario.password) {
+      this.errorMessage = 'Debe llenar todos los campos.';
+      return;
+    }
 
+    console.log("Datos que envío: ", this.usuario);
+
+    // 2️⃣ Llamar al backend
     this.usuarioService.login({
       idUsuario: this.usuario.idUsuario,
       password: this.usuario.password
     }).subscribe(
       (response) => {
-
         if (response.success) {
           alert('Login exitoso');
           this.router.navigate(['/principal']);
         } else {
-          this.errorMessage = response.message;
+          // 3️⃣ Mostrar mensaje que devuelve el backend
+          this.errorMessage = response.message || 'Usuario o contraseña incorrectos';
         }
       },
       (error) => {
-        console.error('Error al iniciar sesión', error);
-        this.errorMessage = 'Ocurrió un error en el servidor';
+        //console.error('Error al iniciar sesión', error);
+        this.errorMessage = 'Usuario o contraseña incorrectos.';
+        //this.errorMessage = 'Error en el servidor. Intente más tarde.';
       }
     );
   }

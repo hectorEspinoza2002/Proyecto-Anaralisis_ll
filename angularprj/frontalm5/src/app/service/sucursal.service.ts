@@ -24,7 +24,7 @@ export class SucursalService {
 
   deleteSucursal(sucursal: Sucursal) {
     return this.http.delete(
-      this.Url + '/delete_sucursal/{id}' + sucursal.idSucursal,
+      this.Url + '/delete_sucursal/' + sucursal.idSucursal,
       { responseType: 'text' }
     );
   }
