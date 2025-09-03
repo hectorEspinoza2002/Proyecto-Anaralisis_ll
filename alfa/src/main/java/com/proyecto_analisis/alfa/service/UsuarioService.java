@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 
 import com.proyecto_analisis.alfa.model.entity.Empresa;
 import com.proyecto_analisis.alfa.model.entity.Genero;
+import com.proyecto_analisis.alfa.model.entity.Role;
 import com.proyecto_analisis.alfa.model.entity.StatusUsuario;
 import com.proyecto_analisis.alfa.model.entity.Sucursal;
 import com.proyecto_analisis.alfa.model.entity.Usuario;
 import com.proyecto_analisis.alfa.model.repository.EmpresaRepository;
 import com.proyecto_analisis.alfa.model.repository.GeneroRepository;
+import com.proyecto_analisis.alfa.model.repository.RoleRepository;
 import com.proyecto_analisis.alfa.model.repository.StatusUsuarioRepository;
 import com.proyecto_analisis.alfa.model.repository.SucursalRepository;
 import com.proyecto_analisis.alfa.model.repository.UsuarioRepository;
@@ -39,6 +41,9 @@ public class UsuarioService {
 
     @Autowired
     private EmpresaRepository empresaRepo; // Y este también
+
+    @Autowired
+    private RoleRepository rolRepo; // Y este también
 
     public UsuarioService(UsuarioRepository ur) {
         this.usuarioRepo = ur;
@@ -175,6 +180,26 @@ public class UsuarioService {
 
     public void delete(Usuario uD) {
         usuarioRepo.delete(uD);
+    }
+
+    public Usuario guardarUsuario(Usuario user){
+        return usuarioRepo.save(user);
+    }
+
+    public List<Genero> findAll(){
+        return generoRepo.findAll();
+    }
+
+    public List<Role> findAllrol(){
+        return rolRepo.findAll();
+    }
+
+    public List<StatusUsuario> findAllstatus(){
+        return statusRepo.findAll();
+    }
+
+    public List<Sucursal> findAllsucursal(){
+        return sucursalRepo.findAll();
     }
 
 }

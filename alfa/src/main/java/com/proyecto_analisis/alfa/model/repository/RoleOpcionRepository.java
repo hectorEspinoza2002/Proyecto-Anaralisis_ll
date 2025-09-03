@@ -1,11 +1,11 @@
 package com.proyecto_analisis.alfa.model.repository;
 
-import java.util.List;
+//import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+//import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.proyecto_analisis.alfa.model.entity.RoleOpcion;
-import com.proyecto_analisis.alfa.model.entity.RoleOpcionId;
+//import com.proyecto_analisis.alfa.model.entity.RoleOpcion;
+//import com.proyecto_analisis.alfa.model.entity.RoleOpcionId;
 
 public interface RoleOpcionRepository {
 

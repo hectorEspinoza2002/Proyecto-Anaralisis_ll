@@ -1,15 +1,15 @@
 package com.proyecto_analisis.alfa.model.entity;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
+//import java.sql.Date;
+//import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+//import jakarta.persistence.Column;
+//import jakarta.persistence.EmbeddedId;
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.FetchType;
+//import jakarta.persistence.JoinColumn;
+//import jakarta.persistence.ManyToOne;
+//import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.Data;
 

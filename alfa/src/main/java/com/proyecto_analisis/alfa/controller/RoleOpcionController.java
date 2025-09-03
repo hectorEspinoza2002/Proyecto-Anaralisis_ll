@@ -1,14 +1,14 @@
 package com.proyecto_analisis.alfa.controller;
 
-import java.util.List;
+//import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto_analisis.alfa.model.entity.RoleOpcion;
-import com.proyecto_analisis.alfa.service.RoleOpcionService;
+//import com.proyecto_analisis.alfa.model.entity.RoleOpcion;
+//import com.proyecto_analisis.alfa.service.RoleOpcionService;
 
 @RestController
 @CrossOrigin(origins = { "http://localhost:5500", "http://localhost:9090" })

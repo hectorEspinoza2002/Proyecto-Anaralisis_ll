@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.proyecto_analisis.alfa.model.entity.Genero;
 import com.proyecto_analisis.alfa.model.entity.LoginRequest;
 import com.proyecto_analisis.alfa.model.entity.Role;
@@ -112,17 +111,14 @@ public class UsuarioController {
     }
 
     // Endpoints para obtener datos maestros
-    @GetMapping("/generos")
-    public ResponseEntity<List<Genero>> getAllGeneros() {
-        try {
-            List<Genero> generos = generoService.findAll();
-            return ResponseEntity.ok(generos);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    
+
+    @GetMapping("/list_generos")
+    public List<Genero> listGen() {
+        return generoService.findAll();
     }
 
-    @GetMapping("/statusUsuarios")
+    @GetMapping("/list_status_usuarios")
     public ResponseEntity<List<StatusUsuario>> getAllStatusUsuarios() {
         try {
             List<StatusUsuario> statusUsuarios = statusUsuarioService.findAll();
@@ -132,7 +128,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/sucursales")
+    @GetMapping("/list_sucursal")
     public ResponseEntity<List<Sucursal>> getAllSucursales() {
         try {
             List<Sucursal> sucursales = sucursalService.findAll();
@@ -142,7 +138,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/roles")
+    @GetMapping("/list_roles")
     public ResponseEntity<List<Role>> getAllRoles() {
         try {
             List<Role> roles = roleService.findAll();
@@ -174,7 +170,24 @@ public class UsuarioController {
         }
     }
 
-    @PostMapping("/usuarios")
+    /*
+    @PostMapping("/create_usuario")
+    public Usuario createUsuario(@RequestBody Usuario userId) {
+        //String idEm = String.valueOf(empId.getIdEmpresa());
+
+
+        if (userId.getIdUsuario() != null && usuarioService.findById(userId.getIdUsuario()).isPresent()) {
+            return null;
+        } else {
+            //Usuario
+            userId.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
+            //Fecha
+            userId.setFechaCreacion(LocalDateTime.now());
+            return usuarioService.guardarUsuario(userId);
+        }    }
+ */
+    
+    @PostMapping("/create_usuario")
     public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario) {
         try {
             if (usuario.getIdUsuario() != null && 
@@ -196,6 +209,7 @@ public class UsuarioController {
                 .body("Error al crear usuario: " + e.getMessage());
         }
     }
+        
 
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<?> eliminarUsuario(@PathVariable String id) {

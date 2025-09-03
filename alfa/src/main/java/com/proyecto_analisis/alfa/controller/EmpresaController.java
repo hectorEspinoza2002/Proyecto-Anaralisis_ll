@@ -37,6 +37,9 @@ public class EmpresaController {
 
     @PostMapping("/create_empresa")
     public Empresa createEmpresa(@RequestBody Empresa empId) {
+        //String idEm = String.valueOf(empId.getIdEmpresa());
+
+
         if (empId.getIdEmpresa() != null && empresaService.findById(empId.getIdEmpresa()).isPresent()) {
             return null;
         } else {
@@ -50,10 +53,21 @@ public class EmpresaController {
     }
 
     @PutMapping("/update_empresa/{id}")
-    public Empresa updateEmpresa(@PathVariable Integer empreId, @RequestBody Empresa updateEmp){
+    public Empresa updateEmpresa(@PathVariable("id") Integer empreId, @RequestBody Empresa updateEmp){
         Optional<Empresa> optionEmp = empresaService.findById(empreId);
         if (optionEmp.isPresent()) {
             Empresa emp = optionEmp.get();
+            emp.setNombre(updateEmp.getNombre());
+            emp.setDireccion(updateEmp.getDireccion());
+            emp.setNit(updateEmp.getNit());
+            emp.setPasswordCantidadMayusculas(updateEmp.getPasswordCantidadMayusculas());
+            emp.setPasswordCantidadMinusculas(updateEmp.getPasswordCantidadMinusculas());
+            emp.setPasswordCantidadCaracteresEspeciales(updateEmp.getPasswordCantidadCaracteresEspeciales());
+            emp.setPasswordCantidadCaducidadDias(updateEmp.getPasswordCantidadCaducidadDias());
+            emp.setPasswordLargo(updateEmp.getPasswordLargo());
+            emp.setPasswordIntentosAntesDeBloquear(updateEmp.getPasswordIntentosAntesDeBloquear());
+            emp.setPasswordCantidadNumeros(updateEmp.getPasswordCantidadNumeros());
+            emp.setPasswordCantidadPreguntasValidar(updateEmp.getPasswordCantidadMayusculas());
             //Actualizamos usuario
             emp.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
             //Acuatlizamos la hora
@@ -64,7 +78,7 @@ public class EmpresaController {
         }
     }
 
-    @DeleteMapping("delete_empresa/{emId}")
+    @DeleteMapping("/delete_empresa/{emId}")
     public void deleteEmpresa(@PathVariable("emId") Integer Id){
         Optional<Empresa> empOption = empresaService.findById(Id);
         empOption.ifPresent(empresaService::delete);
