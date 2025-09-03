@@ -1,21 +1,21 @@
 <div class="container col-md-6">
   <div class="card">
     <div class="card-header">
-      <h2>Modificar Rol</h2>
+      <h2>Modificar Genero</h2>
     </div>
     <div class="card-body">
       <form>
         <div class="form-group">
           <div class="mb-2">
-            <label for="">ID del Rol:</label>
+            <label for="">ID de Genero:</label>
           </div>
           <div class="mb-2">
             <input
-              [(ngModel)]="rol.idRole"
+              [(ngModel)]="generos.idGenero"
               type="text"
-              name="idRole"
+              name="idGenero"
               disabled
-              id="id"
+              id="idGenero"
               class="form-control"
               placeholder="ID"
               required
@@ -25,24 +25,24 @@
 
         <div class="form-group">
           <div class="mb-2">
-            <label for="">Nombre de Rol:</label>
+            <label for="">Nombre de Genero:</label>
           </div>
           <div class="mb-2">
             <input
-              [(ngModel)]="rol.nombre"
+              [(ngModel)]="generos.nombre"
               type="text"
               name="nombre"
               id="nombre"
               #myFocus
               class="form-control"
-              placeholder="Ingrese nombre de Rol"
+              placeholder="Ingrese nombre de genero"
               required
             />
           </div>
         </div>
 
         <button
-          (click)="editRol(rol)"
+          (click)="editRol(generos)"
           class="btn btn-outline-success"
           type="button"
         >
@@ -56,3 +56,4 @@
     </div>
   </div>
 </div>
+

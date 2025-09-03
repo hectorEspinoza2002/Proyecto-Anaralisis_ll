@@ -29,6 +29,10 @@ import { Listmodulo2Component } from './component/listmodulo2/listmodulo2.compon
 import { Editmodulo2Component } from './component/editmodulo2/editmodulo2.component';
 import { EditsucursalComponent } from './component/editsucursal/editsucursal.component';
 import { EditroleComponent } from './component/editrole/editrole.component';
+import { ListgeneroComponent } from './component/listgenero/listgenero.component';
+import { ListstatususuarioComponent } from './component/liststatususuario/liststatususuario.component';
+import { AddgeneroComponent } from './component/addgenero/addgenero.component';
+import { EditgeneroComponent } from './component/editgenero/editgenero.component';
 
 
 @NgModule({
@@ -59,6 +63,10 @@ import { EditroleComponent } from './component/editrole/editrole.component';
     Editmodulo2Component,
     EditsucursalComponent,
     EditroleComponent,
+    ListgeneroComponent,
+    ListstatususuarioComponent,
+    AddgeneroComponent,
+    EditgeneroComponent,
   ],
   imports: [
     BrowserModule,

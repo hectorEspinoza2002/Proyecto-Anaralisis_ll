@@ -50,10 +50,11 @@ public class GeneroController {
     }
 
     @PutMapping("/update_genero/{idg}")
-    public Genero updateGenero(@PathVariable Integer generoId, @RequestBody Genero updateGen){
+    public Genero updateGenero(@PathVariable("idg") Integer generoId, @RequestBody Genero updateGen){
         Optional<Genero> optionGe = generoService.findById(generoId);
         if (optionGe.isPresent()) {
             Genero gnr = optionGe.get();
+            gnr.setNombre(updateGen.getNombre());
             //Actualizamos usuario
             gnr.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
             //Acuatlizamos la hora

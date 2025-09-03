@@ -23,8 +23,16 @@ import { Editmodulo2Component } from './component/editmodulo2/editmodulo2.compon
 import { EditsucursalComponent } from './component/editsucursal/editsucursal.component';
 import { EditroleComponent } from './component/editrole/editrole.component';
 import { EditmenuComponent } from './component/editmenu/editmenu.component';
+import { ListgeneroComponent } from './component/listgenero/listgenero.component';
+import { ListstatususuarioComponent } from './component/liststatususuario/liststatususuario.component';
+import { AddgeneroComponent } from './component/addgenero/addgenero.component';
+import { EditgeneroComponent } from './component/editgenero/editgenero.component';
 
 const routes: Routes = [
+  {    path: "editgenero", component:EditgeneroComponent },
+  {    path: "addgenero", component:AddgeneroComponent },
+  {    path: "liststatususuario", component:ListstatususuarioComponent },
+  {    path: "listgenero", component:ListgeneroComponent },
   {    path: "editmenu", component:EditmenuComponent },
   {    path: "editrol", component:EditroleComponent },
   {    path: "editsucursal", component:EditsucursalComponent },
