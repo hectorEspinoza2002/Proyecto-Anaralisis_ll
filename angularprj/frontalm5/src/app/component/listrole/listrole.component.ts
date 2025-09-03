@@ -36,7 +36,7 @@ export class ListroleComponent implements OnInit{
 
   selectRol(r:Role): void{
     localStorage.setItem("id",r.idRole.toString().valueOf());
-    //this.router.navigate([""])
+    this.router.navigate(["editrol"]);
   }
 
 }

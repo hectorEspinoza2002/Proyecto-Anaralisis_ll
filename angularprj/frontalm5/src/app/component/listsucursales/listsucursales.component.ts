@@ -25,7 +25,7 @@ export class ListsucursalesComponent implements OnInit{
       this.sucursalService.deleteSucursal(sucur).subscribe({
         next: (result) => {
           this.sucursales = this.sucursales.filter(x => x !== sucur);
-          alert(result);
+          alert(result + "Sucursal: "+sucur.nombre+" a sido eliminada!");
         },
         error: () => {
           alert("Ha ocurrido un error al eliminar el rol.\nVerifique que no existan usuarios");
@@ -36,7 +36,7 @@ export class ListsucursalesComponent implements OnInit{
 
   selectSucur(r:Sucursal): void{
     localStorage.setItem("id",r.idSucursal.toString().valueOf());
-    this.router.navigate([""])
+    this.router.navigate(["editsucursal"])
   }
 
 }

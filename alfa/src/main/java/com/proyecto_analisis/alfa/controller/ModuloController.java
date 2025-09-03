@@ -50,10 +50,13 @@ public class ModuloController {
     }
 
     @PutMapping("/update_modulo/{idg}")
-    public Modulo updateModulo(@PathVariable Integer modId, @RequestBody Modulo updateModul){
+    public Modulo updateModulo(@PathVariable("idg") Integer modId, @RequestBody Modulo updateModul){
         Optional<Modulo> optionM = modService.findById(modId);
         if (optionM.isPresent()) {
             Modulo gnr = optionM.get();
+            gnr.setNombre(updateModul.getNombre());
+            gnr.setOrdenMenu(updateModul.getOrdenMenu());
+
             //Actualizamos usuario
             gnr.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
             //Acuatlizamos la hora

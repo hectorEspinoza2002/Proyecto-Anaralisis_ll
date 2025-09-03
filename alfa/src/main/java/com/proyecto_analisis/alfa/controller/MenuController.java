@@ -50,15 +50,18 @@ public class MenuController {
     }
 
     @PutMapping("/update_menu/{idg}")
-    public Menu updateMenu(@PathVariable Integer menId, @RequestBody Menu updateMen){
+    public Menu updateMenu(@PathVariable("idg") Integer menId, @RequestBody Menu updateMen){
         Optional<Menu> optionMenu = menuService.findById(menId);
         if (optionMenu.isPresent()) {
-            Menu gnr = optionMenu.get();
+            Menu m = optionMenu.get();
+            m.setModulo(updateMen.getModulo());
+            m.setNombre(updateMen.getNombre());
+            m.setOrdenMenu(updateMen.getOrdenMenu());
             //Actualizamos usuario
-            gnr.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
+            m.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
             //Acuatlizamos la hora
-            gnr.setFechaModificacion(LocalDateTime.now());
-            return menuService.guardarMenu(gnr);
+            m.setFechaModificacion(LocalDateTime.now());
+            return menuService.guardarMenu(m);
         } else {
             return null;
         }

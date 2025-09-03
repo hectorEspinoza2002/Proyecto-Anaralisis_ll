@@ -49,11 +49,14 @@ public class SucursalController {
 
     }
 
-    @PutMapping("/update_sucursal/{idg}")
-    public Sucursal updateSucursal(@PathVariable Integer sId, @RequestBody Sucursal updateS){
+    @PutMapping("/update_sucursal/{id}")
+    public Sucursal updateSucursal(@PathVariable("id") Integer sId, @RequestBody Sucursal updateS){
         Optional<Sucursal> optionSuc = sucursalService.findById(sId);
         if (optionSuc.isPresent()) {
             Sucursal scl = optionSuc.get();
+            scl.setNombre(updateS.getNombre());
+            scl.setDireccion(updateS.getDireccion());
+            scl.setEmpresa(updateS.getEmpresa());
             //Actualizamos usuario
             scl.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
             //Acuatlizamos la hora

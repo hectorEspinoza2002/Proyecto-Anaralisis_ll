@@ -19,6 +19,10 @@ export class RoleService {
     return this.http.post<Role>(this.Url+"/create_role",rol);
   }
 
+  editRol(id:String, updateRol:Role){
+      return this.http.put<Role>(this.Url+"/update_role/"+id,updateRol);
+    }
+
   deleteRole(role:Role){
     return this.http.delete(this.Url+"/delete_role/"+role.idRole,{responseType: 'text'});
   }

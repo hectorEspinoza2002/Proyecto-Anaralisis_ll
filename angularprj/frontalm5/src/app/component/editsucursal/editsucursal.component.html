@@ -5,18 +5,17 @@
     </div>
     <div class="card-body">
       <form>
-
         <div class="form-group">
           <div class="mb-2">
-            <label for="">ID de Menu:</label>
+            <label for="">ID del Empresa:</label>
           </div>
           <div class="mb-2">
             <input
-              [(ngModel)]="menu.idMenu"
+              [(ngModel)]="sucursal.idSucursal"
               type="text"
-              name="idMenu"
+              name="idSucursal"
               disabled
-              id="idMenu"
+              id="idSucursal"
               class="form-control"
               placeholder="ID"
               required
@@ -24,29 +23,13 @@
           </div>
         </div>
 
-        <div class="mb-3">
-          <label for="idModulo" class="form-label">Modulo: *</label>
-          <select
-            id="idModulo"
-            class="form-select"
-            required
-            [(ngModel)]="selectedModulo"
-            name="empresa"
-          >
-            <option value="" disabled selected>Seleccione una empresa</option>
-            <option *ngFor="let m of modulo" [value]="m.idModulo">
-              {{ m.nombre }}
-            </option>
-          </select>
-        </div>
-
         <div class="form-group">
           <div class="mb-2">
-            <label for="">Nombre de Muenu:</label>
+            <label for="">Nombre del la Empresa:</label>
           </div>
           <div class="mb-2">
             <input
-              [(ngModel)]="menu.nombre"
+              [(ngModel)]="sucursal.nombre"
               type="text"
               name="nombre"
               id="nombre"
@@ -60,24 +43,40 @@
 
         <div class="form-group">
           <div class="mb-2">
-            <label for="">Orden Menu:</label>
+            <label for="">Direccion:</label>
           </div>
           <div class="mb-2">
             <input
-              [(ngModel)]="menu.ordenMenu"
+              [(ngModel)]="sucursal.direccion"
               type="text"
-              name="ordenMenu"
-              id="ordenMenu"
+              name="direccion"
+              id="direccion"
               #myFocus
               class="form-control"
-              placeholder="Ingrese nombre del la empresa"
+              placeholder="Ingrese la Direccion"
               required
             />
           </div>
         </div>
 
+        <div class="mb-3">
+          <label for="empresa" class="form-label">Empresa:</label>
+          <select
+            id="empresa"
+            class="form-select"
+            required
+            [(ngModel)]="selectedEmpresa"
+            name="empresa"
+          >
+            <option value="" disabled selected>Seleccione una empresa</option>
+            <option *ngFor="let emp of empresa" [value]="emp.idEmpresa">
+              {{ emp.nombre }}
+            </option>
+          </select>
+        </div>
+
         <button
-          (click)="editMenu(menu)"
+          (click)="editEmpresa(sucursal)"
           class="btn btn-outline-success"
           type="button"
         >
@@ -87,7 +86,6 @@
         <button (click)="Cancel()" class="btn btn-outline-danger" type="button">
           Cancelar
         </button>
-
       </form>
     </div>
   </div>

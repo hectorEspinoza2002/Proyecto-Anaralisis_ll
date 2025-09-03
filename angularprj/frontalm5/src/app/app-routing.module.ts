@@ -20,8 +20,14 @@ import { AddmenuComponent } from './component/addmenu/addmenu.component';
 import { AddopcionComponent } from './component/addopcion/addopcion.component';
 import { EditempresaComponent } from './component/editempresa/editempresa.component';
 import { Editmodulo2Component } from './component/editmodulo2/editmodulo2.component';
+import { EditsucursalComponent } from './component/editsucursal/editsucursal.component';
+import { EditroleComponent } from './component/editrole/editrole.component';
+import { EditmenuComponent } from './component/editmenu/editmenu.component';
 
 const routes: Routes = [
+  {    path: "editmenu", component:EditmenuComponent },
+  {    path: "editrol", component:EditroleComponent },
+  {    path: "editsucursal", component:EditsucursalComponent },
   {    path: "editmodulo", component:Editmodulo2Component },
   {    path: "editempresa", component:EditempresaComponent },
   {    path: "addopcion", component:AddopcionComponent },

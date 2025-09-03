@@ -52,35 +52,6 @@ export class AddmenuComponent implements OnInit{
     });
   }
 
-  /*
-  guardar(menus:Menu){
-
-    if (!this.validarFormulario()) {
-      alert('Por favor complete todos los campos obligatorios');
-      return;
-    }
-
-    const modulo = this.moduloDisponibles.find(g => g.idModulo === this.selectedModulo);
-
-    if(!modulo){
-      alert('Debe seleccionar un modulo');
-      return;
-    }
-    this.menus.modulo = modulo;
-
-    if(typeof(menus.nombre) != "undefined"){
-      this.service.addMenu(menus).subscribe(result => {
-        if(result != null){
-          alert("Rol: "+menus.nombre+" ingresado correctamente!");
-          this.router.navigate(["listmenu"]);
-        }
-      });
-    } else{
-      alert("Debe ingresar Nombre y orden");
-    }
-  }
-    */
-
   cargarDatosIniciales(): void {
     // Cargar modulo
     this.service.getModulos().subscribe({

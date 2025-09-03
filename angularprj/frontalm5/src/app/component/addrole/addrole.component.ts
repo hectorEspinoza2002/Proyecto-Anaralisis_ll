@@ -28,7 +28,7 @@ export class AddroleComponent {
         }
       });
     } else{
-      alert("Debe ingresar Nombre del rol y Fecha");
+      alert("Debe ingresar Nombre del rol");
     }
   }
 

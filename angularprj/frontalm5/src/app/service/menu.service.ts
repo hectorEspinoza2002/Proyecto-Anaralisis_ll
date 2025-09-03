@@ -5,10 +5,9 @@ import { Observable } from 'rxjs';
 import { Modulo } from '../entity/modulo';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MenuService {
-
   constructor(private http: HttpClient) {}
   Url = 'http://localhost:9090';
 
@@ -20,19 +19,24 @@ export class MenuService {
     return this.http.get<any[]>(this.Url + '/list_menus');
   }
 
-  addMenu(m:Menu){
-      return this.http.post<Menu>(this.Url+"/create_menu",m);
-    }
-
-  deleteMenu(menu: Menu) {
-    return this.http.delete(
-      this.Url + '/delete_menus/' + menu.idMenu,
-      { responseType: 'text' }
-    );
+  addMenu(m: Menu) {
+    return this.http.post<Menu>(this.Url + '/create_menu', m);
   }
 
-  getModulos(): Observable<Modulo[]>{
-      return this.http.get<Modulo[]>(`${this.Url}/list_modulos`);
-    }
+  deleteMenu(menu: Menu) {
+    return this.http.delete(this.Url + '/delete_menus/' + menu.idMenu, {
+      responseType: 'text',
+    });
+  }
 
+  getModulos(): Observable<Modulo[]> {
+    return this.http.get<Modulo[]>(`${this.Url}/list_modulos`);
+  }
+
+  editMenu(id: String, updateM: Menu) {
+      return this.http.put<Menu>(
+        this.Url + '/update_menu/' + id,
+        updateM
+      );
+    }
 }

@@ -48,11 +48,12 @@ public class RoleController {
     }
 
     @PutMapping("/update_role/{rId}")
-    public Role updateRole(@PathVariable Integer rId,@RequestBody Role updateR){
+    public Role updateRole(@PathVariable("rId") Integer rId,@RequestBody Role updateR){
 
         Optional<Role> rolOptional = roleService.findById(rId);
         if (rolOptional.isPresent()) {
             Role rl = rolOptional.get();
+            rl.setNombre(updateR.getNombre());
             rl.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
             //Acuatlizamos la hora
             rl.setFechaModificacion(LocalDateTime.now());

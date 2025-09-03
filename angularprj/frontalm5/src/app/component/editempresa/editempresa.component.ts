@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { EmpresaService } from '../../service/empresa.service';
 import { Router } from '@angular/router';
 import { Empresa } from '../../entity/empresa';
@@ -9,7 +9,7 @@ import { Empresa } from '../../entity/empresa';
   templateUrl: './editempresa.component.html',
   styleUrl: './editempresa.component.css'
 })
-export class EditempresaComponent {
+export class EditempresaComponent implements OnInit, AfterViewInit{
 
   constructor (private empService: EmpresaService, private router: Router){}
   ngOnInit(): void{
@@ -18,7 +18,7 @@ export class EditempresaComponent {
   emps = new Empresa;
   @ViewChild('myFocus') myFocus: any;
 
-  ngAfterVieeInit(): void{
+  ngAfterViewInit(): void{
     this.myFocus.nativeElement.focus();
   }
 

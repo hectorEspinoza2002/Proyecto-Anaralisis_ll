@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Modulo } from '../../entity/modulo';
 import { ModuloService } from '../../service/modulo.service';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './addmodulo.component.html',
   styleUrl: './addmodulo.component.css'
 })
-export class AddmoduloComponent {
+export class AddmoduloComponent implements OnInit{
 
   mod = new Modulo;
 
@@ -30,7 +30,7 @@ export class AddmoduloComponent {
           }
         });
       } else{
-        alert("Debe ingresar algunos datos!");
+        alert("Debe ingresar Nombre del modulo!");
       }
     }
 

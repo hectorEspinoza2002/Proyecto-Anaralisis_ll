@@ -27,6 +27,8 @@ import { EditmenuComponent } from './component/editmenu/editmenu.component';
 import { EditopcionesComponent } from './component/editopciones/editopciones.component';
 import { Listmodulo2Component } from './component/listmodulo2/listmodulo2.component';
 import { Editmodulo2Component } from './component/editmodulo2/editmodulo2.component';
+import { EditsucursalComponent } from './component/editsucursal/editsucursal.component';
+import { EditroleComponent } from './component/editrole/editrole.component';
 
 
 @NgModule({
@@ -55,6 +57,8 @@ import { Editmodulo2Component } from './component/editmodulo2/editmodulo2.compon
     EditopcionesComponent,
     Listmodulo2Component,
     Editmodulo2Component,
+    EditsucursalComponent,
+    EditroleComponent,
   ],
   imports: [
     BrowserModule,

@@ -26,7 +26,7 @@ export class ListmenuComponent implements OnInit{
       this.menuService.deleteMenu(men).subscribe({
         next: (result) => {
           this.menus = this.menus.filter(x => x !== men);
-          alert(result);
+          alert(result +"Menu "+men.nombre+" eliminado correctamente!");
         },
         error: () => {
           alert("Ha ocurrido un error al eliminar el rol.\nVerifique que no existan usuarios");
@@ -37,7 +37,7 @@ export class ListmenuComponent implements OnInit{
 
   selectMenu(r:Menu): void{
     localStorage.setItem("id",r.idMenu.toString().valueOf());
-    this.router.navigate([""])
+    this.router.navigate(["editmenu"])
   }
 
 }

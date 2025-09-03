@@ -19,13 +19,13 @@ modulos!: Modulo[];
       })
   }
 
-  deleteModulo(sucur:Modulo){
+  deleteModulo(mod:Modulo){
     var validar = confirm("Esta seguro que desea eliminar el Rol?");
     if(validar == true){
-      this.modService.deleteModulo(sucur).subscribe({
+      this.modService.deleteModulo(mod).subscribe({
         next: (result) => {
-          this.modulos = this.modulos.filter(x => x !== sucur);
-          alert(result);
+          this.modulos = this.modulos.filter(x => x !== mod);
+          alert(result +"Modulo "+mod.nombre+" a sido eliminado!");
         },
         error: () => {
           alert("Ha ocurrido un error al eliminar el rol.\nVerifique que no existan usuarios");
