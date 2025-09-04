@@ -1,4 +1,3 @@
-<!--
 <div class="container">
   <div class="card">
     <div class="card-header">
@@ -7,9 +6,8 @@
 
     <div class="card-body">
       <form #usuarioForm="ngForm" class="needs-validation" novalidate>
-        -->
         <!-- Campos básicos -->
-         <!--
+
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">ID Usuario *</label>
@@ -57,10 +55,25 @@
             />
           </div>
         </div>
--->
+
         <!-- Selectores -->
-         <!--
+        <!-- Selectores -->
         <div class="row">
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Status *</label>
+            <select
+              [(ngModel)]="selectedStatus"
+              name="statusUsuario"
+              class="form-select"
+              required
+            >
+              <option [ngValue]="null">Seleccione status</option>
+              <option *ngFor="let st of status" [ngValue]="st.idStatusUsuario">
+                {{ st.nombre }}
+              </option>
+            </select>
+          </div>
+
           <div class="col-md-3 mb-3">
             <label class="form-label">Género *</label>
             <select
@@ -70,47 +83,8 @@
               required
             >
               <option [ngValue]="null">Seleccione género</option>
-              <option
-                *ngFor="let genero of generosDisponibles"
-                [ngValue]="genero.idGenero"
-              >
-                {{ genero.nombre }}
-              </option>
-            </select>
-          </div>
-
-          <div class="col-md-3 mb-3">
-            <label class="form-label">Status *</label>
-            <select
-              [(ngModel)]="selectedStatus"
-              name="status"
-              class="form-select"
-              required
-            >
-              <option [ngValue]="null">Seleccione status</option>
-              <option
-                *ngFor="let status of statusDisponibles"
-                [ngValue]="status.idStatusUsuario"
-              >
-                {{ status.nombre }}
-              </option>
-            </select>
-          </div>
-
-          <div class="col-md-3 mb-3">
-            <label class="form-label">Rol *</label>
-            <select
-              [(ngModel)]="selectedRole"
-              name="role"
-              class="form-select"
-              required
-            >
-              <option [ngValue]="null">Seleccione rol</option>
-              <option
-                *ngFor="let role of rolesDisponibles"
-                [ngValue]="role.nombre"
-              >
-                {{ role.nombre }}
+              <option *ngFor="let g of genero" [ngValue]="g.idGenero">
+                {{ g.nombre }}
               </option>
             </select>
           </div>
@@ -121,22 +95,33 @@
               [(ngModel)]="selectedSucursal"
               name="sucursal"
               class="form-select"
-              (change)="onSucursalChange()"
               required
             >
               <option [ngValue]="null">Seleccione sucursal</option>
-              <option
-                *ngFor="let sucursal of sucursalesDisponibles"
-                [ngValue]="sucursal.idSucursal"
-              >
-                {{ sucursal.nombre }} - {{ sucursal.empresa?.nombre }}
+              <option *ngFor="let suc of sucursal" [ngValue]="suc.idSucursal">
+                {{ suc.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Rol *</label>
+            <select
+              [(ngModel)]="selectedRole"
+              name="rol"
+              class="form-select"
+              required
+            >
+              <option [ngValue]="null">Seleccione rol</option>
+              <option *ngFor="let r of rol" [ngValue]="r.idRole">
+                {{ r.nombre }}
               </option>
             </select>
           </div>
         </div>
--->
+
         <!-- Fecha Nacimiento -->
-         <!--
+
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Fecha Nacimiento *</label>
@@ -149,9 +134,9 @@
             />
           </div>
         </div>
--->
+
         <!-- Contacto -->
-         <!--
+
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Correo Electrónico *</label>
@@ -173,9 +158,9 @@
             />
           </div>
         </div>
--->
+
         <!-- Seguridad -->
-         <!--
+
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Pregunta de Seguridad *</label>
@@ -197,12 +182,12 @@
             />
           </div>
         </div>
--->
+
         <!-- Botones -->
-         <!--
+
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <button
-            (click)="Cancel()"
+            (click)="Cancelar()"
             type="button"
             class="btn btn-secondary me-md-2"
           >
@@ -221,4 +206,3 @@
     </div>
   </div>
 </div>
--->
