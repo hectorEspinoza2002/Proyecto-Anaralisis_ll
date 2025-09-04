@@ -67,7 +67,7 @@ public class SucursalController {
         }
     }
 
-    @DeleteMapping("delete_sucursal/{sId}")
+    @DeleteMapping("/delete_sucursal/{sId}")
     public void deleteSucursal(@PathVariable("sId") Integer Id){
         Optional<Sucursal> sOption = sucursalService.findById(Id);
         sOption.ifPresent(sucursalService::deleteSucursal);

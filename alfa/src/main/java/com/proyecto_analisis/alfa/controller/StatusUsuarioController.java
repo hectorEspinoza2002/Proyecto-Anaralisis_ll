@@ -25,7 +25,7 @@ public class StatusUsuarioController {
     @Autowired
     private StatusUsuarioService statusUsuService;
 
-    @GetMapping("/list_status_usuarios")
+    @GetMapping("/list_status_usuario")
     public List<StatusUsuario> listarTodos(){
         return statusUsuService.findAll();
     }
@@ -52,7 +52,8 @@ public class StatusUsuarioController {
         Optional<StatusUsuario> suOptional = statusUsuService.findById(sId);
         if (suOptional.isPresent()) {
             StatusUsuario stus = suOptional.get();
-            stus.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
+            stus.setNombre(updateS.getNombre());
+            stus.setUsuarioModificado(LoginRequest.getUsuarioLogueado());
         //Acuatlizamos la hora
             stus.setFechaModificacion(LocalDateTime.now());
             return statusUsuService.save(stus);

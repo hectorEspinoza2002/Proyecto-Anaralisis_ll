@@ -27,22 +27,11 @@ import { ListgeneroComponent } from './component/listgenero/listgenero.component
 import { ListstatususuarioComponent } from './component/liststatususuario/liststatususuario.component';
 import { AddgeneroComponent } from './component/addgenero/addgenero.component';
 import { EditgeneroComponent } from './component/editgenero/editgenero.component';
+import { AddstatususuarioComponent } from './component/addstatususuario/addstatususuario.component';
+import { EditstatususuarioComponent } from './component/editstatususuario/editstatususuario.component';
 
 const routes: Routes = [
-  {    path: "editgenero", component:EditgeneroComponent },
-  {    path: "addgenero", component:AddgeneroComponent },
-  {    path: "liststatususuario", component:ListstatususuarioComponent },
-  {    path: "listgenero", component:ListgeneroComponent },
-  {    path: "editmenu", component:EditmenuComponent },
-  {    path: "editrol", component:EditroleComponent },
-  {    path: "editsucursal", component:EditsucursalComponent },
-  {    path: "editmodulo", component:Editmodulo2Component },
-  {    path: "editempresa", component:EditempresaComponent },
-  {    path: "addopcion", component:AddopcionComponent },
-  {    path: "addmenu", component:AddmenuComponent },
-  {    path: "addmodulo", component:AddmoduloComponent },
-  {    path: "addsucursal", component:AddsucursalComponent },
-  {    path: "addempresa", component:AddempresaComponent },
+
   {    path: "listrolopcion", component:ListroleopcionComponent },
   {    path: "listopcion", component:ListopcionComponent  },
   {    path: "listmenu", component:ListmenuComponent  },
@@ -50,9 +39,29 @@ const routes: Routes = [
   {    path: "listempresa", component:ListempresaComponent  },
   {    path: "listsucursal", component:ListsucursalesComponent  },
   {    path: "listrole", component:ListroleComponent  },
-  {    path: "addrole", component:AddroleComponent  },
+  {    path: "liststatususuario", component:ListstatususuarioComponent },
+  {    path: "listgenero", component:ListgeneroComponent },
   {    path: "listusuarios", component:ListusuarioComponent  },
+
+
+  {    path: "addgenero", component:AddgeneroComponent },
+  {    path: "addopcion", component:AddopcionComponent },
+  {    path: "addmenu", component:AddmenuComponent },
+  {    path: "addmodulo", component:AddmoduloComponent },
+  {    path: "addsucursal", component:AddsucursalComponent },
+  {    path: "addempresa", component:AddempresaComponent },
+  {    path: "addrole", component:AddroleComponent  },
   {    path: "addusuarios", component:AddusuarioComponent  },
+  {    path: "addstatususuario", component:AddstatususuarioComponent  },
+
+  {    path: "editstatususuario", component:EditstatususuarioComponent },
+  {    path: "editgenero", component:EditgeneroComponent },
+  {    path: "editmenu", component:EditmenuComponent },
+  {    path: "editrol", component:EditroleComponent },
+  {    path: "editsucursal", component:EditsucursalComponent },
+  {    path: "editmodulo", component:Editmodulo2Component },
+  {    path: "editempresa", component:EditempresaComponent },
+
   {    path: "menu", component:MenuComponent  },
   {    path: "principal", component: PrincipalComponent  },
   {    path: "login", component: LoginComponent  },

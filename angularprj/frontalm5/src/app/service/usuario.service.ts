@@ -2,24 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Usuario } from '../entity/usuario';
 import { Observable } from 'rxjs';
-import { Role } from '../entity/Role';
-import { Sucursal } from '../entity/Sucursal';
-import { Genero } from '../entity/genero';
-import { StatusUsuario } from '../entity/statusUsuario';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
   constructor(private http: HttpClient) {}
-  Url = 'http://localhost:9090/api';
+  Url = 'http://localhost:9090';
 
   listUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${this.Url}/usuarios`);
+    return this.http.get<Usuario[]>(`${this.Url}/list_usuario`);
   }
 
   buscarUsuarioId(id: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.Url}/${id}`);
+    return this.http.get<Usuario>(`${this.Url}/list_usuario/${id}`);
   }
 
   login(loginRequest: { idUsuario: string; password: string }): Observable<any> {
@@ -36,31 +32,23 @@ export class UsuarioService {
         return this.http.post<Usuario>(this.Url+"/create_usuario",usuarios);
       }
 
+      /*
   deleteUsuario(id: string): Observable<any> {
-    return this.http.delete(`${this.Url}/${id}`, { responseType: 'text' });
-  }
+    return this.http.delete(`${this.Url}/delete_usuario/${id}`, { responseType: 'text' });
+  }*/
 
-  getReglasEmpresa(idSucursal: number): Observable<any> {
-    // Necesitarás crear este endpoint en el backend
-    return this.http.get<any>(`${this.Url}/reglas-empresa/${idSucursal}`);
-  }
+  deleteUsuario(user: Usuario) {
+      return this.http.delete(
+        this.Url + '/delete_usuario/' + user.idUsuario,
+        { responseType: 'text' }
+      );
+    }
 
-  // Método para obtener sucursales (necesario para el formulario)
-  getSucursales(): Observable<Sucursal[]> {
-    return this.http.get<Sucursal[]>(`${this.Url}/list_sucursal`);
-  }
-
-  // Método para obtener roles (necesario para el formulario)
-  getRoles(): Observable<Role[]> {
-    return this.http.get<Role[]>(`${this.Url}/list_roles`);
-  }
-
-  getGeneros(): Observable<Genero[]>{
-    return this.http.get<Genero[]>(`${this.Url}/list_generos`);
-  }
-
-  getStatusUsuarios(): Observable<StatusUsuario[]>{
-    return this.http.get<StatusUsuario[]>(`${this.Url}/list_status_usuarios`);
+  editUsuario(id: String, updateUs: Usuario) {
+    return this.http.put<Usuario>(
+      this.Url + '/update_sucursal/' + id,
+      updateUs
+    );
   }
 
 }

@@ -74,7 +74,7 @@ public class Usuario {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdSucursal")
-    private Sucursal sucursal;
+    private Sucursal idSucursal;
 
     @Column(name = "Pregunta")
     private String pregunta;

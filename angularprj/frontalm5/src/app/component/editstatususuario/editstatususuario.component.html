@@ -1,0 +1,59 @@
+<div class="container col-md-6">
+  <div class="card">
+    <div class="card-header">
+      <h2>Modificar Estatus de Usuario</h2>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">ID del Estatus Usuario:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="status.idStatusUsuario"
+              type="text"
+              name="idStatusUsuario"
+              disabled
+              id="id"
+              class="form-control"
+              placeholder="ID"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">Nombre del Estatus Usuario:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="status.nombre"
+              type="text"
+              name="nombre"
+              id="nombre"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese nombre del estatus usuario"
+              required
+            />
+          </div>
+        </div>
+
+        <button
+          (click)="editStatus(status)"
+          class="btn btn-outline-success"
+          type="button"
+        >
+          Guardar
+        </button>
+        <span style="margin-left: 1em"></span>
+        <button (click)="Cancela()" class="btn btn-outline-danger" type="button">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+

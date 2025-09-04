@@ -33,6 +33,8 @@ import { ListgeneroComponent } from './component/listgenero/listgenero.component
 import { ListstatususuarioComponent } from './component/liststatususuario/liststatususuario.component';
 import { AddgeneroComponent } from './component/addgenero/addgenero.component';
 import { EditgeneroComponent } from './component/editgenero/editgenero.component';
+import { AddstatususuarioComponent } from './component/addstatususuario/addstatususuario.component';
+import { EditstatususuarioComponent } from './component/editstatususuario/editstatususuario.component';
 
 
 @NgModule({
@@ -67,6 +69,8 @@ import { EditgeneroComponent } from './component/editgenero/editgenero.component
     ListstatususuarioComponent,
     AddgeneroComponent,
     EditgeneroComponent,
+    AddstatususuarioComponent,
+    EditstatususuarioComponent,
   ],
   imports: [
     BrowserModule,
