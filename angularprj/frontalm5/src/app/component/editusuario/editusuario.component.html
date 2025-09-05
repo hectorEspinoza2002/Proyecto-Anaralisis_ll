@@ -1,1 +1,205 @@
-<p>editusuario works!</p>
+<div class="container col-md-6">
+  <div class="card">
+    <div class="card-header">
+      <h2>Modificar Usuario</h2>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">ID de Usuario:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="usuario.idUsuario"
+              type="text"
+              name="idUsuario"
+              disabled
+              id="idUsuario"
+              class="form-control"
+              placeholder="ID"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">Nombre de Usuario:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="usuario.nombre"
+              type="text"
+              name="nombre"
+              id="nombre"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese nombre del la empresa"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">Apellido de Usuario:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="usuario.apellido"
+              type="text"
+              name="apellido"
+              id="apellido"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese nombre del la empresa"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha Nacimiento *</label>
+            <input
+              [(ngModel)]="usuario.fechaNacimiento"
+              name="fechaNacimiento"
+              type="date"
+              class="form-control"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Combo Status Usuario-->
+        <div class="mb-3">
+          <label for="idStatusUsuario" class="form-label">Status Usuario:</label>
+          <select
+            id="idStatusUsuario"
+            class="form-select"
+            required
+            [(ngModel)]="selectedStatus"
+            name="idStatusUsuario"
+          >
+            <option value="" disabled selected>Seleccione una empresa</option>
+            <option *ngFor="let status of statusUsuarios" [value]="status.idStatusUsuario">
+              {{ status.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Contraseña *</label>
+            <input
+              [(ngModel)]="usuario.password"
+              name="password"
+              type="password"
+              class="form-control"
+              required
+            />
+          <small class="form-text text-muted">
+            La contraseña debe cumplir con las reglas de seguridad
+          </small>
+        </div>
+
+        <!-- Combo Genero-->
+        <div class="mb-3">
+          <label for="idGenero" class="form-label">Genero:</label>
+          <select
+            id="idGenero"
+            class="form-select"
+            required
+            [(ngModel)]="selectedGenero"
+            name="idGenero"
+          >
+            <option value="" disabled selected>Seleccione una empresa</option>
+            <option *ngFor="let ge of genero" [value]="ge.idGenero">
+              {{ ge.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Fotografía</label>
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            class="form-control"
+          />
+        </div>
+
+        <!-- Contacto -->
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Correo Electrónico *</label>
+            <input
+              [(ngModel)]="usuario.correoElectronico"
+              name="correo"
+              type="email"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Teléfono Móvil</label>
+            <input
+              [(ngModel)]="usuario.telefonoMovil"
+              name="telefono"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <!-- Combo Sucursal-->
+        <div class="mb-3">
+          <label for="idSucursal" class="form-label">Sucursal:</label>
+          <select
+            id="idSucursal"
+            class="form-select"
+            required
+            [(ngModel)]="selectedSucursal"
+            name="idSucursal"
+          >
+            <option value="" disabled selected>Seleccione una empresa</option>
+            <option *ngFor="let s of sucursal" [value]="s.idSucursal">
+              {{ s.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Combo Role-->
+        <div class="mb-3">
+          <label for="idRole" class="form-label">Role:</label>
+          <select
+            id="idRole"
+            class="form-select"
+            required
+            [(ngModel)]="selectedRol"
+            name="idRole"
+          >
+            <option value="" disabled selected>Seleccione una empresa</option>
+            <option *ngFor="let r of rol" [value]="r.idRole">
+              {{ r.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <button
+          (click)="editUser(usuario)"
+          class="btn btn-outline-success"
+          type="button"
+        >
+          Guardar
+        </button>
+        <span style="margin-left: 1em"></span>
+        <button (click)="Cancelar()" class="btn btn-outline-danger" type="button">
+          Cancelar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+

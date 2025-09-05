@@ -41,8 +41,8 @@ export class ListusuarioComponent implements OnInit {
   }
 
   selectUser(usr: Usuario): void {
-    localStorage.setItem('selectedUserId', usr.idUsuario.toString());
-    this.router.navigate(['/editusuario', usr.idUsuario]);
+    localStorage.setItem('id', usr.idUsuario.toString().valueOf());
+    this.router.navigate(['/editusuario']);
   }
 
   crearNuevoUsuario(): void {

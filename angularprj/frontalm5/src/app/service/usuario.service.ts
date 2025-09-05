@@ -18,37 +18,24 @@ export class UsuarioService {
     return this.http.get<Usuario>(`${this.Url}/list_usuario/${id}`);
   }
 
-  login(loginRequest: { idUsuario: string; password: string }): Observable<any> {
+  login(loginRequest: {
+    idUsuario: string;
+    password: string;
+  }): Observable<any> {
     return this.http.post<any>(`${this.Url}/login`, loginRequest);
   }
 
-  /*
-  addUsuarios(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.Url}/create_usuario`, usuario);
+  addUsuario(usuarios: Usuario) {
+    return this.http.post<Usuario>(this.Url + '/create_usuario', usuarios);
   }
-     */
-
-  addUsuario(usuarios:Usuario){
-        return this.http.post<Usuario>(this.Url+"/create_usuario",usuarios);
-      }
-
-      /*
-  deleteUsuario(id: string): Observable<any> {
-    return this.http.delete(`${this.Url}/delete_usuario/${id}`, { responseType: 'text' });
-  }*/
 
   deleteUsuario(user: Usuario) {
-      return this.http.delete(
-        this.Url + '/delete_usuario/' + user.idUsuario,
-        { responseType: 'text' }
-      );
-    }
-
-  editUsuario(id: String, updateUs: Usuario) {
-    return this.http.put<Usuario>(
-      this.Url + '/update_sucursal/' + id,
-      updateUs
-    );
+    return this.http.delete(this.Url + '/delete_usuario/' + user.idUsuario, {
+      responseType: 'text',
+    });
   }
 
+  editUsuario(id: String, updateUs: Usuario) {
+    return this.http.put<Usuario>(this.Url + '/update_usuario/' + id, updateUs);
+  }
 }
