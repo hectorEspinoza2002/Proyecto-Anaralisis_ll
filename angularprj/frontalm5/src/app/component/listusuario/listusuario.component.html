@@ -6,6 +6,7 @@
     <table class="table table-striped table-responsive-sm">
       <thead>
         <tr class="text-center">
+          <th>Foto</th>
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Estatus</th>
@@ -17,7 +18,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let us of usuarios" class="text-center">
+        <tr *ngFor="let us of usuarios" class="text-center align-middle">
+          <td>
+            <img *ngIf="us.fotografia"
+                 [src]="'data:image/jpeg;base64,' + us.fotografia"
+                 alt="Foto"
+                 width="100"
+                 height="120"
+                 class="rounded-circle border shadow-sm">
+          </td>
           <td>{{us.nombre}}</td>
           <td>{{us.apellido}}</td>
           <td>{{us.idStatusUsuario.nombre}}</td>
@@ -27,12 +36,10 @@
           <td>{{us.idSucursal.nombre}}</td>
           <td class="text-center">
             <button (click)="selectUser(us)" class="btn btn-warning btn-sm">Editar</button>
-            <span style="margin-trim:1em"></span>
             <button (click)="deleteUsuario(us)" class="btn btn-danger btn-sm">Borrar</button>
-            <span style="margin-trim:1em"></span>
+          </td>
         </tr>
       </tbody>
     </table>
-
   </div>
 </div>

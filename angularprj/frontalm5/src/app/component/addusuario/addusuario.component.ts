@@ -21,67 +21,91 @@ export class AddusuarioComponent implements OnInit {
   usuario = new Usuario();
 
   selectedStatus!: number;
-  status: StatusUsuario [] = [];
+  status: StatusUsuario[] = [];
 
   selectedGenero!: number;
-  genero: Genero [] = [];
+  genero: Genero[] = [];
 
   selectedSucursal!: number;
-  sucursal: Sucursal [] = [];
+  sucursal: Sucursal[] = [];
 
   selectedRole!: number;
-  rol: Role [] = [];
+  rol: Role[] = [];
 
   mensaje: String = '';
 
-  constructor(private userService: UsuarioService,
+  constructor(
+    private userService: UsuarioService,
     private router: Router,
-    private statusService:StatusUsuarioService,
-    private generoService:GeneroService,
-    private sucursalService:SucursalService,
-    private roleService:RoleService
+    private statusService: StatusUsuarioService,
+    private generoService: GeneroService,
+    private sucursalService: SucursalService,
+    private roleService: RoleService
   ) {}
 
   ngOnInit(): void {
     this.cargarDatosIniciales();
   }
 
-  Cancelar(){
-    this.router.navigate(["listusuarios"]);
+  Cancelar() {
+    this.router.navigate(['listusuarios']);
   }
 
-  guardarUser(user:Usuario){
-    this.usuario.idStatusUsuario = {idStatusUsuario: this.selectedStatus} as unknown as StatusUsuario;
-    this.usuario.idGenero = {idGenero: this.selectedGenero} as unknown as Genero;
-    this.usuario.idSucursal = {idSucursal: this.selectedSucursal} as unknown as Sucursal;
-    this.usuario.idRole = {idRole: this.selectedRole} as unknown as Role;
-
-    if(
-      typeof user.nombre != "undefined" &&
-      typeof user.apellido != "undefined" &&
-
-      this.selectedStatus &&
-      this.selectedGenero &&
-      this.selectedSucursal &&
-      this.selectedRole ){
-
-      this.userService.addUsuario(user).subscribe({
-        next: (result) => {
-          if(result != null){
-            alert("Usuario: "+user.nombre+ " "+user.apellido+" ingresado correctamente!");
-            this.router.navigate(["listusuarios"]);
-          }
-          this.resetForm();
-        },
-        error:(error) => {
-          alert("Ocurrio un error al guardar el usuario");
-        }
-      })
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = (reader.result as string).split(',')[1];
+        this.usuario.fotografia = base64String; // ahora solo el binario en base64
+      };
+      reader.readAsDataURL(file);
     }
   }
 
-  resetForm(): void{
-    this.usuario = new Usuario;
+  guardarUser(user: Usuario) {
+    this.usuario.idStatusUsuario = {
+      idStatusUsuario: this.selectedStatus,
+    } as unknown as StatusUsuario;
+    this.usuario.idGenero = {
+      idGenero: this.selectedGenero,
+    } as unknown as Genero;
+    this.usuario.idSucursal = {
+      idSucursal: this.selectedSucursal,
+    } as unknown as Sucursal;
+    this.usuario.idRole = { idRole: this.selectedRole } as unknown as Role;
+
+    if (
+      typeof user.nombre != 'undefined' &&
+      typeof user.apellido != 'undefined' &&
+      this.selectedStatus &&
+      this.selectedGenero &&
+      this.selectedSucursal &&
+      this.selectedRole
+    ) {
+      this.userService.addUsuario(user).subscribe({
+        next: (result) => {
+          if (result != null) {
+            alert(
+              'Usuario: ' +
+                user.nombre +
+                ' ' +
+                user.apellido +
+                ' ingresado correctamente!'
+            );
+            this.router.navigate(['listusuarios']);
+          }
+          this.resetForm();
+        },
+        error: (error) => {
+          alert('Ocurrio un error al guardar el usuario');
+        },
+      });
+    }
+  }
+
+  resetForm(): void {
+    this.usuario = new Usuario();
     this.selectedStatus = null!;
     this.selectedGenero = null!;
     this.selectedSucursal = null!;
@@ -95,10 +119,10 @@ export class AddusuarioComponent implements OnInit {
       next: (data) => {
         this.status = data;
       },
-      error:(err) => {
+      error: (err) => {
         this.mensaje = 'Error al traer el status usuario';
-      }
-    })
+      },
+    });
 
     this.generoService.getAll().subscribe({
       next: (d) => {
@@ -106,8 +130,8 @@ export class AddusuarioComponent implements OnInit {
       },
       error: (err) => {
         this.mensaje = 'Error al traer el genero';
-      }
-    })
+      },
+    });
 
     this.sucursalService.getAll().subscribe({
       next: (a) => {
@@ -115,8 +139,8 @@ export class AddusuarioComponent implements OnInit {
       },
       error: (err) => {
         this.mensaje = 'Error al traer la sucursal';
-      }
-    })
+      },
+    });
 
     this.roleService.getAll().subscribe({
       next: (t) => {
@@ -124,9 +148,7 @@ export class AddusuarioComponent implements OnInit {
       },
       error: (err) => {
         this.mensaje = 'Error al traer el rol';
-      }
-    })
-
-
+      },
+    });
   }
 }

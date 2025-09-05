@@ -29,6 +29,7 @@ import { AddgeneroComponent } from './component/addgenero/addgenero.component';
 import { EditgeneroComponent } from './component/editgenero/editgenero.component';
 import { AddstatususuarioComponent } from './component/addstatususuario/addstatususuario.component';
 import { EditstatususuarioComponent } from './component/editstatususuario/editstatususuario.component';
+import { EditusuarioComponent } from './component/editusuario/editusuario.component';
 
 const routes: Routes = [
 
@@ -54,6 +55,7 @@ const routes: Routes = [
   {    path: "addusuarios", component:AddusuarioComponent  },
   {    path: "addstatususuario", component:AddstatususuarioComponent  },
 
+  {    path: "editusuario", component:EditusuarioComponent },
   {    path: "editstatususuario", component:EditstatususuarioComponent },
   {    path: "editgenero", component:EditgeneroComponent },
   {    path: "editmenu", component:EditmenuComponent },

@@ -8,10 +8,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -22,8 +21,8 @@ import lombok.Data;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Usuario {
 
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "IdUsuario")
     private String idUsuario;
@@ -66,8 +65,9 @@ public class Usuario {
     @Column(name = "RequiereCambiarPassword")
     private Integer requiereCambiarPassword;
 
+    @Lob
     @Column(name = "Fotografia")
-    private String fotografia;
+    private byte[] fotografia;
 
     @Column(name = "TelefonoMovil")
     private String telefonoMovil;
@@ -93,7 +93,7 @@ public class Usuario {
     private String usuarioCreacion;
 
     @Column(name = "FechaModificacion")
-    private Date fechaModificacion;
+    private LocalDateTime fechaModificacion;
 
     @Column(name = "UsuarioModificacion")
     private String usuarioModificacion;
