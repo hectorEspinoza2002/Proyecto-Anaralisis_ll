@@ -45,6 +45,12 @@ public class UsuarioController {
         } else {
             userId.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
             userId.setFechaCreacion(LocalDateTime.now());
+
+            if (userId.getPassword() != null && !userId.getPassword().isEmpty()) {
+                String passwordMD5 = usuarioService.encriptarPassword(userId.getPassword());
+                userId.setPassword(passwordMD5);
+            }
+
             return usuarioService.guardarUsuario(userId);
         }
     }
@@ -64,9 +70,15 @@ public class UsuarioController {
             user.setIdStatusUsuario(updUs.getIdStatusUsuario());
             user.setPregunta(updUs.getPregunta());
             user.setRespuesta(updUs.getRespuesta());
+            user.setIntentosDeAcceso(0);
 
-            user.setUsuarioModificacion(updUs.getUsuarioModificacion());
-            user.setFechaModificacion(updUs.getFechaModificacion());
+            if (updUs.getPassword() != null && !updUs.getPassword().isEmpty()) {
+                String passwordMD5 = usuarioService.encriptarPassword(updUs.getPassword());
+                user.setPassword(passwordMD5);
+            }
+
+            user.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
+            user.setFechaModificacion(LocalDateTime.now());
             return usuarioService.guardarUsuario(user);
         } else {
             return null;
@@ -82,6 +94,15 @@ public class UsuarioController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
+            Optional<Usuario> usuarioOpt = usuarioService.findById(loginRequest.getIdUsuario());
+
+            if (usuarioOpt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("Usuario no encontrado");
+            }
+
+            Usuario usuario = usuarioOpt.get();
+
             boolean loginExitoso = usuarioService.validarLogin(
                     loginRequest.getIdUsuario(),
                     loginRequest.getPassword());
@@ -89,33 +110,31 @@ public class UsuarioController {
             if (!loginExitoso) {
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", false);
-                response.put("message", "Credenciales inválidas");
+
+                if (usuario.getIdStatusUsuario() != null
+                        && usuario.getIdStatusUsuario().getIdStatusUsuario() == 2) {
+                    response.put("message", "Usuario bloqueado por demasiados intentos fallidos");
+                } else {
+                    response.put("message", "Credenciales inválidas");
+                    response.put("intentos", usuario.getIntentosDeAcceso());
+                }
+
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
 
-            //Aguardamos el usuario ingresado
+            // 🔹 Guardamos usuario logueado
             LoginRequest.setUsuarioLogueado(loginRequest.getIdUsuario());
-            // Buscar el usuario
-            Optional<Usuario> usuarioOpt = usuarioService.findById(loginRequest.getIdUsuario());
-            if (usuarioOpt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body("Usuario no encontrado después de validación exitosa");
-            }
-
-            Usuario u = usuarioOpt.get();
 
             // 🔹 Actualizar última fecha de ingreso
-            u.setUltimaFechaIngreso(LocalDateTime.now());
-            usuarioService.guardarUsuario(u); // guardar cambios en la BD
+            usuario.setUltimaFechaIngreso(LocalDateTime.now());
+            usuarioService.guardarUsuario(usuario);
 
             // Respuesta
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "Login exitoso");
-            response.put("usuario", u);
+            response.put("usuario", usuario);
 
-            System.out.println("Usuario Controller se ejecuta");
-            System.out.println(loginRequest.getIdUsuario());
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {

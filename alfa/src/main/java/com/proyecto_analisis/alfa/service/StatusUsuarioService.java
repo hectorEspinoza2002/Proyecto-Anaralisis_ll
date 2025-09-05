@@ -33,4 +33,9 @@ public class StatusUsuarioService {
         statusUsRepo.delete(suD);
     }
 
+    public StatusUsuario obtenerStatusPorId(Integer id){
+        return statusUsRepo.findById(id)
+        .orElseThrow(() -> new RuntimeException("Status no encontrado"));
+    }
+
 }

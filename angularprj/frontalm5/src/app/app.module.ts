@@ -36,6 +36,7 @@ import { EditgeneroComponent } from './component/editgenero/editgenero.component
 import { AddstatususuarioComponent } from './component/addstatususuario/addstatususuario.component';
 import { EditstatususuarioComponent } from './component/editstatususuario/editstatususuario.component';
 import { EditusuarioComponent } from './component/editusuario/editusuario.component';
+import { PerfilComponent } from './component/perfil/perfil.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { EditusuarioComponent } from './component/editusuario/editusuario.compon
     AddstatususuarioComponent,
     EditstatususuarioComponent,
     EditusuarioComponent,
+    PerfilComponent,
   ],
   imports: [
     BrowserModule,
