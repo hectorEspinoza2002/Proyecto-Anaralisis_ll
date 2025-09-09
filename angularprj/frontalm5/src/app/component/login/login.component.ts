@@ -33,6 +33,10 @@ export class LoginComponent {
     }).subscribe(
       (response) => {
         if (response.success) {
+
+          //localStorage.getItem('id', this.usuario.idUsuario);
+          localStorage.setItem('usuario', JSON.stringify(response.usuario));
+
           alert('Login exitoso');
           this.router.navigate(['/principal']);
         } else {
