@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto_analisis.alfa.model.entity.Empresa;
 import com.proyecto_analisis.alfa.model.entity.LoginRequest;
+import com.proyecto_analisis.alfa.model.entity.Sucursal;
+import com.proyecto_analisis.alfa.model.repository.EmpresaRepository;
+import com.proyecto_analisis.alfa.model.repository.SucursalRepository;
 import com.proyecto_analisis.alfa.service.EmpresaService;
 
 @RestController
@@ -24,6 +28,12 @@ public class EmpresaController {
 
     @Autowired
     private EmpresaService empresaService;
+
+    @Autowired
+    private SucursalRepository sucursalRepository;
+
+    @Autowired
+    private EmpresaRepository empresaRepository;
 
     @GetMapping("/list_empresas")
     public List<Empresa> listarTodos() {
@@ -37,15 +47,14 @@ public class EmpresaController {
 
     @PostMapping("/create_empresa")
     public Empresa createEmpresa(@RequestBody Empresa empId) {
-        //String idEm = String.valueOf(empId.getIdEmpresa());
-
+        // String idEm = String.valueOf(empId.getIdEmpresa());
 
         if (empId.getIdEmpresa() != null && empresaService.findById(empId.getIdEmpresa()).isPresent()) {
             return null;
         } else {
-            //Usuario
+            // Usuario
             empId.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
-            //Fecha
+            // Fecha
             empId.setFechaCreacion(LocalDateTime.now());
             return empresaService.guardar(empId);
         }
@@ -53,7 +62,7 @@ public class EmpresaController {
     }
 
     @PutMapping("/update_empresa/{id}")
-    public Empresa updateEmpresa(@PathVariable("id") Integer empreId, @RequestBody Empresa updateEmp){
+    public Empresa updateEmpresa(@PathVariable("id") Integer empreId, @RequestBody Empresa updateEmp) {
         Optional<Empresa> optionEmp = empresaService.findById(empreId);
         if (optionEmp.isPresent()) {
             Empresa emp = optionEmp.get();
@@ -68,9 +77,9 @@ public class EmpresaController {
             emp.setPasswordIntentosAntesDeBloquear(updateEmp.getPasswordIntentosAntesDeBloquear());
             emp.setPasswordCantidadNumeros(updateEmp.getPasswordCantidadNumeros());
             emp.setPasswordCantidadPreguntasValidar(updateEmp.getPasswordCantidadMayusculas());
-            //Actualizamos usuario
+            // Actualizamos usuario
             emp.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
-            //Acuatlizamos la hora
+            // Acuatlizamos la hora
             emp.setFechaModificacion(LocalDateTime.now());
             return empresaService.guardar(emp);
         } else {
@@ -79,9 +88,21 @@ public class EmpresaController {
     }
 
     @DeleteMapping("/delete_empresa/{emId}")
-    public void deleteEmpresa(@PathVariable("emId") Integer Id){
+    public void deleteEmpresa(@PathVariable("emId") Integer Id) {
         Optional<Empresa> empOption = empresaService.findById(Id);
         empOption.ifPresent(empresaService::delete);
+    }
+
+    // Mandamos los campos obligatoiras
+    @GetMapping("/empresa_por_sucursal/{idSucursal}")
+    public ResponseEntity<Empresa> getEmpresaPorSucursal(@PathVariable Integer idSucursal) {
+        Sucursal sucursal = sucursalRepository.findById(idSucursal)
+                .orElseThrow(() -> new RuntimeException("Sucursal no encontrada"));
+
+        Empresa empresa = empresaRepository.findById(sucursal.getEmpresa().getIdEmpresa())
+                .orElseThrow(() -> new RuntimeException("Empresa no encontrada"));
+
+        return ResponseEntity.ok(empresa);
     }
 
 }

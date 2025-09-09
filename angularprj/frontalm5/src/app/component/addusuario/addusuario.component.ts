@@ -10,6 +10,7 @@ import { Sucursal } from '../../entity/Sucursal';
 import { Role } from '../../entity/Role';
 import { SucursalService } from '../../service/sucursal.service';
 import { RoleService } from '../../service/role.service';
+import { EmpresaService } from '../../service/empresa.service';
 
 @Component({
   selector: 'app-addusuario',
@@ -34,13 +35,18 @@ export class AddusuarioComponent implements OnInit {
 
   mensaje: String = '';
 
+  //variables para traer datos de empresa
+  empresaRules: any = null;
+  passwordValidations: string[] = [];
+
   constructor(
     private userService: UsuarioService,
     private router: Router,
     private statusService: StatusUsuarioService,
     private generoService: GeneroService,
     private sucursalService: SucursalService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private empresaService: EmpresaService
   ) {}
 
   ngOnInit(): void {
@@ -64,9 +70,15 @@ export class AddusuarioComponent implements OnInit {
   }
 
   guardarUser(user: Usuario) {
-    this.usuario.idStatusUsuario = {idStatusUsuario: this.selectedStatus, } as unknown as StatusUsuario;
-    this.usuario.idGenero = {idGenero: this.selectedGenero, } as unknown as Genero;
-    this.usuario.idSucursal = {idSucursal: this.selectedSucursal, } as unknown as Sucursal;
+    this.usuario.idStatusUsuario = {
+      idStatusUsuario: this.selectedStatus,
+    } as unknown as StatusUsuario;
+    this.usuario.idGenero = {
+      idGenero: this.selectedGenero,
+    } as unknown as Genero;
+    this.usuario.idSucursal = {
+      idSucursal: this.selectedSucursal,
+    } as unknown as Sucursal;
     this.usuario.idRole = { idRole: this.selectedRole } as unknown as Role;
 
     if (
@@ -80,7 +92,13 @@ export class AddusuarioComponent implements OnInit {
       this.userService.addUsuario(user).subscribe({
         next: (result) => {
           if (result != null) {
-            alert('Usuario: ' + user.nombre + ' ' + user.apellido + ' ingresado correctamente!' );
+            alert(
+              'Usuario: ' +
+                user.nombre +
+                ' ' +
+                user.apellido +
+                ' ingresado correctamente!'
+            );
             this.router.navigate(['listusuarios']);
             this.resetForm();
           }
@@ -138,5 +156,79 @@ export class AddusuarioComponent implements OnInit {
         this.mensaje = 'Error al traer el rol';
       },
     });
+
+    if (this.selectedSucursal) {
+      this.empresaService
+        .getEmpresaPorSucursal(this.selectedSucursal)
+        .subscribe({
+          next: (empresa) => {
+            this.empresaRules = empresa;
+          },
+          error: () => {
+            this.empresaRules = null;
+            this.passwordValidations = [];
+          },
+        });
+    }
+  }
+
+  validarPassword(password: string) {
+    this.passwordValidations = [];
+
+    if (!this.empresaRules) return;
+
+    if (password.length < this.empresaRules.passwordLargo) {
+      this.passwordValidations.push(
+        `Debe tener al menos ${this.empresaRules.passwordLargo} caracteres`
+      );
+    }
+
+    const mayusculas = (password.match(/[A-Z]/g) || []).length;
+    if (mayusculas < this.empresaRules.passwordCantidadMayusculas) {
+      this.passwordValidations.push(
+        `Debe tener al menos ${this.empresaRules.passwordCantidadMayusculas} mayúscula(s)`
+      );
+    }
+
+    const minusculas = (password.match(/[a-z]/g) || []).length;
+    if (minusculas < this.empresaRules.passwordCantidadMinusculas) {
+      this.passwordValidations.push(
+        `Debe tener al menos ${this.empresaRules.passwordCantidadMinusculas} minúscula(s)`
+      );
+    }
+
+    const numeros = (password.match(/[0-9]/g) || []).length;
+    if (numeros < this.empresaRules.passwordCantidadNumeros) {
+      this.passwordValidations.push(
+        `Debe tener al menos ${this.empresaRules.passwordCantidadNumeros} número(s)`
+      );
+    }
+
+    const especiales = (password.match(/[^a-zA-Z0-9]/g) || []).length;
+    if (especiales < this.empresaRules.passwordCantidadCaracteresEspeciales) {
+      this.passwordValidations.push(
+        `Debe tener al menos ${this.empresaRules.passwordCantidadCaracteresEspeciales} caracter(es) especial(es)`
+      );
+    }
+  }
+
+  onSucursalChange() {
+    if (this.selectedSucursal) {
+      this.empresaService
+        .getEmpresaPorSucursal(this.selectedSucursal)
+        .subscribe({
+          next: (empresa) => {
+            this.empresaRules = empresa;
+            // Si ya escribió algo en password, revalida con las nuevas reglas
+            if (this.usuario.password) {
+              this.validarPassword(this.usuario.password);
+            }
+          },
+          error: () => {
+            this.empresaRules = null;
+            this.passwordValidations = [];
+          },
+        });
+    }
   }
 }

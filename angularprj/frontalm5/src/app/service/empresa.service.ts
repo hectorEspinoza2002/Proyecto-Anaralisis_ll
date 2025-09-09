@@ -33,4 +33,9 @@ export class EmpresaService {
   deleteEmpresa(emp: Empresa) {
     return this.http.delete(this.Url + '/delete_empresa/' + emp.idEmpresa, { responseType: 'text' });
   }
+
+  getEmpresaPorSucursal(idSucursal:number): Observable<any>{
+    return this.http.get<any>(`${this.Url}/empresa_por_sucursal/${idSucursal}`);
+  }
+
 }
