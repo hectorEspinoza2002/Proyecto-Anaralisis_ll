@@ -38,4 +38,8 @@ export class UsuarioService {
   editUsuario(id: String, updateUs: Usuario) {
     return this.http.put<Usuario>(this.Url + '/update_usuario/' + id, updateUs);
   }
+
+  updatePassword(id: string, password: string): Observable<any> {
+    return this.http.put(`${this.Url}/update_password/${id}`, { password });
+  }
 }

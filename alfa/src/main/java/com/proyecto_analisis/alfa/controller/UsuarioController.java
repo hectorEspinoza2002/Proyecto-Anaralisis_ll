@@ -143,4 +143,27 @@ public class UsuarioController {
         }
     }
 
+    @PutMapping("/update_password/{id}")
+    public ResponseEntity<?> updatePassword(@PathVariable("id") String id, @RequestBody Map<String, String> body) {
+        Optional<Usuario> optionUser = usuarioService.findById(id);
+
+        if (optionUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+
+        Usuario user = optionUser.get();
+        String nuevaPassword = body.get("password");
+
+        if (nuevaPassword != null && !nuevaPassword.isEmpty()) {
+            String passwordMD5 = usuarioService.encriptarPassword(nuevaPassword);
+            user.setPassword(passwordMD5);
+            user.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
+            user.setFechaModificacion(LocalDateTime.now());
+            usuarioService.guardarUsuario(user);
+            return ResponseEntity.ok("Contraseña actualizada correctamente");
+        }
+
+        return ResponseEntity.badRequest().body("La contraseña no puede estar vacía");
+    }
+
 }

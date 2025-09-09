@@ -1,22 +1,48 @@
 <div class="container mt-4" *ngIf="usuario">
-  <div class="card shadow-sm p-4">
-    <div class="row">
-      <div class="col-md-4 text-center">
-        <img *ngIf="usuario.fotografia"
-             [src]="'data:image/jpeg;base64,' + usuario.fotografia"
-             alt="Foto de perfil"
-             class="img-fluid rounded-circle shadow"
-             width="200" height="200">
-      </div>
-      <div class="col-md-8">
-        <h3 class="text-primary">{{ usuario.nombre }} {{ usuario.apellido }}</h3>
-        <p><strong>Correo:</strong> {{ usuario.correoElectronico }}</p>
-        <p><strong>Teléfono:</strong> {{ usuario.telefonoMovil }}</p>
-        <p><strong>Género:</strong> {{ usuario.idGenero.nombre }}</p>
-        <p><strong>Sucursal:</strong> {{ usuario.idSucursal.nombre }}</p>
-        <p><strong>Estatus:</strong> {{ usuario.idStatusUsuario.nombre }}</p>
-        <p><strong>Último ingreso:</strong> {{ usuario.ultimaFechaIngreso | date:'short' }}</p>
-      </div>
-    </div>
+  <div class="card shadow-lg p-4 text-center">
+    <!-- Imagen de perfil -->
+
+    <!-- Nombre completo -->
+    <h3 class="mt-3 text-primary">
+      {{ usuario.nombre }} {{ usuario.apellido }}
+    </h3>
+
+    <!-- Información del usuario -->
+    <p><strong>Correo:</strong> {{ usuario.correoElectronico }}</p>
+    <p><strong>Teléfono:</strong> {{ usuario.telefonoMovil }}</p>
+    <p><strong>Género:</strong> {{ usuario.idGenero.nombre }}</p>
+    <p><strong>Sucursal:</strong> {{ usuario.idSucursal.nombre }}</p>
+    <p><strong>Rol:</strong> {{ usuario.idRole.nombre }}</p>
+
+    <img
+      *ngIf="usuario.fotografia"
+      [src]="'data:image/jpeg;base64,' + usuario.fotografia"
+      alt="Foto de perfil"
+      width="120"
+      height="120"
+      class="rounded-circle border shadow-sm mx-auto d-block"
+    />
   </div>
+
+  <hr />
+  <h5 class="mt-4">Cambiar Contraseña</h5>
+  <div class="form-group">
+    <input
+      type="password"
+      class="form-control mb-2"
+      placeholder="Nueva contraseña"
+      [(ngModel)]="nuevaPassword"
+    />
+    <input
+      type="password"
+      class="form-control mb-2"
+      placeholder="Confirmar contraseña"
+      [(ngModel)]="confirmarPassword"
+    />
+    <button class="btn btn-primary w-100" (click)="cambiarPassword()">
+      Actualizar Contraseña
+    </button>
+  </div>
+
+  <p class="mt-2 text-danger" *ngIf="mensaje">{{ mensaje }}</p>
 </div>
