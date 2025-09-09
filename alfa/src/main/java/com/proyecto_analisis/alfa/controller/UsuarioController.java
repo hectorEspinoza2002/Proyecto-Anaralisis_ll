@@ -17,8 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.proyecto_analisis.alfa.model.entity.Empresa;
 import com.proyecto_analisis.alfa.model.entity.LoginRequest;
+import com.proyecto_analisis.alfa.model.entity.Sucursal;
 import com.proyecto_analisis.alfa.model.entity.Usuario;
+import com.proyecto_analisis.alfa.model.repository.EmpresaRepository;
+import com.proyecto_analisis.alfa.model.repository.SucursalRepository;
 import com.proyecto_analisis.alfa.service.UsuarioService;
 
 @RestController
@@ -27,6 +32,12 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private EmpresaRepository empresaRepository;
+
+    @Autowired
+    private SucursalRepository sucursalRepository;
 
     @GetMapping("/list_usuario")
     public List<Usuario> listarTodos() {
@@ -39,21 +50,51 @@ public class UsuarioController {
     }
 
     @PostMapping("/create_usuario")
-    public Usuario createUsuario(@RequestBody Usuario userId) {
+    public ResponseEntity<?> createUsuario(@RequestBody Usuario userId) {
         if (userId.getIdUsuario() != null && usuarioService.findById(userId.getIdUsuario()).isPresent()) {
-            return null;
-        } else {
-            userId.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
-            userId.setFechaCreacion(LocalDateTime.now());
-
-            if (userId.getPassword() != null && !userId.getPassword().isEmpty()) {
-                String passwordMD5 = usuarioService.encriptarPassword(userId.getPassword());
-                userId.setPassword(passwordMD5);
-            }
-
-            return usuarioService.guardarUsuario(userId);
+            return ResponseEntity.badRequest().body("El usuario ya existe");
         }
+
+        // Buscar la empresa desde la sucursal seleccionada
+        Sucursal sucursal = sucursalRepository.findById(userId.getIdSucursal().getIdSucursal())
+                .orElseThrow(() -> new RuntimeException("Sucursal no encontrada"));
+        Empresa empresa = empresaRepository.findById(sucursal.getEmpresa().getIdEmpresa())
+                .orElseThrow(() -> new RuntimeException("Empresa no encontrada"));
+
+        // Validar la contraseña
+        if (!usuarioService.validarPassword(userId.getPassword(), empresa)) {
+            return ResponseEntity.badRequest()
+                    .body("La contraseña no cumple con las reglas de seguridad de la empresa");
+        }
+
+        // Si pasa validaciones, encriptamos
+        userId.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
+        userId.setFechaCreacion(LocalDateTime.now());
+        userId.setPassword(usuarioService.encriptarPassword(userId.getPassword()));
+
+        Usuario savedUser = usuarioService.guardarUsuario(userId);
+        return ResponseEntity.ok(savedUser);
     }
+
+    /*
+     * @PostMapping("/create_usuario")
+     * public Usuario createUsuario(@RequestBody Usuario userId) {
+     * if (userId.getIdUsuario() != null &&
+     * usuarioService.findById(userId.getIdUsuario()).isPresent()) {
+     * return null;
+     * } else {
+     * userId.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
+     * userId.setFechaCreacion(LocalDateTime.now());
+     * 
+     * if (userId.getPassword() != null && !userId.getPassword().isEmpty()) {
+     * String passwordMD5 = usuarioService.encriptarPassword(userId.getPassword());
+     * userId.setPassword(passwordMD5);
+     * }
+     * 
+     * return usuarioService.guardarUsuario(userId);
+     * }
+     * }
+     */
 
     @PutMapping("/update_usuario/{id}")
     public Usuario updateUser(@PathVariable("id") String usId, @RequestBody Usuario updUs) {

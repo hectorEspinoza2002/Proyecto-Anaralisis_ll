@@ -64,15 +64,9 @@ export class AddusuarioComponent implements OnInit {
   }
 
   guardarUser(user: Usuario) {
-    this.usuario.idStatusUsuario = {
-      idStatusUsuario: this.selectedStatus,
-    } as unknown as StatusUsuario;
-    this.usuario.idGenero = {
-      idGenero: this.selectedGenero,
-    } as unknown as Genero;
-    this.usuario.idSucursal = {
-      idSucursal: this.selectedSucursal,
-    } as unknown as Sucursal;
+    this.usuario.idStatusUsuario = {idStatusUsuario: this.selectedStatus, } as unknown as StatusUsuario;
+    this.usuario.idGenero = {idGenero: this.selectedGenero, } as unknown as Genero;
+    this.usuario.idSucursal = {idSucursal: this.selectedSucursal, } as unknown as Sucursal;
     this.usuario.idRole = { idRole: this.selectedRole } as unknown as Role;
 
     if (
@@ -86,19 +80,13 @@ export class AddusuarioComponent implements OnInit {
       this.userService.addUsuario(user).subscribe({
         next: (result) => {
           if (result != null) {
-            alert(
-              'Usuario: ' +
-                user.nombre +
-                ' ' +
-                user.apellido +
-                ' ingresado correctamente!'
-            );
+            alert('Usuario: ' + user.nombre + ' ' + user.apellido + ' ingresado correctamente!' );
             this.router.navigate(['listusuarios']);
+            this.resetForm();
           }
-          this.resetForm();
         },
         error: (error) => {
-          alert('Ocurrio un error al guardar el usuario');
+          alert(error.error);
         },
       });
     }

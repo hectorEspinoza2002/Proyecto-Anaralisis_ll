@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyecto_analisis.alfa.service.StatusUsuarioService;
+import com.proyecto_analisis.alfa.model.entity.Empresa;
 import com.proyecto_analisis.alfa.model.entity.StatusUsuario;
 import com.proyecto_analisis.alfa.model.entity.Usuario;
 import com.proyecto_analisis.alfa.model.repository.UsuarioRepository;
@@ -108,5 +109,43 @@ public class UsuarioService {
      * }
      * }
      */
+
+    public boolean validarPassword(String password, Empresa empresa) {
+        if (password == null)
+            return false;
+
+        // Largo mínimo
+        if (password.length() < empresa.getPasswordLargo()) {
+            return false;
+        }
+
+        // Mayúsculas
+        long mayusculas = password.chars().filter(Character::isUpperCase).count();
+        if (mayusculas < empresa.getPasswordCantidadMayusculas()) {
+            return false;
+        }
+
+        // Minúsculas
+        long minusculas = password.chars().filter(Character::isLowerCase).count();
+        if (minusculas < empresa.getPasswordCantidadMinusculas()) {
+            return false;
+        }
+
+        // Números
+        long numeros = password.chars().filter(Character::isDigit).count();
+        if (numeros < empresa.getPasswordCantidadNumeros()) {
+            return false;
+        }
+
+        // Caracteres especiales
+        long especiales = password.chars()
+                .filter(ch -> !Character.isLetterOrDigit(ch))
+                .count();
+        if (especiales < empresa.getPasswordCantidadCaracteresEspeciales()) {
+            return false;
+        }
+
+        return true;
+    }
 
 }
