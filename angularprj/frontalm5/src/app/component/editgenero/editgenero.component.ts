@@ -35,7 +35,7 @@ export class EditgeneroComponent implements OnInit, AfterViewInit{
     }
   }
 
-  editRol(g:Genero){
+  editGenero(g:Genero){
     let id = localStorage.getItem("id");
     if(id){
       this.generoService.editGenero(id,g)

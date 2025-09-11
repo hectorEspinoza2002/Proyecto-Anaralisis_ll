@@ -1,22 +1,18 @@
-<div class="container">
-  <div class="card">
-    <div class="card-header">
-      <h2>Crear Nuevo Usuario</h2>
+<div class="container col-md-10">
+  <div class="card shadow-lg border-0 rounded-3">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Crear Nuevo Usuario</h2>
     </div>
 
     <div class="card-body">
       <form #usuarioForm="ngForm" class="needs-validation" novalidate>
-        <!-- Campos básicos -->
 
+        <!-- Datos básicos -->
+        <h5 class="text-secondary mb-3">Datos Básicos</h5>
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">ID Usuario *</label>
-            <input
-              [(ngModel)]="usuario.idUsuario"
-              name="idUsuario"
-              class="form-control"
-              required
-            />
+            <input [(ngModel)]="usuario.idUsuario" name="idUsuario" class="form-control" required />
           </div>
 
           <div class="col-md-6 mb-3">
@@ -41,36 +37,21 @@
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Nombre *</label>
-            <input
-              [(ngModel)]="usuario.nombre"
-              name="nombre"
-              class="form-control"
-              required
-            />
+            <input [(ngModel)]="usuario.nombre" name="nombre" class="form-control" required />
           </div>
 
           <div class="col-md-6 mb-3">
             <label class="form-label">Apellido *</label>
-            <input
-              [(ngModel)]="usuario.apellido"
-              name="apellido"
-              class="form-control"
-              required
-            />
+            <input [(ngModel)]="usuario.apellido" name="apellido" class="form-control" required />
           </div>
         </div>
 
         <!-- Selectores -->
-        <!-- Selectores -->
+        <h5 class="text-secondary mt-4 mb-3">Asignaciones</h5>
         <div class="row">
           <div class="col-md-3 mb-3">
             <label class="form-label">Status *</label>
-            <select
-              [(ngModel)]="selectedStatus"
-              name="statusUsuario"
-              class="form-select"
-              required
-            >
+            <select [(ngModel)]="selectedStatus" name="statusUsuario" class="form-select" required>
               <option [ngValue]="null">Seleccione status</option>
               <option *ngFor="let st of status" [ngValue]="st.idStatusUsuario">
                 {{ st.nombre }}
@@ -80,12 +61,7 @@
 
           <div class="col-md-3 mb-3">
             <label class="form-label">Género *</label>
-            <select
-              [(ngModel)]="selectedGenero"
-              name="genero"
-              class="form-select"
-              required
-            >
+            <select [(ngModel)]="selectedGenero" name="genero" class="form-select" required>
               <option [ngValue]="null">Seleccione género</option>
               <option *ngFor="let g of genero" [ngValue]="g.idGenero">
                 {{ g.nombre }}
@@ -109,32 +85,9 @@
             </select>
           </div>
 
-          <!--
-          <div class="col-md-3 mb-3">
-            <label class="form-label">Sucursal *</label>
-            <select
-              [(ngModel)]="selectedSucursal"
-              name="sucursal"
-              class="form-select"
-              required
-              (change)="cargarDatosIniciales()"
-            >
-              <option [ngValue]="null">Seleccione sucursal</option>
-              <option *ngFor="let suc of sucursal" [ngValue]="suc.idSucursal">
-                {{ suc.nombre }}
-              </option>
-            </select>
-          </div>
-          -->
-
           <div class="col-md-3 mb-3">
             <label class="form-label">Rol *</label>
-            <select
-              [(ngModel)]="selectedRole"
-              name="rol"
-              class="form-select"
-              required
-            >
+            <select [(ngModel)]="selectedRole" name="rol" class="form-select" required>
               <option [ngValue]="null">Seleccione rol</option>
               <option *ngFor="let r of rol" [ngValue]="r.idRole">
                 {{ r.nombre }}
@@ -143,92 +96,57 @@
           </div>
         </div>
 
-        <!-- Fecha Nacimiento -->
-
+        <!-- Fecha y foto -->
+        <h5 class="text-secondary mt-4 mb-3">Información Personal</h5>
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Fecha Nacimiento *</label>
-            <input
-              [(ngModel)]="usuario.fechaNacimiento"
-              name="fechaNacimiento"
-              type="date"
-              class="form-control"
-              required
-            />
+            <input [(ngModel)]="usuario.fechaNacimiento" name="fechaNacimiento" type="date" class="form-control" required />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Fotografía</label>
+            <input type="file" (change)="onFileSelected($event)" class="form-control" />
           </div>
         </div>
 
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Fotografía</label>
-          <input
-            type="file"
-            (change)="onFileSelected($event)"
-            class="form-control"
-          />
-        </div>
-
         <!-- Contacto -->
-
+        <h5 class="text-secondary mt-4 mb-3">Contacto</h5>
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Correo Electrónico *</label>
-            <input
-              [(ngModel)]="usuario.correoElectronico"
-              name="correo"
-              type="email"
-              class="form-control"
-              required
-            />
+            <input [(ngModel)]="usuario.correoElectronico" name="correo" type="email" class="form-control" required />
           </div>
 
           <div class="col-md-6 mb-3">
             <label class="form-label">Teléfono Móvil</label>
-            <input
-              [(ngModel)]="usuario.telefonoMovil"
-              name="telefono"
-              class="form-control"
-            />
+            <input [(ngModel)]="usuario.telefonoMovil" name="telefono" class="form-control" />
           </div>
         </div>
 
         <!-- Seguridad -->
-
+        <h5 class="text-secondary mt-4 mb-3">Seguridad</h5>
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Pregunta de Seguridad *</label>
-            <input
-              [(ngModel)]="usuario.pregunta"
-              name="pregunta"
-              class="form-control"
-              required
-            />
+            <input [(ngModel)]="usuario.pregunta" name="pregunta" class="form-control" required />
           </div>
 
           <div class="col-md-6 mb-3">
             <label class="form-label">Respuesta *</label>
-            <input
-              [(ngModel)]="usuario.respuesta"
-              name="respuesta"
-              class="form-control"
-              required
-            />
+            <input [(ngModel)]="usuario.respuesta" name="respuesta" class="form-control" required />
           </div>
         </div>
 
         <!-- Botones -->
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-          <button
-            (click)="Cancelar()"
-            type="button"
-            class="btn btn-secondary me-md-2"
-          >
+        <div class="d-flex justify-content-end mt-4">
+          <button (click)="Cancelar()" type="button" class="btn btn-outline-danger me-2">
             Cancelar
           </button>
           <button
             (click)="guardarUser(usuario)"
             type="button"
-            class="btn btn-primary"
+            class="btn btn-success"
             [disabled]="!usuarioForm.form.valid"
           >
             Guardar Usuario

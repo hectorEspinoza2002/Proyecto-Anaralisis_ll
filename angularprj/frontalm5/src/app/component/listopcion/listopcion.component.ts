@@ -37,7 +37,7 @@ export class ListopcionComponent implements OnInit{
 
   selectOp(r:Opcion): void{
     localStorage.setItem("id",r.idOpcion.toString().valueOf());
-    this.router.navigate([""])
+    this.router.navigate(["editopcion"])
   }
 
 }

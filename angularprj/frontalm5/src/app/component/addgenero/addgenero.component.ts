@@ -16,7 +16,7 @@ export class AddgeneroComponent {
   ngOnInit(): void{}
 
   Cancelar(){
-    this.router.navigate(["listrole"]);
+    this.router.navigate(["listgenero"]);
   }
 
   guardar(g:Genero){

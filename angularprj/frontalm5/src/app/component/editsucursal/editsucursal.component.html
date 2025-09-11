@@ -1,66 +1,59 @@
-<div class="container col-md-6">
-  <div class="card">
-    <div class="card-header">
-      <h2>Modificar Sucursal</h2>
+<div class="container col-md-6 mt-4">
+  <div class="card shadow-lg border-0 rounded-3">
+    <!-- Header -->
+    <div class="card-header bg-primary text-white text-center rounded-top">
+      <h3 class="mb-0">Modificar Sucursal</h3>
     </div>
+
+    <!-- Body -->
     <div class="card-body">
-      <form>
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="">ID del Empresa:</label>
-          </div>
-          <div class="mb-2">
-            <input
-              [(ngModel)]="sucursal.idSucursal"
-              type="text"
-              name="idSucursal"
-              disabled
-              id="idSucursal"
-              class="form-control"
-              placeholder="ID"
-              required
-            />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="">Nombre del la Empresa:</label>
-          </div>
-          <div class="mb-2">
-            <input
-              [(ngModel)]="sucursal.nombre"
-              type="text"
-              name="nombre"
-              id="nombre"
-              #myFocus
-              class="form-control"
-              placeholder="Ingrese nombre del la empresa"
-              required
-            />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="">Direccion:</label>
-          </div>
-          <div class="mb-2">
-            <input
-              [(ngModel)]="sucursal.direccion"
-              type="text"
-              name="direccion"
-              id="direccion"
-              #myFocus
-              class="form-control"
-              placeholder="Ingrese la Direccion"
-              required
-            />
-          </div>
-        </div>
-
+      <form #sucursalForm="ngForm" novalidate>
+        <!-- ID -->
         <div class="mb-3">
-          <label for="empresa" class="form-label">Empresa:</label>
+          <label for="idSucursal" class="form-label fw-bold">ID de Sucursal</label>
+          <input
+            [(ngModel)]="sucursal.idSucursal"
+            type="text"
+            name="idSucursal"
+            id="idSucursal"
+            class="form-control"
+            placeholder="ID"
+            required
+            disabled
+          />
+        </div>
+
+        <!-- Nombre -->
+        <div class="mb-3">
+          <label for="nombre" class="form-label fw-bold">Nombre de la Sucursal</label>
+          <input
+            [(ngModel)]="sucursal.nombre"
+            type="text"
+            name="nombre"
+            id="nombre"
+            class="form-control"
+            placeholder="Ingrese nombre de la sucursal"
+            required
+          />
+        </div>
+
+        <!-- Dirección -->
+        <div class="mb-3">
+          <label for="direccion" class="form-label fw-bold">Dirección</label>
+          <input
+            [(ngModel)]="sucursal.direccion"
+            type="text"
+            name="direccion"
+            id="direccion"
+            class="form-control"
+            placeholder="Ingrese la dirección"
+            required
+          />
+        </div>
+
+        <!-- Empresa -->
+        <div class="mb-3">
+          <label for="empresa" class="form-label fw-bold">Empresa</label>
           <select
             id="empresa"
             class="form-select"
@@ -68,24 +61,32 @@
             [(ngModel)]="selectedEmpresa"
             name="empresa"
           >
-            <option value="" disabled selected>Seleccione una empresa</option>
-            <option *ngFor="let emp of empresa" [value]="emp.idEmpresa">
+            <option [ngValue]="null" disabled selected>Seleccione una empresa</option>
+            <option *ngFor="let emp of empresa" [ngValue]="emp.idEmpresa">
               {{ emp.nombre }}
             </option>
           </select>
         </div>
 
-        <button
-          (click)="editEmpresa(sucursal)"
-          class="btn btn-outline-success"
-          type="button"
-        >
-          Guardar
-        </button>
-        <span style="margin-left: 1em"></span>
-        <button (click)="Cancel()" class="btn btn-outline-danger" type="button">
-          Cancelar
-        </button>
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button
+            (click)="editSucursal(sucursal)"
+            class="btn btn-success me-2"
+            type="button"
+            [disabled]="!sucursalForm.form.valid"
+          >
+            <i class="bi bi-save"></i> Guardar
+          </button>
+
+          <button
+            (click)="Cancel()"
+            class="btn btn-danger"
+            type="button"
+          >
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
       </form>
     </div>
   </div>

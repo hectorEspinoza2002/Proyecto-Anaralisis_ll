@@ -31,6 +31,7 @@ import { AddstatususuarioComponent } from './component/addstatususuario/addstatu
 import { EditstatususuarioComponent } from './component/editstatususuario/editstatususuario.component';
 import { EditusuarioComponent } from './component/editusuario/editusuario.component';
 import { PerfilComponent } from './component/perfil/perfil.component';
+import { EditopcionesComponent } from './component/editopciones/editopciones.component';
 
 const routes: Routes = [
 
@@ -65,6 +66,7 @@ const routes: Routes = [
   {    path: "editsucursal", component:EditsucursalComponent },
   {    path: "editmodulo", component:Editmodulo2Component },
   {    path: "editempresa", component:EditempresaComponent },
+  {    path: "editopcion", component:EditopcionesComponent },
 
   {    path: "menu", component:MenuComponent  },
   {    path: "principal", component: PrincipalComponent  },

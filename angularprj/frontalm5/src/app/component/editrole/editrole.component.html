@@ -1,57 +1,59 @@
-<div class="container col-md-6">
-  <div class="card">
-    <div class="card-header">
-      <h2>Modificar Rol</h2>
+<div class="container col-md-6 mt-4">
+  <div class="card shadow-lg border-0 rounded-3">
+    <div class="card-header bg-primary text-white text-center rounded-top">
+      <h3 class="mb-0">Modificar Rol</h3>
     </div>
+
     <div class="card-body">
-      <form>
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="">ID del Rol:</label>
-          </div>
-          <div class="mb-2">
-            <input
-              [(ngModel)]="rol.idRole"
-              type="text"
-              name="idRole"
-              disabled
-              id="id"
-              class="form-control"
-              placeholder="ID"
-              required
-            />
-          </div>
+      <form #rolForm="ngForm" novalidate>
+        <!-- ID Rol -->
+        <div class="mb-3">
+          <label for="idRole" class="form-label fw-bold">ID del Rol</label>
+          <input
+            [(ngModel)]="rol.idRole"
+            type="text"
+            name="idRole"
+            id="idRole"
+            class="form-control"
+            placeholder="ID"
+            required
+            disabled
+          />
         </div>
 
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="">Nombre de Rol:</label>
-          </div>
-          <div class="mb-2">
-            <input
-              [(ngModel)]="rol.nombre"
-              type="text"
-              name="nombre"
-              id="nombre"
-              #myFocus
-              class="form-control"
-              placeholder="Ingrese nombre de Rol"
-              required
-            />
-          </div>
+        <!-- Nombre Rol -->
+        <div class="mb-3">
+          <label for="nombre" class="form-label fw-bold">Nombre de Rol</label>
+          <input
+            [(ngModel)]="rol.nombre"
+            type="text"
+            name="nombre"
+            id="nombre"
+            class="form-control"
+            placeholder="Ingrese nombre de Rol"
+            required
+          />
         </div>
 
-        <button
-          (click)="editRol(rol)"
-          class="btn btn-outline-success"
-          type="button"
-        >
-          Guardar
-        </button>
-        <span style="margin-left: 1em"></span>
-        <button (click)="Cancel()" class="btn btn-outline-danger" type="button">
-          Cancelar
-        </button>
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-success me-2"
+            (click)="editRol(rol)"
+            [disabled]="!rolForm.form.valid"
+          >
+            <i class="bi bi-save"></i> Guardar
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="Cancel()"
+          >
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
       </form>
     </div>
   </div>

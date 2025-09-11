@@ -1,23 +1,45 @@
-<div class="container col-md-6">
-  <div class="card">
-    <div class="card-header">
-       <h2>Agregar Rol</h2>
+<div class="container col-md-6 mt-4">
+  <div class="card shadow-lg border-0 rounded-3">
+    <!-- Header -->
+    <div class="card-header bg-primary text-white text-center rounded-top">
+      <h3 class="mb-0">Agregar Rol</h3>
     </div>
+
+    <!-- Body -->
     <div class="card-body">
-      <form id="addcursosforms" class="needs-validation" novalidate>
-        <div class="form-group">
-          <div class="mb-2">
-            <label for="name">Nombre:</label>
-          </div>
-          <div class="mb-2">
-            <input [(ngModel)]="rol.nombre" type="text" name="curso" id="name" class="form-control" placeholder="Ingrese el Nombre del Rol" required>
-          </div>
+      <form>
+        <!-- Nombre del Rol -->
+        <div class="form-group mb-3">
+          <label for="nombre" class="form-label fw-bold">Nombre del Rol:</label>
+          <input
+            [(ngModel)]="rol.nombre"
+            type="text"
+            name="nombre"
+            id="nombre"
+            class="form-control"
+            placeholder="Ingrese el nombre del rol"
+            required
+          />
         </div>
 
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button
+            (click)="guardar(rol)"
+            type="button"
+            class="btn btn-outline-success me-2"
+          >
+            Guardar
+          </button>
 
-        <button (click)="guardar(rol)" type="button" class="btn btn-outline-success">Guardar</button>
-        <span style="margin-left:1em"></span>
-        <button (click)="Cancelar()" type="button" class="btn btn-outline-danger">Cancelar</button>
+          <button
+            (click)="Cancelar()"
+            type="button"
+            class="btn btn-outline-danger"
+          >
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
   </div>

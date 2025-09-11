@@ -45,7 +45,7 @@ export class EditsucursalComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editEmpresa(sucur: Sucursal): void {
+  editSucursal(sucur: Sucursal): void {
     if (this.selectedEmpresa) {
       sucur.empresa = { idEmpresa: this.selectedEmpresa } as unknown as Empresa;
     }

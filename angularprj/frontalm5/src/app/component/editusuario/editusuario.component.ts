@@ -34,6 +34,8 @@ export class EditusuarioComponent implements OnInit, AfterViewInit{
   selectedRol: Number | null = null;
   rol: Role[] = [];
 
+  passwordValidations: string[] = [];
+
   @ViewChild('myFocus') myFocus: any;
 
   constructor(private userService:UsuarioService,
@@ -154,6 +156,15 @@ export class EditusuarioComponent implements OnInit, AfterViewInit{
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  validarPassword(password: string) {
+    this.passwordValidations = [];
+    if (!/[A-Z]/.test(password)) this.passwordValidations.push("Debe tener al menos una mayúscula");
+    if (!/[a-z]/.test(password)) this.passwordValidations.push("Debe tener al menos una minúscula");
+    if (!/[0-9]/.test(password)) this.passwordValidations.push("Debe tener un número");
+    if (!/[@$!%*?&]/.test(password)) this.passwordValidations.push("Debe tener un carácter especial");
+    if (password.length < 8) this.passwordValidations.push("Debe tener mínimo 8 caracteres");
   }
 
 }
