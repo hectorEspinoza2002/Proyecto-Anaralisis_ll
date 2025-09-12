@@ -1,0 +1,72 @@
+<div class="container mt-4">
+  <div class="card shadow-lg border-0 rounded-3">
+    <div class="card-header bg-primary text-white">
+      <h4 class="m-0">Agregar Rol Opción</h4>
+    </div>
+
+    <div class="card-body">
+      <form (ngSubmit)="saveRoleOpcion()" #form="ngForm">
+
+        <!-- Selección de Rol -->
+        <div class="mb-3">
+          <label class="form-label">Rol</label>
+          <select class="form-select" [(ngModel)]="rolOpc.role" name="role" required>
+            <option *ngFor="let r of roles" [ngValue]="r">{{ r.nombre }}</option>
+          </select>
+        </div>
+
+        <!-- Selección de Opción -->
+        <div class="mb-3">
+          <label class="form-label">Opción</label>
+          <select class="form-select" [(ngModel)]="rolOpc.opcion" name="opcion" required>
+            <option *ngFor="let o of opciones" [ngValue]="o">{{ o.nombre }}</option>
+          </select>
+        </div>
+
+        <!-- Permisos como Switch -->
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="rolOpc.alta" name="alta">
+              <label class="form-check-label">Alta</label>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="rolOpc.baja" name="baja">
+              <label class="form-check-label">Baja</label>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="rolOpc.cambio" name="cambio">
+              <label class="form-check-label">Cambio</label>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="rolOpc.imprimir" name="imprimir">
+              <label class="form-check-label">Imprimir</label>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="rolOpc.exportar" name="exportar">
+              <label class="form-check-label">Exportar</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-end mt-4">
+          <button type="submit" class="btn btn-success me-2">
+            <i class="bi bi-save"></i> Guardar
+          </button>
+          <button type="button" (click)="cancelar()" class="btn btn-secondary">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -11,13 +11,36 @@ import { Router } from '@angular/router';
 })
 export class ListroleopcionComponent implements OnInit{
 
-  rolOpc!: RoleOpcion[];
+  rolOpc: RoleOpcion[] = [];
 
-  constructor(private rolOpService: RoleopcionService, private router:Router){}
+  constructor(private roService: RoleopcionService, private router:Router){}
   ngOnInit(): void {
-      this.rolOpService.getAll().subscribe(data => {
+      this.roService.listRoleOpciones().subscribe(data => {
         this.rolOpc = data;
-      })
+      });
+  }
+
+  deleteRoleOpcion(rolOp: RoleOpcion) {
+    const validar = confirm(
+      `¿Está seguro que desea eliminar la opción "${rolOp.opcion.nombre}" del rol "${rolOp.role.nombre}"?`
+    );
+    if (validar) {
+      this.roService.deleteRoleOpcion(rolOp.role.idRole, rolOp.opcion.idOpcion).subscribe({
+        next: (result) => {
+          this.rolOpc = this.rolOpc.filter(x => x !== rolOp);
+          alert(`Se eliminó correctamente la opción "${rolOp.opcion.nombre}" del rol "${rolOp.role.nombre}"`);
+        },
+        error: () => {
+          alert("Ha ocurrido un error al eliminar la asignación.");
+        }
+      });
+    }
+  }
+
+  selectRoleOpcion(rolOp: RoleOpcion): void {
+    localStorage.setItem("idRole", rolOp.role.idRole.toString());
+    localStorage.setItem("idOpcion", rolOp.opcion.idOpcion.toString());
+    this.router.navigate(["editroleopcion"]);
   }
 
 }

@@ -37,6 +37,8 @@ import { AddstatususuarioComponent } from './component/addstatususuario/addstatu
 import { EditstatususuarioComponent } from './component/editstatususuario/editstatususuario.component';
 import { EditusuarioComponent } from './component/editusuario/editusuario.component';
 import { PerfilComponent } from './component/perfil/perfil.component';
+import { AddroleopcionComponent } from './component/addroleopcion/addroleopcion.component';
+import { EditroleopcionComponent } from './component/editroleopcion/editroleopcion.component';
 
 
 @NgModule({
@@ -75,6 +77,8 @@ import { PerfilComponent } from './component/perfil/perfil.component';
     EditstatususuarioComponent,
     EditusuarioComponent,
     PerfilComponent,
+    AddroleopcionComponent,
+    EditroleopcionComponent,
   ],
   imports: [
     BrowserModule,

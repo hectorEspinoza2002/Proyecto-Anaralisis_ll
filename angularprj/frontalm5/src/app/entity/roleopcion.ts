@@ -5,11 +5,11 @@ export class RoleOpcion {
 
   role!: Role;
   opcion!: Opcion;
-  alta!: number;
-  baja!: number;
-  cambio!: number;
-  imprimir!: number;
-  exportar!: number;
+  alta!: boolean;
+  baja!: boolean;
+  cambio!: boolean;
+  imprimir!: boolean;
+  exportar!: boolean;
   fechaCreacion!: Date;
   usuarioCreacion!: String;
   fechaModificacion!: Date;

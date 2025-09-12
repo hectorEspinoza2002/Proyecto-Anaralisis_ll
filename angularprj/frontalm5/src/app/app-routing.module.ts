@@ -32,6 +32,8 @@ import { EditstatususuarioComponent } from './component/editstatususuario/editst
 import { EditusuarioComponent } from './component/editusuario/editusuario.component';
 import { PerfilComponent } from './component/perfil/perfil.component';
 import { EditopcionesComponent } from './component/editopciones/editopciones.component';
+import { AddroleopcionComponent } from './component/addroleopcion/addroleopcion.component';
+import { EditroleopcionComponent } from './component/editroleopcion/editroleopcion.component';
 
 const routes: Routes = [
 
@@ -45,6 +47,7 @@ const routes: Routes = [
   {    path: "liststatususuario", component:ListstatususuarioComponent },
   {    path: "listgenero", component:ListgeneroComponent },
   {    path: "listusuarios", component:ListusuarioComponent  },
+  {    path: "listrolopcion", component:ListroleopcionComponent  },
 
   {    path: "perfil", component:PerfilComponent },
 
@@ -57,6 +60,7 @@ const routes: Routes = [
   {    path: "addrole", component:AddroleComponent  },
   {    path: "addusuarios", component:AddusuarioComponent  },
   {    path: "addstatususuario", component:AddstatususuarioComponent  },
+  {    path: "addroleopcion", component:AddroleopcionComponent  },
 
   {    path: "editusuario", component:EditusuarioComponent },
   {    path: "editstatususuario", component:EditstatususuarioComponent },
@@ -67,6 +71,7 @@ const routes: Routes = [
   {    path: "editmodulo", component:Editmodulo2Component },
   {    path: "editempresa", component:EditempresaComponent },
   {    path: "editopcion", component:EditopcionesComponent },
+  {    path: "editroleopcion", component:EditroleopcionComponent },
 
   {    path: "menu", component:MenuComponent  },
   {    path: "principal", component: PrincipalComponent  },

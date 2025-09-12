@@ -1,6 +1,6 @@
 export class Role {
 
-    idRole!: Number;
+    idRole!: number;
     nombre!: String;
     fechaCreacion!: Date;
     usuarioCreacion!: String;
