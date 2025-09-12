@@ -1,38 +1,47 @@
 package com.proyecto_analisis.alfa.service;
 
-//import java.util.List;
+import java.util.List;
+import java.util.Optional;
 
-//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//import com.proyecto_analisis.alfa.model.entity.RoleOpcion;
-//import com.proyecto_analisis.alfa.model.repository.RoleOpcionRepository;
+import com.proyecto_analisis.alfa.model.entity.RoleOpcion;
+import com.proyecto_analisis.alfa.model.entity.RoleOpcionId;
+import com.proyecto_analisis.alfa.model.repository.RoleOpcionRepository;
 
 @Service
 public class RoleOpcionService {
 
-    /*
-    @Autowired
-    private RoleOpcionRepository roleOpcionRepository;
-    
-    public List<RoleOpcion> findAll() {
-        return roleOpcionRepository.findAll();
-    }
-    
-    /*
-    public Optional<RoleOpcion> findById(Integer id) {
-        return roleOpcionRepository.findById(id);
-    }
-        
+   private final RoleOpcionRepository roleOpcionRepository;
 
-    public RoleOpcion guardarRoleOpcion(RoleOpcion ro){
-        return roleOpcionRepository.save(ro);
-    }
+   public RoleOpcionService(RoleOpcionRepository roleOpcionRepository){
+    this.roleOpcionRepository = roleOpcionRepository;
+   }
 
-    public void deleteRoleOpcion(RoleOpcion ro){
-        roleOpcionRepository.delete(ro);
-    }
+   public List<RoleOpcion> findAll(){
+    return roleOpcionRepository.findAll();
+   }
 
-    */
+   public Optional<RoleOpcion> findById(RoleOpcionId id){
+    return roleOpcionRepository.findById(id);
+   }
+
+   public RoleOpcion save(RoleOpcion roleOpcion){
+    return roleOpcionRepository.save(roleOpcion);
+   }
+
+   public void delete(RoleOpcionId id){
+    roleOpcionRepository.deleteById(id);
+   }
+
+   // Buscar todas las opciones que tiene un rol
+   public List<RoleOpcion> findByRole(Integer idRole){
+    return roleOpcionRepository.findByRole_IdRole(idRole);
+   }
+
+   // Buscar una opcion especifica de un rol
+   public Optional<RoleOpcion> findByRoleAndOpcion(Integer idRole, Integer idOpcion){
+    return roleOpcionRepository.findByRole_IdRoleAndOpcion_IdOpcion(idRole, idOpcion);
+   }
 
 }

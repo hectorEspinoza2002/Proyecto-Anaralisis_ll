@@ -16,6 +16,7 @@ export class EditempresaComponent implements OnInit, AfterViewInit{
     this.selectEdit();
   }
   emps = new Empresa;
+
   @ViewChild('myFocus') myFocus: any;
 
   ngAfterViewInit(): void{
@@ -29,7 +30,7 @@ export class EditempresaComponent implements OnInit, AfterViewInit{
       this.empService.searchEmpresa(id)
       .subscribe(result =>{
         this.emps = result;
-      })
+      });
     }
   }
 

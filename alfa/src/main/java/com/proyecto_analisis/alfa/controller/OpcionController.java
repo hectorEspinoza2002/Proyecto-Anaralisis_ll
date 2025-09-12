@@ -49,11 +49,15 @@ public class OpcionController {
 
     }
 
-    @PutMapping("/update_opcion/{idg}")
-    public Opcion updateOpcion(@PathVariable Integer opId, @RequestBody Opcion updateGen){
+    @PutMapping("/update_opcion/{idop}")
+    public Opcion updateOpcion(@PathVariable("idop") Integer opId, @RequestBody Opcion updateGen){
         Optional<Opcion> optionOp = opService.findById(opId);
         if (optionOp.isPresent()) {
             Opcion op = optionOp.get();
+            op.setMenu(updateGen.getMenu());
+            op.setNombre(updateGen.getNombre());
+            op.setOrdenMenu(updateGen.getOrdenMenu());
+            op.setPagina(updateGen.getPagina());
             //Actualizamos usuario
             op.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
             //Acuatlizamos la hora

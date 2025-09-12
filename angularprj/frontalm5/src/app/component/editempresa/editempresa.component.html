@@ -15,17 +15,17 @@
           </div>
           <div class="col-md-6 mb-3">
             <label for="nombre" class="form-label">Nombre de la Empresa:</label>
-            <input [(ngModel)]="emps.nombre" type="text" name="nombre" id="nombre"
+            <input [(ngModel)]="emps.nombre" type="text" name="nombre" id="nombre" #myFocus
               class="form-control" placeholder="Ingrese el nombre de la empresa" required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="direccion" class="form-label">Dirección:</label>
-            <input [(ngModel)]="emps.direccion" type="text" name="direccion" id="direccion"
+            <input [(ngModel)]="emps.direccion" type="text" name="direccion" id="direccion" #myFocus
               class="form-control" placeholder="Ingrese la dirección" required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="nit" class="form-label">NIT:</label>
-            <input [(ngModel)]="emps.nit" type="text" name="nit" id="nit"
+            <input [(ngModel)]="emps.nit" type="text" name="nit" id="nit" #myFocus
               class="form-control" placeholder="Ingrese el NIT" required>
           </div>
         </div>
@@ -35,42 +35,42 @@
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Letras Mayúsculas:</label>
-            <input [(ngModel)]="emps.passwordCantidadMayusculas" type="number" name="passwordCantidadMayusculas"
+            <input [(ngModel)]="emps.passwordCantidadMayusculas" type="number" name="passwordCantidadMayusculas" #myFocus
               class="form-control" placeholder="# mayúsculas requeridas" required>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Letras Minúsculas:</label>
-            <input [(ngModel)]="emps.passwordCantidadMinusculas" type="number" name="passwordCantidadMinusculas"
+            <input [(ngModel)]="emps.passwordCantidadMinusculas" type="number" name="passwordCantidadMinusculas" #myFocus
               class="form-control" placeholder="# minúsculas requeridas" required>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Caracteres Especiales:</label>
-            <input [(ngModel)]="emps.passwordCantidadCaracteresEspeciales" type="number" name="passwordCantidadCaracteresEspeciales"
+            <input [(ngModel)]="emps.passwordCantidadCaracteresEspeciales" type="number" name="passwordCantidadCaracteresEspeciales"#myFocus
               class="form-control" placeholder="# caracteres especiales" required>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Caducidad (días):</label>
-            <input [(ngModel)]="emps.passwordCantidadCaducidadDias" type="number" name="passwordCantidadCaducidadDias"
+            <input [(ngModel)]="emps.passwordCantidadCaducidadDias" type="number" name="passwordCantidadCaducidadDias" #myFocus
               class="form-control" placeholder="Días antes de caducar" required>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Largo mínimo:</label>
-            <input [(ngModel)]="emps.passwordLargo" type="number" name="passwordLargo"
+            <input [(ngModel)]="emps.passwordLargo" type="number" name="passwordLargo" #myFocus
               class="form-control" placeholder="Mínimo de caracteres" required>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Intentos de Bloqueo:</label>
-            <input [(ngModel)]="emps.passwordIntentosAntesDeBloquear" type="number" name="passwordIntentosAntesDeBloquear"
+            <input [(ngModel)]="emps.passwordIntentosAntesDeBloquear" type="number" name="passwordIntentosAntesDeBloquear" #myFocus
               class="form-control" placeholder="Intentos antes de bloquear" required>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Cantidad de Números:</label>
-            <input [(ngModel)]="emps.passwordCantidadNumeros" type="number" name="passwordCantidadNumeros"
+            <input [(ngModel)]="emps.passwordCantidadNumeros" type="number" name="passwordCantidadNumeros" #myFocus
               class="form-control" placeholder="# números requeridos" required>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label">Preguntas de Seguridad:</label>
-            <input [(ngModel)]="emps.passwordCantidadPreguntasValidar" type="number" name="passwordCantidadPreguntasValidar"
+            <input [(ngModel)]="emps.passwordCantidadPreguntasValidar" type="number" name="passwordCantidadPreguntasValidar" #myFocus
               class="form-control" placeholder="# preguntas requeridas" required>
           </div>
         </div>

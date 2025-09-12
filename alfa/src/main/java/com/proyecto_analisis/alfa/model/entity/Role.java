@@ -36,5 +36,4 @@ public class Role {
     @Column(name = "UsuarioModificacion")
     private String usuarioModificacion;
 
-
 }

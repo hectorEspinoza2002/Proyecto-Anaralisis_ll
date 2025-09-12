@@ -1,70 +1,52 @@
 package com.proyecto_analisis.alfa.model.entity;
 
-//import java.sql.Date;
-//import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
-//import jakarta.persistence.Column;
-//import jakarta.persistence.EmbeddedId;
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.FetchType;
-//import jakarta.persistence.JoinColumn;
-//import jakarta.persistence.ManyToOne;
-//import jakarta.persistence.MapsId;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-//@Entity
+@Entity
 @Table(name = "role_opcion")
 @Data
 public class RoleOpcion {
-    /*
-
+    
     @EmbeddedId
     private RoleOpcionId id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("idRole") // mapea la parte de la PK
-    @JoinColumn(name = "IdRole")
+    @MapsId("idRole") // enlaza con role
+    @JoinColumn(name = "IdRole", insertable = false, updatable = false)
     private Role role;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("idOpcion") // mapea la parte de la PK
-    @JoinColumn(name = "IdOpcion")
+    @MapsId("idOpcion") //enlaza con Opcion
+    @JoinColumn(name = "IdOpcion", insertable = false, updatable = false)
     private Opcion opcion;
 
-    /*
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "IdRole")
-    private Role role;
-
-    @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "IdOpcion")
-    private Opcion opcion;
-    */
-
-    /* 
     @Column(name = "Alta")
-    private Integer alta;
+    private Boolean alta;
 
     @Column(name = "Baja")
-    private Integer baja;
+    private Boolean baja;
 
     @Column(name = "Cambio")
-    private Integer cambio;
+    private Boolean cambio;
 
     @Column(name = "Imprimir")
-    private Integer imprimir;
+    private Boolean imprimir;
 
     @Column(name = "Exportar")
-    private Integer exportar;
+    private Boolean exportar;
 
     @Column(name = "FechaCreacion")
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "UsuarioCreacion")
     private String usuarioCreacion;
@@ -74,7 +56,5 @@ public class RoleOpcion {
 
     @Column(name = "UsuarioModificacion")
     private String usuarioModificacion;
-
-    */
 
 }

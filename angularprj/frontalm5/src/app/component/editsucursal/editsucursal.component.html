@@ -15,7 +15,7 @@
             [(ngModel)]="sucursal.idSucursal"
             type="text"
             name="idSucursal"
-            id="idSucursal"
+            id="idSucursal" #myFocus
             class="form-control"
             placeholder="ID"
             required
@@ -30,7 +30,7 @@
             [(ngModel)]="sucursal.nombre"
             type="text"
             name="nombre"
-            id="nombre"
+            id="nombre" #myFocus
             class="form-control"
             placeholder="Ingrese nombre de la sucursal"
             required
@@ -44,7 +44,7 @@
             [(ngModel)]="sucursal.direccion"
             type="text"
             name="direccion"
-            id="direccion"
+            id="direccion" #myFocus
             class="form-control"
             placeholder="Ingrese la dirección"
             required
@@ -55,7 +55,7 @@
         <div class="mb-3">
           <label for="empresa" class="form-label fw-bold">Empresa</label>
           <select
-            id="empresa"
+            id="empresa" #myFocus
             class="form-select"
             required
             [(ngModel)]="selectedEmpresa"

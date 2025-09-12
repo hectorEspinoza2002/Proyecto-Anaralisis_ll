@@ -1,1 +1,113 @@
-<p>editopciones works!</p>
+<div class="container col-md-6">
+  <div class="card">
+    <div class="card-header">
+      <h2>Modificar Opcion</h2>
+    </div>
+    <div class="card-body">
+      <form>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">ID de Opcion:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="opcion.idOpcion"
+              type="text"
+              name="idOpcion"
+              disabled
+              id="idOpcion" #myFocus
+              class="form-control"
+              placeholder="ID"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="idMenu" class="form-label">Menu: *</label>
+          <select
+            id="idMenu" #myFocus
+            class="form-select"
+            required
+            [(ngModel)]="selectedMenu"
+            name="Menu"
+          >
+            <option value="" disabled selected>Seleccione un menu</option>
+            <option *ngFor="let m of menu" [value]="m.idMenu">
+              {{ m.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">Nombre de Opcion:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="opcion.nombre"
+              type="text"
+              name="nombre"
+              id="nombre"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese nombre del la opcion"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">Orden Opcion:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="opcion.ordenMenu"
+              type="text"
+              name="ordenMenu"
+              id="ordenMenu"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese numero del la opcion"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">Pagina:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="opcion.pagina"
+              type="text"
+              name="pagina"
+              id="pagina"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese pagina"
+              required
+            />
+          </div>
+        </div>
+
+        <button
+          (click)="editMenu(opcion)"
+          class="btn btn-outline-success"
+          type="button"
+        >
+          Guardar
+        </button>
+        <span style="margin-left: 1em"></span>
+        <button (click)="Cancel()" class="btn btn-outline-danger" type="button">
+          Cancelar
+        </button>
+
+      </form>
+    </div>
+  </div>
+</div>
+

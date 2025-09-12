@@ -1,42 +1,76 @@
 <div class="container col-md-6">
   <div class="card">
     <div class="card-header">
-       <h2>Modificar Modulo</h2>
+      <h2>Modificar Modulo</h2>
     </div>
-       <div class="card-body">
-        <form>
-
-          <div class="form-group">
-            <div class="mb-2">
-              <label for="">ID del Modulo:</label>
-            </div>
-            <div class="mb-2">
-              <input [(ngModel)]="modul.idModulo"  type="text" name="idModulo"  disabled  id="idModulo"  class="form-control" placeholder="ID" required>
-            </div>
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">ID del Modulo:</label>
           </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="modul.idModulo"
+              type="text"
+              name="idModulo"
+              disabled
+              id="idModulo" #myFocus
+              class="form-control"
+              placeholder="ID"
+              required
+            />
+          </div>
+        </div>
 
-            <div class="form-group">
-              <div class="mb-2">
-                <label for="">Nombre del Modulo:</label>
-              </div>
-              <div class="mb-2">
-                <input [(ngModel)]="modul.nombre" type="text" name="nombre"  id="nombre" #myFocus class="form-control" placeholder="Ingrese nombre del modulo" required>
-              </div>
-            </div>
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">Nombre del Modulo:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="modul.nombre"
+              type="text"
+              name="nombre"
+              id="nombre"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese nombre del modulo"
+              required
+            />
+          </div>
+        </div>
 
-            <div class="form-group">
-              <div class="mb-2">
-                <label for="">Ingrese Orde de Menu:</label>
-              </div>
-              <div class="mb-2">
-                <input [(ngModel)]="modul.ordenMenu" type="text" name="direccion"  id="direccion" #myFocus class="form-control" placeholder="Ingrese numero de menu" required>
-              </div>
-            </div>
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="">Ingrese Orde de Menu:</label>
+          </div>
+          <div class="mb-2">
+            <input
+              [(ngModel)]="modul.ordenMenu"
+              type="text"
+              name="direccion"
+              id="direccion"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese numero de menu"
+              required
+            />
+          </div>
+        </div>
 
-            <button (click)="editEmpresa(modul)" class="btn btn-outline-success" type="button">Guardar</button>
-          <span style="margin-left:1em"></span>
-          <button (click)="Cancel()" class="btn btn-outline-danger"  type="button">Cancelar</button>
-        </form>
-       </div>
+        <button
+          (click)="editEmpresa(modul)"
+          class="btn btn-outline-success"
+          type="button"
+        >
+          Guardar
+        </button>
+        <span style="margin-left: 1em"></span>
+        <button (click)="Cancel()" class="btn btn-outline-danger" type="button">
+          Cancelar
+        </button>
+      </form>
     </div>
   </div>
+</div>
