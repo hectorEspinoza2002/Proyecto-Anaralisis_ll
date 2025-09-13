@@ -86,7 +86,7 @@ public class RoleOpcionController {
         return roleOpcionService.findByRole(idRole);
     }
 
-    @GetMapping("/list_role_opciones/role/{idrole}/opcion/{idOpcion}")
+    @GetMapping("/list_role_opciones/role/{idRole}/opcion/{idOpcion}")
     public Optional<RoleOpcion> listarPoorRolYOpcion(@PathVariable Integer idRole, @PathVariable Integer idOpcion) {
         return roleOpcionService.findByRoleAndOpcion(idRole, idOpcion);
     }

@@ -27,9 +27,67 @@
           <tr *ngFor="let rolOp of rolOpc">
             <td>{{ rolOp.role.nombre }}</td>
             <td>{{ rolOp.opcion.nombre }}</td>
+
+            <td>
+              <div class="form-check form-switch d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="rolOp.alta"
+                  disabled
+                />
+              </div>
+            </td>
+
+            <td>
+              <div class="form-check form-switch d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="rolOp.baja"
+                  disabled
+                />
+              </div>
+            </td>
+
+            <td>
+              <div class="form-check form-switch d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="rolOp.cambio"
+                  disabled
+                />
+              </div>
+            </td>
+
+            <td>
+              <div class="form-check form-switch d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="rolOp.imprimir"
+                  disabled
+                />
+              </div>
+            </td>
+
+            <td>
+              <div class="form-check form-switch d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="rolOp.exportar"
+                  disabled
+                />
+              </div>
+            </td>
+
+            <!--
             <td>
               <i class="bi" [ngClass]="rolOp.alta ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'"></i>
             </td>
+
             <td>
               <i class="bi" [ngClass]="rolOp.baja ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'"></i>
             </td>
@@ -42,11 +100,18 @@
             <td>
               <i class="bi" [ngClass]="rolOp.exportar ? 'bi-check-circle-fill text-success' : 'bi-x-circle-fill text-danger'"></i>
             </td>
+            -->
             <td>
-              <button (click)="selectRoleOpcion(rolOp)" class="btn btn-warning btn-sm me-2">
+              <button
+                (click)="selectRoleOpcion(rolOp)"
+                class="btn btn-warning btn-sm me-2"
+              >
                 <i class="bi bi-pencil-square"></i> Editar
               </button>
-              <button (click)="deleteRoleOpcion(rolOp)" class="btn btn-danger btn-sm">
+              <button
+                (click)="deleteRoleOpcion(rolOp)"
+                class="btn btn-danger btn-sm"
+              >
                 <i class="bi bi-trash"></i> Borrar
               </button>
             </td>

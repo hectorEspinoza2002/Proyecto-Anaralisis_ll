@@ -22,6 +22,8 @@ export class EditroleopcionComponent implements OnInit{
   idRole!: number;
   idOpcion!: number;
 
+
+
   constructor(
     private roService: RoleopcionService,
     private roleService: RoleService,
@@ -30,6 +32,7 @@ export class EditroleopcionComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.selectEdit();
     // Obtener ids guardados
      const idRole = localStorage.getItem("idRole");
     const idOpcion = localStorage.getItem("idOpcion");
@@ -60,12 +63,22 @@ export class EditroleopcionComponent implements OnInit{
     this.router.navigate(["listrolopcion"]);
   }
 
-  permisos = [
-  { key: 'alta', label: 'Alta' },
-  { key: 'baja', label: 'Baja' },
-  { key: 'cambio', label: 'Cambio' },
-  { key: 'imprimir', label: 'Imprimir' },
-  { key: 'exportar', label: 'Exportar' }
-];
+  selectEdit(): void {
+    const idRoleStr = localStorage.getItem("idRole");
+    const idOpcionStr = localStorage.getItem("idOpcion");
+
+    if (idRoleStr && idOpcionStr) {
+      this.idRole = Number(idRoleStr);
+      this.idOpcion = Number(idOpcionStr);
+
+      this.roService.buscarRoleOpcion(this.idRole, this.idOpcion)
+        .subscribe(data => {
+          this.rolOpc = data;
+        });
+    } else {
+      alert("❌ No se encontraron los IDs en localStorage");
+      this.router.navigate(["listroleopcion"]);
+    }
+  }
 
 }
