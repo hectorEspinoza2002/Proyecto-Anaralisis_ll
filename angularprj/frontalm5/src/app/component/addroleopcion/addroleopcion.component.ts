@@ -11,10 +11,9 @@ import { Router } from '@angular/router';
   selector: 'app-addroleopcion',
   standalone: false,
   templateUrl: './addroleopcion.component.html',
-  styleUrl: './addroleopcion.component.css'
+  styleUrl: './addroleopcion.component.css',
 })
-export class AddroleopcionComponent implements OnInit{
-
+export class AddroleopcionComponent implements OnInit {
   rolOpc: RoleOpcion = new RoleOpcion();
   roles: Role[] = [];
   opciones: Opcion[] = [];
@@ -27,10 +26,25 @@ export class AddroleopcionComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.roleService.listRole().subscribe(data => this.roles = data);
-    this.opcionService.getAll().subscribe(data => this.opciones = data);
+    this.roleService.listRole().subscribe((data) => (this.roles = data));
+    this.opcionService.getAll().subscribe((data) => (this.opciones = data));
   }
 
+  saveRoleOpcion() {
+  this.roService.addRoleOpcion(this.rolOpc).subscribe({
+    next: () => {
+      alert("Rol Opción asignado correctamente ✅");
+      this.router.navigate(["listrolopcion"]);
+    },
+    error: (err) => {
+      console.error("Error al guardar:", err);
+      alert("❌ Ocurrió un error al guardar la asignación");
+    }
+  });
+}
+
+
+  /*
   saveRoleOpcion() {
     this.roService.addRoleOpcion(this.rolOpc).subscribe({
       next: () => {
@@ -42,9 +56,8 @@ export class AddroleopcionComponent implements OnInit{
       }
     });
   }
-
+ */
   cancelar() {
-    this.router.navigate(["listrolopcion"]);
+    this.router.navigate(['listrolopcion']);
   }
-
 }

@@ -1,43 +1,68 @@
+import { Opcion } from './../../entity/opcion';
 import { Component, OnInit } from '@angular/core';
 import { Empresa } from '../../entity/empresa';
 import { EmpresaService } from '../../service/empresa.service';
 import { Router } from '@angular/router';
+import { PermisosService } from '../../service/permisos.service';
 
 @Component({
   selector: 'app-listempresa',
   standalone: false,
   templateUrl: './listempresa.component.html',
-  styleUrl: './listempresa.component.css'
+  styleUrl: './listempresa.component.css',
 })
-export class ListempresaComponent implements OnInit{
+export class ListempresaComponent implements OnInit {
   empresas!: Empresa[];
 
-  constructor(private empresaService: EmpresaService, private router:Router){}
+  puedeAlta = false;
+  puedeBaja = false;
+  puedeCambio = false;
+
+  constructor(
+    private empresaService: EmpresaService,
+    private router: Router,
+    private permisosService: PermisosService
+  ) {}
   ngOnInit(): void {
-      this.empresaService.getAll().subscribe(data => {
-        this.empresas = data;
-      })
+    this.empresaService.getAll().subscribe((data) => {
+      this.empresas = data;
+    });
+
+    //const permisos = JSON.parse(localStorage.getItem("permisos") || '[]');
+    this.permisosService.permisos$.subscribe((permisos) => {
+      console.log('Permisos en localStorage:', permisos);
+
+      const permisosEmpresa = permisos.find(
+        (p: any) => p.opcion.nombre === 'Empresas'
+      );
+
+      if (permisosEmpresa) {
+        this.puedeAlta = permisosEmpresa.alta == 1;
+        this.puedeBaja = permisosEmpresa.baja == 1;
+        this.puedeCambio = permisosEmpresa.cambio == 1;
+      }
+    });
   }
 
-  deleteEmpresa(empr:Empresa){
-    var validar = confirm("Esta seguro que desea eliminar el Empresa?");
-    if(validar == true){
+  deleteEmpresa(empr: Empresa) {
+    var validar = confirm('Esta seguro que desea eliminar el Empresa?');
+    if (validar == true) {
       this.empresaService.deleteEmpresa(empr).subscribe({
         next: (result) => {
-          this.empresas = this.empresas.filter(x => x !== empr);
-          alert(result +empr.nombre+" eliminada correctamente");
+          this.empresas = this.empresas.filter((x) => x !== empr);
+          alert(result + empr.nombre + ' eliminada correctamente');
         },
         error: () => {
-          alert("Ha ocurrido un error al eliminar el Empresa.\nVerifique que no existan sucursales");
+          alert(
+            'Ha ocurrido un error al eliminar el Empresa.\nVerifique que no existan sucursales'
+          );
         },
       });
     }
   }
 
-  selectEmpresa(r:Empresa): void{
-    localStorage.setItem("id",r.idEmpresa.toString().valueOf());
-    this.router.navigate(["editempresa"])
+  selectEmpresa(r: Empresa): void {
+    localStorage.setItem('id', r.idEmpresa.toString().valueOf());
+    this.router.navigate(['editempresa']);
   }
-
-
 }

@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto_analisis.alfa.model.entity.Empresa;
 import com.proyecto_analisis.alfa.model.entity.LoginRequest;
+import com.proyecto_analisis.alfa.model.entity.RoleOpcion;
 import com.proyecto_analisis.alfa.model.entity.Sucursal;
 import com.proyecto_analisis.alfa.model.entity.Usuario;
 import com.proyecto_analisis.alfa.model.repository.EmpresaRepository;
 import com.proyecto_analisis.alfa.model.repository.SucursalRepository;
+import com.proyecto_analisis.alfa.service.RoleOpcionService;
 import com.proyecto_analisis.alfa.service.UsuarioService;
 
 @RestController
@@ -32,6 +34,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private RoleOpcionService roleOpcionService;
 
     @Autowired
     private EmpresaRepository empresaRepository;
@@ -175,6 +180,20 @@ public class UsuarioController {
             response.put("success", true);
             response.put("message", "Login exitoso");
             response.put("usuario", usuario);
+
+            // Permisos del rol del usuario
+            /*
+             * if (usuario.getIdRole() != null) {
+             * List<RoleOpcion> permisos =
+             * roleOpcionService.findByRole(usuario.getIdRole().getIdRole());
+             * response.put("permisos", permisos);
+             * }
+             */
+            // 🔹 Obtener permisos del rol
+            Integer idRole = usuario.getIdRole().getIdRole();
+            List<RoleOpcion> permisos = roleOpcionService.findByRole(idRole);
+
+            response.put("permisos", permisos);
 
             return ResponseEntity.ok(response);
 

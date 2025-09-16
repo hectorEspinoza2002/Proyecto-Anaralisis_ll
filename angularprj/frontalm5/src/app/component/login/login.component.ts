@@ -2,6 +2,7 @@ import { UsuarioService } from './../../service/usuario.service';
 import { Component } from '@angular/core';
 import { Usuario } from '../../entity/usuario';
 import { Router } from '@angular/router';
+import { PermisosService } from '../../service/permisos.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,11 @@ export class LoginComponent {
   usuario: Usuario = new Usuario();
   errorMessage: string = '';
 
-  constructor(private usuarioService: UsuarioService, private router: Router) {}
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router,
+    private permisosService: PermisosService
+  ) {}
 
   iniciarSesion() {
     this.errorMessage = '';
@@ -24,32 +29,44 @@ export class LoginComponent {
       return;
     }
 
-    console.log("Datos que envío: ", this.usuario);
+    console.log('Datos que envío: ', this.usuario);
 
     // 2️⃣ Llamar al backend
-    this.usuarioService.login({
-      idUsuario: this.usuario.idUsuario,
-      password: this.usuario.password
-    }).subscribe(
-      (response) => {
-        if (response.success) {
+    this.usuarioService
+      .login({
+        idUsuario: this.usuario.idUsuario,
+        password: this.usuario.password,
+      })
+      .subscribe(
+        (response) => {
+          if (response.success) {
+            //localStorage.getItem('id', this.usuario.idUsuario);
+            localStorage.setItem('usuario', JSON.stringify(response.usuario));
 
-          //localStorage.getItem('id', this.usuario.idUsuario);
-          localStorage.setItem('usuario', JSON.stringify(response.usuario));
+            //If que asigna permisos de alta, baja y cambio
+            /*
+          if(response.permisos){
+            localStorage.setItem('permisos',JSON.stringify(response.permisos));
+          }
+            */
+            if (response.permisos) {
+              this.permisosService.actualizarPermisos(response.permisos);
+            }
 
-          alert('Login exitoso');
-          this.router.navigate(['/principal']);
-        } else {
-          // 3️⃣ Mostrar mensaje que devuelve el backend
-          this.errorMessage = response.message || 'Usuario o contraseña incorrectos';
+            alert('Login exitoso');
+            this.router.navigate(['/principal']);
+          } else {
+            // 3️⃣ Mostrar mensaje que devuelve el backend
+            this.errorMessage =
+              response.message || 'Usuario o contraseña incorrectos';
+          }
+        },
+        (error) => {
+          //console.error('Error al iniciar sesión', error);
+          this.errorMessage = 'Usuario o contraseña incorrectos.';
+          //this.errorMessage = 'Error en el servidor. Intente más tarde.';
         }
-      },
-      (error) => {
-        //console.error('Error al iniciar sesión', error);
-        this.errorMessage = 'Usuario o contraseña incorrectos.';
-        //this.errorMessage = 'Error en el servidor. Intente más tarde.';
-      }
-    );
+      );
   }
 
   registrar() {
