@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Genero } from '../../entity/genero';
 import { GeneroService } from '../../service/genero.service';
 import { Router } from '@angular/router';
+import { PermisosService } from '../../service/permisos.service';
 
 @Component({
   selector: 'app-listgenero',
@@ -12,11 +13,31 @@ import { Router } from '@angular/router';
 export class ListgeneroComponent implements OnInit{
   generos!: Genero[];
 
-  constructor(private generoService: GeneroService, private router:Router){}
+  puedeAlta = false;
+  puedeBaja = false;
+  puedeCambio = false;
+
+  constructor(private generoService: GeneroService, private router:Router,
+    private permisosService: PermisosService
+  ){}
   ngOnInit(): void {
       this.generoService.listGenero().subscribe(data => {
         this.generos = data;
-      })
+      });
+
+      this.permisosService.permisos$.subscribe((permisos) => {
+      console.log('Permisos en localStorage:', permisos);
+
+      const permisosEmpresa = permisos.find(
+        (p: any) => p.opcion.nombre === 'Generos'
+      );
+
+      if (permisosEmpresa) {
+        this.puedeAlta = permisosEmpresa.alta == 1;
+        this.puedeBaja = permisosEmpresa.baja == 1;
+        this.puedeCambio = permisosEmpresa.cambio == 1;
+      }
+    });
   }
 
   deleteGenero(ge:Genero){

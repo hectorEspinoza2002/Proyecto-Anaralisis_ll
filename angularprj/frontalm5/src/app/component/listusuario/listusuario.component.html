@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="text-primary m-0">Listado de Usuarios</h2>
-    <a routerLink="/addusuarios" class="btn btn-success">
+    <a *ngIf="puedeAlta" routerLink="/addusuarios" class="btn btn-success">
       <i class="bi bi-plus-circle"></i>Agregar Usuario
     </a>
   </div>
@@ -40,10 +40,10 @@
           <td>{{us.telefonoMovil}}</td>
           <td>{{us.idSucursal.nombre}}</td>
           <td>
-            <button (click)="selectUser(us)" class="btn btn-warning btn-sm me-2">
+            <button *ngIf="puedeCambio" (click)="selectUser(us)" class="btn btn-warning btn-sm me-2">
               <i class="bi bi-pencil-square"></i>Editar
             </button>
-            <button (click)="deleteUsuario(us)" class="btn btn-danger btn-sm">
+            <button *ngIf="puedeBaja" (click)="deleteUsuario(us)" class="btn btn-danger btn-sm">
               <i class="bi bi-trash"></i>Borrar
             </button>
           </td>

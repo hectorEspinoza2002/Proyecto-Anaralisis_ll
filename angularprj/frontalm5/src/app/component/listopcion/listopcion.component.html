@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="text-primary m-0">Listado de Opciones</h2>
-    <a routerLink="/addopcion" class="btn btn-success">
+    <a *ngIf="puedeAlta" routerLink="/addopcion" class="btn btn-success">
       <i class="bi bi-plus-circle"></i> Agregar Opciones
     </a>
   </div>
@@ -27,13 +27,13 @@
             <td>{{ op.ordenMenu }}</td>
             <td>{{ op.pagina }}</td>
             <td>
-              <button
+              <button *ngIf="puedeCambio"
                 (click)="selectOp(op)"
                 class="btn btn-warning btn-sm me-2"
               >
                 <i class="bi bi-pencil-square"></i>Editar
               </button>
-              <button (click)="deleteOpcion(op)" class="btn btn-danger btn-sm">
+              <button *ngIf="puedeBaja" (click)="deleteOpcion(op)" class="btn btn-danger btn-sm">
                 <i class="bi bi-trash"></i>Borrar
               </button>
             </td>

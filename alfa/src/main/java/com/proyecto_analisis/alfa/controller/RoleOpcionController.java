@@ -82,7 +82,6 @@ public class RoleOpcionController {
      */
 
     @PutMapping("/update_role_opcion/{idRole}/{idOpcion}")
-    //public RoleOpcion updateRoleOpcion(@PathVariable Integer idRole, @PathVariable Integer idOpcion,
     public ResponseEntity<?> updateRoleOpcion(@PathVariable Integer idRole, @PathVariable Integer idOpcion,
             @RequestBody RoleOpcion updateRo) {
         RoleOpcionId id = new RoleOpcionId(idRole, idOpcion);
@@ -127,6 +126,7 @@ public class RoleOpcionController {
         return roleOpcionService.findByRoleAndOpcion(idRole, idOpcion);
     }
 
+    
     @GetMapping("/permisos/{idUsuario}")
     public ResponseEntity<?> getPermisosPorUsuario(@PathVariable String idUsuario) {
         try {
@@ -150,5 +150,6 @@ public class RoleOpcionController {
                     .body("Error al obtener permisos: " + e.getMessage());
         }
     }
+         
 
 }

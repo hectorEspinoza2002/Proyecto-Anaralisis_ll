@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="text-primary m-0">Listado de Modulo</h2>
-    <a routerLink="/addmodulo" class="btn btn-success">
+    <a *ngIf="puedeAlta" routerLink="/addmodulo" class="btn btn-success">
       <i class="bi bi-plus-circle"></i> Agregar Modulo
     </a>
   </div>
@@ -23,13 +23,13 @@
             <td>{{ mod.nombre }}</td>
             <td>{{ mod.ordenMenu }}</td>
             <td>
-              <button
+              <button *ngIf="puedeCambio"
                 (click)="selectModulo(mod)"
                 class="btn btn-warning btn-sm me-2"
               >
                 <i class="bi bi-pencil-square"></i>Editar
               </button>
-              <button (click)="deleteModulo(mod)" class="btn btn-danger btn-sm">
+              <button *ngIf="puedeBaja" (click)="deleteModulo(mod)" class="btn btn-danger btn-sm">
                 <i class="bi bi-trash"></i>Borrar
               </button>
             </td>

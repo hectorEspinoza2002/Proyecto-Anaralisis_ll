@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../entity/usuario';
 import { UsuarioService } from '../../service/usuario.service';
 import { Router } from '@angular/router';
+import { PermisosService } from '../../service/permisos.service';
 
 @Component({
   selector: 'app-listusuario',
@@ -12,12 +13,32 @@ import { Router } from '@angular/router';
 export class ListusuarioComponent implements OnInit {
   usuarios!: Usuario[];
 
-  constructor(private userService: UsuarioService, private router: Router) {}
+  puedeAlta = false;
+  puedeBaja = false;
+  puedeCambio = false;
+
+  constructor(private userService: UsuarioService, private router: Router,
+    private permisosService: PermisosService
+  ) {}
 
   ngOnInit(): void {
     this.userService.listUsuarios().subscribe(data => {
       this.usuarios = data;
-    })
+    });
+
+    this.permisosService.permisos$.subscribe((permisos) => {
+      console.log('Permisos en localStorage:', permisos);
+
+      const permisosEmpresa = permisos.find(
+        (p: any) => p.opcion.nombre === 'Usuarios'
+      );
+
+      if (permisosEmpresa) {
+        this.puedeAlta = permisosEmpresa.alta == 1;
+        this.puedeBaja = permisosEmpresa.baja == 1;
+        this.puedeCambio = permisosEmpresa.cambio == 1;
+      }
+    });
   }
 
   deleteUsuario(user: Usuario) {
