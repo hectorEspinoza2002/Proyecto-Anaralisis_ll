@@ -96,7 +96,7 @@ public class UsuarioController {
             // user.setIdStatusUsuario(updUs.getIdStatusUsuario());
             user.setPregunta(updUs.getPregunta());
             user.setRespuesta(updUs.getRespuesta());
-            user.setUltimaFechaCambioPassword(updUs.getUltimaFechaCambioPassword());
+            user.setUltimaFechaCambioPassword(LocalDateTime.now());
             // user.setIntentosDeAcceso(0);
 
             if (updUs.getPassword() != null && !updUs.getPassword().isEmpty()) {
@@ -201,7 +201,7 @@ public class UsuarioController {
             user.setPassword(passwordMD5);
             user.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
             user.setFechaModificacion(LocalDateTime.now());
-            user.setUltimaFechaCambioPassword(user.getUltimaFechaCambioPassword());
+            user.setUltimaFechaCambioPassword(LocalDateTime.now());
             usuarioService.guardarUsuario(user);
             return ResponseEntity.ok("Contraseña actualizada correctamente");
         }
