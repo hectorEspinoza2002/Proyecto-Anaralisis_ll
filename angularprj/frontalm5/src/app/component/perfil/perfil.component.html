@@ -26,6 +26,39 @@
 
   <hr />
   <h5 class="mt-4">Cambiar Contraseña</h5>
+
+  <div class="form-group col-md-6 p-0">
+    <input
+      type="password"
+      class="form-control mb-2"
+      placeholder="Nueva contraseña"
+      [(ngModel)]="nuevaPassword"
+      name="nuevaPassword"
+      required
+    />
+
+    <input
+      type="password"
+      class="form-control mb-2"
+      placeholder="Confirmar contraseña"
+      [(ngModel)]="confirmarPassword"
+      name="confirmarPassword"
+      required
+    />
+
+    <button class="btn btn-primary w-100" (click)="cambiarPassword()">
+      Actualizar Contraseña
+    </button>
+    <div *ngIf="erroresPassword.length > 0" class="text-danger mb-2">
+      <div *ngFor="let err of erroresPassword">{{ err }}</div>
+    </div>
+
+    <p class="mt-2 text-danger" *ngIf="mensaje">{{ mensaje }}</p>
+  </div>
+
+  <!--
+  <hr />
+  <h5 class="mt-4">Cambiar Contraseña</h5>
   <div class="form-group">
     <input
       type="password"
@@ -46,3 +79,4 @@
 
   <p class="mt-2 text-danger" *ngIf="mensaje">{{ mensaje }}</p>
 </div>
+--></div>

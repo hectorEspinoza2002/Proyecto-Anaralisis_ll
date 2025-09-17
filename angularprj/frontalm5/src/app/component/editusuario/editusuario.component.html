@@ -31,17 +31,6 @@
               (input)="validarPassword(usuario.password)"
               placeholder="Dejar vacío si no cambia"
             />
-
-            <!--
-            <input #myFocus
-              [(ngModel)]="usuario.password"
-              name="password"
-              type="password"
-              class="form-control"
-              required
-              (input)="validarPassword(usuario.password)"
-            />
-            -->
             <ul class="text-danger mt-1" *ngIf="passwordValidations.length > 0">
               <li *ngFor="let msg of passwordValidations">{{ msg }}</li>
             </ul>

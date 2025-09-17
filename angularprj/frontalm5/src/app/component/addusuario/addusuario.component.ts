@@ -11,6 +11,7 @@ import { Role } from '../../entity/Role';
 import { SucursalService } from '../../service/sucursal.service';
 import { RoleService } from '../../service/role.service';
 import { EmpresaService } from '../../service/empresa.service';
+import { PassowrdValidatorDirective } from '../../service/passowrd-validator.directive';
 
 @Component({
   selector: 'app-addusuario',
@@ -46,7 +47,8 @@ export class AddusuarioComponent implements OnInit {
     private generoService: GeneroService,
     private sucursalService: SucursalService,
     private roleService: RoleService,
-    private empresaService: EmpresaService
+    private empresaService: EmpresaService,
+    private passwordValidator:PassowrdValidatorDirective
   ) {}
 
   ngOnInit(): void {

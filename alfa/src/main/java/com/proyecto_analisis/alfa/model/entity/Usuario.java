@@ -57,7 +57,7 @@ public class Usuario {
     private String sesionActual;
 
     @Column(name = "UltimaFechaCambioPassword")
-    private Date ultimaFechaCambioPassword;
+    private LocalDateTime ultimaFechaCambioPassword;
 
     @Column(name = "CorreoElectronico")
     private String correoElectronico;

@@ -10,6 +10,7 @@ import { StatusUsuarioService } from '../../service/status-usuario.service';
 import { GeneroService } from '../../service/genero.service';
 import { SucursalService } from '../../service/sucursal.service';
 import { RoleService } from '../../service/role.service';
+import { EmpresaService } from '../../service/empresa.service';
 
 @Component({
   selector: 'app-editusuario',
@@ -27,12 +28,14 @@ export class EditusuarioComponent implements OnInit, AfterViewInit {
   selectedGenero: Number | null = null;
   genero: Genero[] = [];
 
-  selectedSucursal: Number | null = null;
+  selectedSucursal: number | null = null;
   sucursal: Sucursal[] = [];
 
   selectedRol: Number | null = null;
   rol: Role[] = [];
 
+  //variables para traer datos de empresa
+  empresaRules: any = null;
   passwordValidations: string[] = [];
 
   @ViewChild('myFocus') myFocus: any;
@@ -43,7 +46,8 @@ export class EditusuarioComponent implements OnInit, AfterViewInit {
     private statusService: StatusUsuarioService,
     private generoService: GeneroService,
     private sucursalservice: SucursalService,
-    private rolService: RoleService
+    private rolService: RoleService,
+    private empresaService: EmpresaService
   ) {}
 
   ngOnInit(): void {
@@ -60,11 +64,28 @@ export class EditusuarioComponent implements OnInit, AfterViewInit {
     if (id) {
       this.userService.buscarUsuarioId(id).subscribe((result) => {
         this.usuario = result;
-        this.usuario.password = "";
+        this.usuario.password = '';
         this.selectedStatus = result.idStatusUsuario?.idStatusUsuario ?? null;
         this.selectedGenero = result.idGenero?.idGenero ?? null;
         this.selectedSucursal = result.idSucursal?.idSucursal ?? null;
         this.selectedRol = result.idRole?.idRole ?? null;
+
+        if (this.selectedSucursal) {
+          this.empresaService
+            .getEmpresaPorSucursal(this.selectedSucursal)
+            .subscribe({
+              next: (empresa) => {
+                this.empresaRules = empresa;
+                if (this.usuario.password) {
+                  this.validarPassword(this.usuario.password);
+                }
+              },
+              error: () => {
+                this.empresaRules = null;
+                this.passwordValidations = [];
+              },
+            });
+        }
       });
     }
   }
@@ -187,6 +208,20 @@ export class EditusuarioComponent implements OnInit, AfterViewInit {
         console.error(err);
       },
     });
+
+    if (this.selectedSucursal) {
+      this.empresaService
+        .getEmpresaPorSucursal(this.selectedSucursal)
+        .subscribe({
+          next: (empresa) => {
+            this.empresaRules = empresa;
+          },
+          error: () => {
+            this.empresaRules = null;
+            this.passwordValidations = [];
+          },
+        });
+    }
   }
 
   onFileSelected(event: any) {
@@ -200,7 +235,7 @@ export class EditusuarioComponent implements OnInit, AfterViewInit {
       reader.readAsDataURL(file);
     }
   }
-
+  /*
   validarPassword(password: string) {
     this.passwordValidations = [];
     if (!/[A-Z]/.test(password))
@@ -213,5 +248,65 @@ export class EditusuarioComponent implements OnInit, AfterViewInit {
       this.passwordValidations.push('Debe tener un carácter especial');
     if (password.length < 8)
       this.passwordValidations.push('Debe tener mínimo 8 caracteres');
+  }
+*/
+  validarPassword(password: string) {
+    this.passwordValidations = [];
+
+    if (!this.empresaRules) return;
+
+    if (password.length < this.empresaRules.passwordLargo) {
+      this.passwordValidations.push(
+        `Debe tener al menos ${this.empresaRules.passwordLargo} caracteres`
+      );
+    }
+
+    const mayusculas = (password.match(/[A-Z]/g) || []).length;
+    if (mayusculas < this.empresaRules.passwordCantidadMayusculas) {
+      this.passwordValidations.push(
+        `Debe tener al menos ${this.empresaRules.passwordCantidadMayusculas} mayúscula(s)`
+      );
+    }
+
+    const minusculas = (password.match(/[a-z]/g) || []).length;
+    if (minusculas < this.empresaRules.passwordCantidadMinusculas) {
+      this.passwordValidations.push(
+        `Debe tener al menos ${this.empresaRules.passwordCantidadMinusculas} minúscula(s)`
+      );
+    }
+
+    const numeros = (password.match(/[0-9]/g) || []).length;
+    if (numeros < this.empresaRules.passwordCantidadNumeros) {
+      this.passwordValidations.push(
+        `Debe tener al menos ${this.empresaRules.passwordCantidadNumeros} número(s)`
+      );
+    }
+
+    const especiales = (password.match(/[^a-zA-Z0-9]/g) || []).length;
+    if (especiales < this.empresaRules.passwordCantidadCaracteresEspeciales) {
+      this.passwordValidations.push(
+        `Debe tener al menos ${this.empresaRules.passwordCantidadCaracteresEspeciales} caracter(es) especial(es)`
+      );
+    }
+  }
+
+  onSucursalChange() {
+    if (this.selectedSucursal) {
+      this.empresaService
+        .getEmpresaPorSucursal(this.selectedSucursal)
+        .subscribe({
+          next: (empresa) => {
+            this.empresaRules = empresa;
+            // Si ya escribió algo en password, revalida con las nuevas reglas
+            if (this.usuario.password) {
+              this.validarPassword(this.usuario.password);
+            }
+          },
+          error: () => {
+            this.empresaRules = null;
+            this.passwordValidations = [];
+          },
+        });
+    }
   }
 }

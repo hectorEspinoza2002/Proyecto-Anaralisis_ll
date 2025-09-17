@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,8 +67,9 @@ public class UsuarioService {
 
         // obtenemos la empresa desde la sucursal
         Empresa empresa = usuario.getIdSucursal().getEmpresa();
-        int maxIntentos = empresa.getPasswordIntentosAntesDeBloquear() != null ?
-        empresa.getPasswordIntentosAntesDeBloquear() : 5;
+        int maxIntentos = empresa.getPasswordIntentosAntesDeBloquear() != null
+                ? empresa.getPasswordIntentosAntesDeBloquear()
+                : 5;
 
         String passwordEncriptado = encriptarPassword(password);
 
@@ -139,6 +141,29 @@ public class UsuarioService {
         }
 
         return true;
+    }
+
+    // Validacion de contraseña de usuario a sucursal(empresa)
+    public String actualizarPassword(String idUsuario, String passwordActual, String nuevaPassword) {
+        Usuario usuario = usuarioRepo.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        String passActualEncriptada = encriptarPassword(passwordActual);
+        if (!usuario.getPassword().equals(passActualEncriptada)) {
+            throw new RuntimeException("La contraseña actual es incorrecta");
+        }
+
+        // Validar reglas de empresa aquí si quieres doble validación en backend
+        Empresa empresa = usuario.getIdSucursal().getEmpresa();
+        if (!validarPassword(nuevaPassword, empresa)) {
+            throw new RuntimeException("La nueva contraseña no cumple con las reglas de seguridad");
+        }
+
+        usuario.setPassword(encriptarPassword(nuevaPassword));
+        usuario.setUltimaFechaCambioPassword(LocalDateTime.now());
+        usuarioRepo.save(usuario);
+
+        return "Contraseña actualizada exitosamente";
     }
 
 }

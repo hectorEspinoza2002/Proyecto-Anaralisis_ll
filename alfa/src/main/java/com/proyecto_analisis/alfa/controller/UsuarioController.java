@@ -88,15 +88,16 @@ public class UsuarioController {
             Usuario user = optionUser.get();
             user.setNombre(updUs.getNombre());
             user.setApellido(updUs.getApellido());
-            //user.setIdStatusUsuario(updUs.getIdStatusUsuario());
+            // user.setIdStatusUsuario(updUs.getIdStatusUsuario());
             user.setIdGenero(updUs.getIdGenero());
             user.setCorreoElectronico(updUs.getCorreoElectronico());
             user.setFotografia(updUs.getFotografia());
             user.setTelefonoMovil(updUs.getTelefonoMovil());
-            //user.setIdStatusUsuario(updUs.getIdStatusUsuario());
+            // user.setIdStatusUsuario(updUs.getIdStatusUsuario());
             user.setPregunta(updUs.getPregunta());
             user.setRespuesta(updUs.getRespuesta());
-            //user.setIntentosDeAcceso(0);
+            user.setUltimaFechaCambioPassword(updUs.getUltimaFechaCambioPassword());
+            // user.setIntentosDeAcceso(0);
 
             if (updUs.getPassword() != null && !updUs.getPassword().isEmpty()) {
                 String passwordMD5 = usuarioService.encriptarPassword(updUs.getPassword());
@@ -147,8 +148,8 @@ public class UsuarioController {
                 response.put("success", false);
 
                 if (usuario.getIdStatusUsuario() != null
-                        && usuario.getIdStatusUsuario().getIdStatusUsuario() == 2) {                            
-                    response.put("message", "Usuario bloqueado por demasiados intentos fallidos");                    
+                        && usuario.getIdStatusUsuario().getIdStatusUsuario() == 2) {
+                    response.put("message", "Usuario bloqueado por demasiados intentos fallidos");
                 } else {
                     response.put("message", "Credenciales inválidas");
                     response.put("intentos", usuario.getIntentosDeAcceso());
@@ -200,11 +201,23 @@ public class UsuarioController {
             user.setPassword(passwordMD5);
             user.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
             user.setFechaModificacion(LocalDateTime.now());
+            user.setUltimaFechaCambioPassword(user.getUltimaFechaCambioPassword());
             usuarioService.guardarUsuario(user);
             return ResponseEntity.ok("Contraseña actualizada correctamente");
         }
 
         return ResponseEntity.badRequest().body("La contraseña no puede estar vacía");
     }
+
+    /*
+    @PutMapping("/update_password_actual/{id}")
+    public ResponseEntity<String> actualizarPassword(
+            @PathVariable String id,
+            @RequestBody CambioPasswordRequest request) {
+
+        return ResponseEntity
+                .ok(usuarioService.actualizarPassword(id, request.getActualPassword(), request.getNuevaPassword()));
+    }
+                 */
 
 }

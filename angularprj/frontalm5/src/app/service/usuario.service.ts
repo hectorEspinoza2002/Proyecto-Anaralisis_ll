@@ -40,6 +40,7 @@ export class UsuarioService {
   }
 
   updatePassword(id: string, password: string): Observable<any> {
-    return this.http.put(`${this.Url}/update_password/${id}`, { password });
+    return this.http.put(`${this.Url}/update_password/${id}`, { password }, {responseType: 'text'});
   }
+
 }
