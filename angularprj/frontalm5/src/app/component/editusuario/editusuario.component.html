@@ -1,3 +1,172 @@
+<div class="container col-md-10">
+  <div class="card shadow-lg border-0 rounded-3">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Editar Usuario</h2>
+    </div>
+
+    <div class="card-body">
+      <form #usuarioForm="ngForm" novalidate>
+        <!-- Datos básicos -->
+        <h5 class="text-secondary mb-3">Datos Básicos</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">ID Usuario *</label>
+            <input #myFocus
+              [(ngModel)]="usuario.idUsuario"
+              name="idUsuario"
+              class="form-control"
+              required
+              readonly
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Contraseña *</label>
+            <input #myFocus
+              [(ngModel)]="usuario.password"
+              name="password"
+              type="password"
+              class="form-control"
+              required
+              (input)="validarPassword(usuario.password)"
+            />
+            <ul class="text-danger mt-1" *ngIf="passwordValidations.length > 0">
+              <li *ngFor="let msg of passwordValidations">{{ msg }}</li>
+            </ul>
+            <small class="form-text text-muted">
+              La contraseña debe cumplir con las reglas de seguridad
+            </small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nombre *</label>
+            <input #myFocus [(ngModel)]="usuario.nombre" name="nombre" class="form-control" required />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Apellido *</label>
+            <input [(ngModel)]="usuario.apellido" name="apellido" class="form-control" required />
+          </div>
+        </div>
+
+        <!-- Selectores -->
+        <h5 class="text-secondary mt-4 mb-3">Asignaciones</h5>
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Status *</label>
+            <select [(ngModel)]="selectedStatus" name="statusUsuario" class="form-select" required>
+              <option [ngValue]="null">Seleccione status</option>
+              <option *ngFor="let st of statusUsuarios" [ngValue]="st.idStatusUsuario">
+                {{ st.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Género *</label>
+            <select [(ngModel)]="selectedGenero" name="genero" class="form-select" required>
+              <option [ngValue]="null">Seleccione género</option>
+              <option *ngFor="let g of genero" [ngValue]="g.idGenero">
+                {{ g.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Sucursal *</label>
+            <select [(ngModel)]="selectedSucursal" name="sucursal" class="form-select" required>
+              <option [ngValue]="null">Seleccione sucursal</option>
+              <option *ngFor="let s of sucursal" [ngValue]="s.idSucursal">
+                {{ s.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <label class="form-label">Rol *</label>
+            <select [(ngModel)]="selectedRol" name="rol" class="form-select" required>
+              <option [ngValue]="null">Seleccione rol</option>
+              <option *ngFor="let r of rol" [ngValue]="r.idRole">
+                {{ r.nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Fecha y foto -->
+        <h5 class="text-secondary mt-4 mb-3">Información Personal</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha Nacimiento *</label>
+            <input #myFocus [(ngModel)]="usuario.fechaNacimiento" name="fechaNacimiento" type="date" class="form-control" required />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Fotografía</label>
+            <input type="file" (change)="onFileSelected($event)" class="form-control" />
+            <div *ngIf="usuario.fotografia" class="mt-2">
+              <img
+                [src]="'data:image/jpeg;base64,' + usuario.fotografia"
+                alt="Foto de usuario"
+                class="img-thumbnail"
+                style="max-width: 150px; max-height: 150px;"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Contacto -->
+        <h5 class="text-secondary mt-4 mb-3">Contacto</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Correo Electrónico *</label>
+            <input #myFocus [(ngModel)]="usuario.correoElectronico" name="correo" type="email" class="form-control" required />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Teléfono Móvil</label>
+            <input [(ngModel)]="usuario.telefonoMovil" name="telefono" class="form-control" />
+          </div>
+        </div>
+
+        <!-- Seguridad -->
+        <h5 class="text-secondary mt-4 mb-3">Seguridad</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Pregunta de Seguridad *</label>
+            <input #myFocus [(ngModel)]="usuario.pregunta" name="pregunta" class="form-control" required />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Respuesta *</label>
+            <input [(ngModel)]="usuario.respuesta" name="respuesta" class="form-control" required />
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-end mt-4">
+          <button (click)="Cancelar()" type="button" class="btn btn-outline-danger me-2">
+            Cancelar
+          </button>
+          <button
+            (click)="editUser(usuario)"
+            type="button"
+            class="btn btn-success"
+            [disabled]="!usuarioForm.form.valid"
+          >
+            Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!--
 <div class="container col-md-8">
   <div class="card">
     <div class="card-header">
@@ -6,7 +175,8 @@
 
     <div class="card-body">
       <form #usuarioForm="ngForm" novalidate>
-        <!-- ID Usuario -->
+        -->
+        <!-- ID Usuario
         <div class="form-group mb-3">
           <label for="idUsuario">ID de Usuario:</label>
           <input #myFocus
@@ -19,8 +189,8 @@
             required
           />
         </div>
-
-        <!-- Nombre -->
+-->
+        <!-- Nombre
         <div class="form-group mb-3">
           <label for="nombre">Nombre:</label>
           <input #myFocus
@@ -33,8 +203,8 @@
             required
           />
         </div>
-
-        <!-- Apellido -->
+ -->
+        <!-- Apellido
         <div class="form-group mb-3">
           <label for="apellido">Apellido:</label>
           <input #myFocus
@@ -47,8 +217,8 @@
             required
           />
         </div>
-
-        <!-- Fecha Nacimiento -->
+ -->
+        <!-- Fecha Nacimiento
         <div class="form-group mb-3">
           <label for="fechaNacimiento">Fecha Nacimiento:</label>
           <input #myFocus
@@ -59,8 +229,8 @@
             required
           />
         </div>
-
-        <!-- Password-->
+-->
+        <!-- Password
         <div class="form-group mb-3">
           <label for="password">Contraseña:</label>
           <input #myFocus
@@ -78,9 +248,9 @@
             La contraseña debe cumplir con las reglas de seguridad
           </small>
         </div>
+-->
 
-
-        <!-- Selects -->
+        <!-- Selects
         <div class="row">
           <div class="col-md-6 mb-3">
             <label>Status Usuario:</label>
@@ -112,8 +282,8 @@
             </select>
           </div>
         </div>
-
-        <!-- Correo y Teléfono -->
+ -->
+        <!-- Correo y Teléfono
         <div class="row">
           <div class="col-md-6 mb-3">
             <label>Correo Electrónico:</label>
@@ -135,8 +305,8 @@
             />
           </div>
         </div>
-
-        <!-- Sucursal y Rol -->
+ -->
+        <!-- Sucursal y Rol
         <div class="row">
           <div class="col-md-6 mb-3">
             <label>Sucursal:</label>
@@ -168,8 +338,8 @@
             </select>
           </div>
         </div>
-
-        <!-- Botones -->
+-->
+        <!-- Botones
         <div class="d-flex justify-content-end">
           <button type="button" class="btn btn-secondary me-2" (click)="Cancelar()">
             Cancelar
@@ -187,3 +357,4 @@
     </div>
   </div>
 </div>
+ -->
