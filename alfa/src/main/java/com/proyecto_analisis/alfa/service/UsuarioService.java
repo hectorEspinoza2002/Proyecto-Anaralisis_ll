@@ -64,6 +64,11 @@ public class UsuarioService {
             return false;
         }
 
+        // obtenemos la empresa desde la sucursal
+        Empresa empresa = usuario.getIdSucursal().getEmpresa();
+        int maxIntentos = empresa.getPasswordIntentosAntesDeBloquear() != null ?
+        empresa.getPasswordIntentosAntesDeBloquear() : 5;
+
         String passwordEncriptado = encriptarPassword(password);
 
         // 🔹 Si la contraseña es correcta
@@ -77,8 +82,8 @@ public class UsuarioService {
         int intentos = usuario.getIntentosDeAcceso() == null ? 0 : usuario.getIntentosDeAcceso();
         usuario.setIntentosDeAcceso(intentos + 1);
 
-        // 🔹 Si llega a 5 intentos, cambiar estatus a BLOQUEADO
-        if (usuario.getIntentosDeAcceso() >= 5) {
+        // validar contra el numero de intentos configurado en empresa
+        if (usuario.getIntentosDeAcceso() >= maxIntentos) {
             StatusUsuario statusBloqueado = statusUsuarioService.obtenerStatusPorId(2);
             usuario.setIdStatusUsuario(statusBloqueado);
             System.out.println("Usuario " + idUsuario + " ha sido bloqueado por intentos fallidos");
@@ -97,18 +102,6 @@ public class UsuarioService {
             throw new RuntimeException("Error al encriptar contraseña", e);
         }
     }
-
-    /*
-     * private String encriptarPassword(String password) {
-     * try {
-     * MessageDigest md = MessageDigest.getInstance("MD5");
-     * byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
-     * return String.format("%032x", new BigInteger(1, hash));
-     * } catch (NoSuchAlgorithmException e) {
-     * throw new RuntimeException("Error al encriptar contraseña", e);
-     * }
-     * }
-     */
 
     public boolean validarPassword(String password, Empresa empresa) {
         if (password == null)

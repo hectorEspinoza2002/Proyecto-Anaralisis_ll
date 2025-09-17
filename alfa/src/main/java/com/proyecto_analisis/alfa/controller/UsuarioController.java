@@ -81,26 +81,6 @@ public class UsuarioController {
         return ResponseEntity.ok(savedUser);
     }
 
-    /*
-     * @PostMapping("/create_usuario")
-     * public Usuario createUsuario(@RequestBody Usuario userId) {
-     * if (userId.getIdUsuario() != null &&
-     * usuarioService.findById(userId.getIdUsuario()).isPresent()) {
-     * return null;
-     * } else {
-     * userId.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
-     * userId.setFechaCreacion(LocalDateTime.now());
-     * 
-     * if (userId.getPassword() != null && !userId.getPassword().isEmpty()) {
-     * String passwordMD5 = usuarioService.encriptarPassword(userId.getPassword());
-     * userId.setPassword(passwordMD5);
-     * }
-     * 
-     * return usuarioService.guardarUsuario(userId);
-     * }
-     * }
-     */
-
     @PutMapping("/update_usuario/{id}")
     public Usuario updateUser(@PathVariable("id") String usId, @RequestBody Usuario updUs) {
         Optional<Usuario> optionUser = usuarioService.findById(usId);
@@ -108,19 +88,28 @@ public class UsuarioController {
             Usuario user = optionUser.get();
             user.setNombre(updUs.getNombre());
             user.setApellido(updUs.getApellido());
-            user.setIdStatusUsuario(updUs.getIdStatusUsuario());
+            //user.setIdStatusUsuario(updUs.getIdStatusUsuario());
             user.setIdGenero(updUs.getIdGenero());
             user.setCorreoElectronico(updUs.getCorreoElectronico());
             user.setFotografia(updUs.getFotografia());
             user.setTelefonoMovil(updUs.getTelefonoMovil());
-            user.setIdStatusUsuario(updUs.getIdStatusUsuario());
+            //user.setIdStatusUsuario(updUs.getIdStatusUsuario());
             user.setPregunta(updUs.getPregunta());
             user.setRespuesta(updUs.getRespuesta());
-            user.setIntentosDeAcceso(0);
+            //user.setIntentosDeAcceso(0);
 
             if (updUs.getPassword() != null && !updUs.getPassword().isEmpty()) {
                 String passwordMD5 = usuarioService.encriptarPassword(updUs.getPassword());
                 user.setPassword(passwordMD5);
+            }
+
+            if (updUs.getIdStatusUsuario() != null) {
+                user.setIdStatusUsuario(updUs.getIdStatusUsuario());
+
+                // 🔹 Si lo están desbloqueando, reiniciar intentos
+                if (updUs.getIdStatusUsuario().getIdStatusUsuario() == 1) {
+                    user.setIntentosDeAcceso(0);
+                }
             }
 
             user.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
@@ -158,8 +147,8 @@ public class UsuarioController {
                 response.put("success", false);
 
                 if (usuario.getIdStatusUsuario() != null
-                        && usuario.getIdStatusUsuario().getIdStatusUsuario() == 2) {
-                    response.put("message", "Usuario bloqueado por demasiados intentos fallidos");
+                        && usuario.getIdStatusUsuario().getIdStatusUsuario() == 2) {                            
+                    response.put("message", "Usuario bloqueado por demasiados intentos fallidos");                    
                 } else {
                     response.put("message", "Credenciales inválidas");
                     response.put("intentos", usuario.getIntentosDeAcceso());
@@ -181,15 +170,7 @@ public class UsuarioController {
             response.put("message", "Login exitoso");
             response.put("usuario", usuario);
 
-            // Permisos del rol del usuario
-            /*
-             * if (usuario.getIdRole() != null) {
-             * List<RoleOpcion> permisos =
-             * roleOpcionService.findByRole(usuario.getIdRole().getIdRole());
-             * response.put("permisos", permisos);
-             * }
-             */
-            // 🔹 Obtener permisos del rol
+            // Obtener permisos del rol
             Integer idRole = usuario.getIdRole().getIdRole();
             List<RoleOpcion> permisos = roleOpcionService.findByRole(idRole);
 
