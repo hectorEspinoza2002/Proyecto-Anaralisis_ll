@@ -29,7 +29,6 @@ import com.proyecto_analisis.alfa.service.RoleOpcionService;
 import com.proyecto_analisis.alfa.service.UsuarioService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -234,38 +233,4 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
-
-    /*
-     * 
-     * @DeleteMapping("/logout")
-     * public ResponseEntity<?> logout(HttpServletRequest request,
-     * HttpServletResponse response) {
-     * try {
-     * // Invalidar la sesión
-     * HttpSession session = request.getSession(false);
-     * if (session != null) {
-     * session.invalidate();
-     * }
-     * 
-     * return ResponseEntity.ok("Logout exitoso");
-     * } catch (Exception e) {
-     * return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-     * .body("Error al hacer logout: " + e.getMessage());
-     * }
-     * }
-     */
-    /*
-     * @PutMapping("/update_password_actual/{id}")
-     * public ResponseEntity<String> actualizarPassword(
-     * 
-     * @PathVariable String id,
-     * 
-     * @RequestBody CambioPasswordRequest request) {
-     * 
-     * return ResponseEntity
-     * .ok(usuarioService.actualizarPassword(id, request.getActualPassword(),
-     * request.getNuevaPassword()));
-     * }
-     */
-
 }
