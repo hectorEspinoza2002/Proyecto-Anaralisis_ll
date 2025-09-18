@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Usuario } from '../entity/usuario';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +40,20 @@ export class UsuarioService {
   }
 
   updatePassword(id: string, password: string): Observable<any> {
-    return this.http.put(`${this.Url}/update_password/${id}`, { password }, {responseType: 'text'});
+    return this.http.put(
+      `${this.Url}/update_password/${id}`,
+      { password },
+      { responseType: 'text' }
+    );
   }
 
+  // Método de logout
+  logout(): Observable<any> {
+    return this.http.delete<any>(`${this.Url}/logout`).pipe(
+      catchError(error => {
+        console.error('Error en logout:', error);
+        return throwError(error);  // Si hay error, lo pasa al siguiente bloque
+      })
+    );
+  }
 }

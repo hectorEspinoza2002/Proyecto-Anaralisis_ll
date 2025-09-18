@@ -28,6 +28,10 @@ import com.proyecto_analisis.alfa.model.repository.SucursalRepository;
 import com.proyecto_analisis.alfa.service.RoleOpcionService;
 import com.proyecto_analisis.alfa.service.UsuarioService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @CrossOrigin(origins = { "http://localhost:5500", "http://localhost:9090" })
 public class UsuarioController {
@@ -210,15 +214,58 @@ public class UsuarioController {
         return ResponseEntity.badRequest().body("La contraseña no puede estar vacía");
     }
 
-    /*
-    @PutMapping("/update_password_actual/{id}")
-    public ResponseEntity<String> actualizarPassword(
-            @PathVariable String id,
-            @RequestBody CambioPasswordRequest request) {
+    @DeleteMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        try {
+            // Invalidar la sesión
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
 
-        return ResponseEntity
-                .ok(usuarioService.actualizarPassword(id, request.getActualPassword(), request.getNuevaPassword()));
+            // Retornamos una respuesta con un cuerpo que el frontend puede manejar
+            // fácilmente
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Logout exitoso");
+            return ResponseEntity.ok(response); // Enviar un body con un mensaje claro
+        } catch (Exception e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Error al hacer logout: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
-                 */
+
+    /*
+     * 
+     * @DeleteMapping("/logout")
+     * public ResponseEntity<?> logout(HttpServletRequest request,
+     * HttpServletResponse response) {
+     * try {
+     * // Invalidar la sesión
+     * HttpSession session = request.getSession(false);
+     * if (session != null) {
+     * session.invalidate();
+     * }
+     * 
+     * return ResponseEntity.ok("Logout exitoso");
+     * } catch (Exception e) {
+     * return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+     * .body("Error al hacer logout: " + e.getMessage());
+     * }
+     * }
+     */
+    /*
+     * @PutMapping("/update_password_actual/{id}")
+     * public ResponseEntity<String> actualizarPassword(
+     * 
+     * @PathVariable String id,
+     * 
+     * @RequestBody CambioPasswordRequest request) {
+     * 
+     * return ResponseEntity
+     * .ok(usuarioService.actualizarPassword(id, request.getActualPassword(),
+     * request.getNuevaPassword()));
+     * }
+     */
 
 }
