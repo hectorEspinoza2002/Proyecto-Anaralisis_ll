@@ -88,7 +88,7 @@ public class UsuarioController {
             Usuario user = optionUser.get();
             user.setNombre(updUs.getNombre());
             user.setApellido(updUs.getApellido());
-            // user.setIdStatusUsuario(updUs.getIdStatusUsuario());
+            user.setIdStatusUsuario(updUs.getIdStatusUsuario());
             user.setIdGenero(updUs.getIdGenero());
             user.setCorreoElectronico(updUs.getCorreoElectronico());
             user.setFotografia(updUs.getFotografia());
@@ -97,7 +97,8 @@ public class UsuarioController {
             user.setPregunta(updUs.getPregunta());
             user.setRespuesta(updUs.getRespuesta());
             user.setUltimaFechaCambioPassword(LocalDateTime.now());
-            // user.setIntentosDeAcceso(0);
+            user.setIdRole(updUs.getIdRole());
+            user.setIdSucursal(updUs.getIdSucursal());
 
             if (updUs.getPassword() != null && !updUs.getPassword().isEmpty()) {
                 String passwordMD5 = usuarioService.encriptarPassword(updUs.getPassword());
