@@ -11,7 +11,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proyecto_analisis.alfa.service.StatusUsuarioService;
+//import com.proyecto_analisis.alfa.service.StatusUsuarioService;
 import com.proyecto_analisis.alfa.model.entity.Empresa;
 import com.proyecto_analisis.alfa.model.entity.StatusUsuario;
 import com.proyecto_analisis.alfa.model.entity.Usuario;
