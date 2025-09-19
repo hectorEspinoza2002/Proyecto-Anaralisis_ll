@@ -19,8 +19,10 @@ import lombok.Data;
 @Data
 public class DocumentoPersona {
 
+    
     @EmbeddedId
     private RoleOpcionId id;
+/*
 
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("idTipoDocumento") // enlaza con Tipo_Documento
@@ -31,6 +33,7 @@ public class DocumentoPersona {
     @MapsId("idPersona") //enlaza con Persona
     @JoinColumn(name = "IdPersona", insertable = false, updatable = false)
     private Persona persona;
+     */
 
     @Column(name = "NoDocumento")
     private String noDocumento;

@@ -12,10 +12,10 @@ import com.proyecto_analisis.alfa.model.entityf2.DocumentoPersona;
 public interface DocumentoPersonaRepository extends JpaRepository<DocumentoPersona, Integer> {
 
     // Buscar todas las opciones asignadas a un rol
-    List<DocumentoPersona> findByTipoDocumento_IdTipoDocumento(Integer idTipoDocumento);
+    //List<DocumentoPersona> findByTipoDocumento_IdTipoDocumento(Integer idTipoDocumento);
 
     // Buscar si una opcion especifica pertenece a un rol
-    Optional<DocumentoPersona> findByTipoDocumento_IdTipoDocumentoAndPersona_IdPersona(Integer idTipoDocumento,
-            Integer idPersona);
+    //Optional<DocumentoPersona> findByTipoDocumento_IdTipoDocumentoAndPersona_IdPersona(Integer idTipoDocumento,
+      //      Integer idPersona);
 
 }

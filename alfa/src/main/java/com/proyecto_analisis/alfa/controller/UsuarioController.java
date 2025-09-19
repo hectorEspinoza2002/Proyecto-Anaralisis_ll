@@ -18,13 +18,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyecto_analisis.alfa.model.entity.BitacoraAcceso;
 import com.proyecto_analisis.alfa.model.entity.Empresa;
 import com.proyecto_analisis.alfa.model.entity.LoginRequest;
 import com.proyecto_analisis.alfa.model.entity.RoleOpcion;
 import com.proyecto_analisis.alfa.model.entity.Sucursal;
+import com.proyecto_analisis.alfa.model.entity.TipoAcceso;
 import com.proyecto_analisis.alfa.model.entity.Usuario;
 import com.proyecto_analisis.alfa.model.repository.EmpresaRepository;
 import com.proyecto_analisis.alfa.model.repository.SucursalRepository;
+import com.proyecto_analisis.alfa.service.BitacoraAccesoService;
 import com.proyecto_analisis.alfa.service.RoleOpcionService;
 import com.proyecto_analisis.alfa.service.UsuarioService;
 
@@ -46,6 +49,9 @@ public class UsuarioController {
 
     @Autowired
     private SucursalRepository sucursalRepository;
+
+    @Autowired
+    private BitacoraAccesoService bitacoraService;
 
     @GetMapping("/list_usuario")
     public List<Usuario> listarTodos() {
@@ -132,11 +138,27 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest,
+            HttpServletRequest request) {
         try {
             Optional<Usuario> usuarioOpt = usuarioService.findById(loginRequest.getIdUsuario());
 
+            // Crear Objeto de bitacora
+            BitacoraAcceso bitacora = new BitacoraAcceso();
+            bitacora.setIdUsuario(loginRequest.getIdUsuario());
+            bitacora.setFechaAcceso(LocalDateTime.now());
+            bitacora.setDireccionIp(request.getRemoteAddr());
+            bitacora.setHttpUserAgent(request.getHeader("User-Agent"));
+
             if (usuarioOpt.isEmpty()) {
+
+                //Usuario no existe se registra en bitacora
+                TipoAcceso tipoAcceso = new TipoAcceso();
+                tipoAcceso.setIdTipoAcceso(4);
+                bitacora.setTipoAcceso(tipoAcceso);
+                bitacora.setAccion("Intento de login fallido");
+                bitacoraService.guardar(bitacora);
+
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body("Usuario no encontrado");
             }
@@ -148,6 +170,15 @@ public class UsuarioController {
                     loginRequest.getPassword());
 
             if (!loginExitoso) {
+
+                //Password incorrecto se registra en bitacora
+                TipoAcceso tipoAcceso = new TipoAcceso();
+                tipoAcceso.setIdTipoAcceso(2);
+                bitacora.setTipoAcceso(tipoAcceso);
+                bitacora.setAccion("Credenciales invalidas");
+                bitacoraService.guardar(bitacora);
+
+
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", false);
 
@@ -161,6 +192,14 @@ public class UsuarioController {
 
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
+
+            //login exitoso se registra en bitacora
+            TipoAcceso tipoAcceso = new TipoAcceso();
+            tipoAcceso.setIdTipoAcceso(1);
+            bitacora.setTipoAcceso(tipoAcceso);
+            bitacora.setAccion("Login exitoso");
+            bitacoraService.guardar(bitacora);
+
 
             // 🔹 Guardamos usuario logueado
             LoginRequest.setUsuarioLogueado(loginRequest.getIdUsuario());
