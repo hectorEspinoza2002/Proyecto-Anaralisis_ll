@@ -31,6 +31,9 @@ import com.proyecto_analisis.alfa.service.BitacoraAccesoService;
 import com.proyecto_analisis.alfa.service.RoleOpcionService;
 import com.proyecto_analisis.alfa.service.UsuarioService;
 
+import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.OperatingSystem;
+import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -143,16 +146,26 @@ public class UsuarioController {
         try {
             Optional<Usuario> usuarioOpt = usuarioService.findById(loginRequest.getIdUsuario());
 
+            // 🔹 Obtener User-Agent
+            String userAgentString = request.getHeader("User-Agent");
+            UserAgent userAgent = UserAgent.parseUserAgentString(userAgentString);
+
+            OperatingSystem os = userAgent.getOperatingSystem();
+            Browser browserObj = userAgent.getBrowser();
+
             // Crear Objeto de bitacora
             BitacoraAcceso bitacora = new BitacoraAcceso();
             bitacora.setIdUsuario(loginRequest.getIdUsuario());
             bitacora.setFechaAcceso(LocalDateTime.now());
             bitacora.setDireccionIp(request.getRemoteAddr());
-            bitacora.setHttpUserAgent(request.getHeader("User-Agent"));
+            bitacora.setHttpUserAgent(userAgentString);
+            bitacora.setSistemaOperativo(os.getName()); // Ej: Windows 10, Android, iOS
+            bitacora.setBrowser(browserObj.getName()); // Ej: Chrome, Firefox
+            bitacora.setDispositivo(os.getDeviceType().getName()); // Ej: Computer, Mobile, Tablet
 
             if (usuarioOpt.isEmpty()) {
 
-                //Usuario no existe se registra en bitacora
+                // Usuario no existe se registra en bitacora
                 TipoAcceso tipoAcceso = new TipoAcceso();
                 tipoAcceso.setIdTipoAcceso(4);
                 bitacora.setTipoAcceso(tipoAcceso);
@@ -171,13 +184,12 @@ public class UsuarioController {
 
             if (!loginExitoso) {
 
-                //Password incorrecto se registra en bitacora
+                // Password incorrecto se registra en bitacora
                 TipoAcceso tipoAcceso = new TipoAcceso();
                 tipoAcceso.setIdTipoAcceso(2);
                 bitacora.setTipoAcceso(tipoAcceso);
                 bitacora.setAccion("Credenciales invalidas");
                 bitacoraService.guardar(bitacora);
-
 
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", false);
@@ -193,13 +205,12 @@ public class UsuarioController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
 
-            //login exitoso se registra en bitacora
+            // login exitoso se registra en bitacora
             TipoAcceso tipoAcceso = new TipoAcceso();
             tipoAcceso.setIdTipoAcceso(1);
             bitacora.setTipoAcceso(tipoAcceso);
             bitacora.setAccion("Login exitoso");
             bitacoraService.guardar(bitacora);
-
 
             // 🔹 Guardamos usuario logueado
             LoginRequest.setUsuarioLogueado(loginRequest.getIdUsuario());
