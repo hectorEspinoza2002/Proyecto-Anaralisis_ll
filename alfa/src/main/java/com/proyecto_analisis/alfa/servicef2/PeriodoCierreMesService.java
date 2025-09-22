@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.proyecto_analisis.alfa.model.entityf2.PeriodoCierreMes;
+import com.proyecto_analisis.alfa.model.entityf2.PeriodoCierreMesId;
 import com.proyecto_analisis.alfa.model.repositoryf2.PeriodoCierreMesRepository;
 
 @Service
@@ -21,7 +22,7 @@ public class PeriodoCierreMesService {
         return periodoRepo.findAll();
     }
 
-    public Optional<PeriodoCierreMes> findById(Integer id){
+    public Optional<PeriodoCierreMes> findById(PeriodoCierreMesId id){
         return periodoRepo.findById(id);
     }
 
@@ -29,8 +30,8 @@ public class PeriodoCierreMesService {
         return periodoRepo.save(pcm);
     }
 
-    public void delete(PeriodoCierreMes pcMes){
-        periodoRepo.delete(pcMes);
+    public void delete(PeriodoCierreMesId id){
+        periodoRepo.deleteById(id);
     }
 
 }

@@ -26,7 +26,7 @@ public class MovimientoCuenta {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdSaldoCuenta")
-    private StatusCuenta idSaldoCuenta;
+    private SaldoCuenta idSaldoCuenta;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdTipoMovimientoCXC")

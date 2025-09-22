@@ -30,6 +30,9 @@ public class Persona {
     @Column(name = "Nombre")
     private String nombre;
 
+    @Column(name = "Apellido")
+    private String apellido;
+
     @Column(name = "FechaNacimiento")
     private Date fechaNacimiento;
 

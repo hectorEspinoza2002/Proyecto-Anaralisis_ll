@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -21,6 +22,15 @@ public class SaldoCuentaHist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @ManyToOne
+    @JoinColumns({
+        @JoinColumn(name = "Anio", referencedColumnName = "Anio"),
+        @JoinColumn(name = "Mes", referencedColumnName = "Mes")
+    })
+
+    private PeriodoCierreMes periodo;
+
+    /*
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Anio")
     private PeriodoCierreMes anioPCM;
@@ -28,6 +38,7 @@ public class SaldoCuentaHist {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Mes")
     private PeriodoCierreMes mesPCM;
+     */
 
     @Column(name = "IdSaldoCuenta")
     private Integer saldoCuenta;

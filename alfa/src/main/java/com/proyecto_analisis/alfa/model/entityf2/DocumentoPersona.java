@@ -2,8 +2,6 @@ package com.proyecto_analisis.alfa.model.entityf2;
 
 import java.time.LocalDateTime;
 
-import com.proyecto_analisis.alfa.model.entity.RoleOpcionId;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -19,22 +17,19 @@ import lombok.Data;
 @Data
 public class DocumentoPersona {
 
-    
     @EmbeddedId
-    private RoleOpcionId id;
-/*
+    private DocumentoPersonaId id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("idTipoDocumento") // enlaza con Tipo_Documento
+    @MapsId("tipoDocumentoId") //este nombre es de documentoPersonaId no de la tabla tipodocumento
     @JoinColumn(name = "IdTipoDocumento", insertable = false, updatable = false)
     private TipoDocumento tipoDocumento;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("idPersona") //enlaza con Persona
+    @MapsId("personaId") //este nombre es de documentoPersonaId no de la tabla persona
     @JoinColumn(name = "IdPersona", insertable = false, updatable = false)
     private Persona persona;
-     */
-
+     
     @Column(name = "NoDocumento")
     private String noDocumento;
 

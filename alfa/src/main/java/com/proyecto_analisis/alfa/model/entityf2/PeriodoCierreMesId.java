@@ -8,16 +8,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Embeddable
 @Data
+@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocumentoPersonaId implements Serializable{
+public class PeriodoCierreMesId implements Serializable{
 
-    @Column(name = "IdTipoDocumento")
-    private Integer tipoDocumentoId;
-
-    @Column(name = "IdPersona")
-    private Integer personaId;
+    @Column(name = "Anio")
+    private Integer anio;
+    
+    @Column(name = "Mes")
+    private Integer mes;
 
 }
