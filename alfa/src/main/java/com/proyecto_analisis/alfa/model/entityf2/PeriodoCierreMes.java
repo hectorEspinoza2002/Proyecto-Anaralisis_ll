@@ -29,7 +29,7 @@ public class PeriodoCierreMes {
     private Date fechaInicio;
 
     @Column(name = "FechaFinal")
-    private Date FechaFinal;
+    private Date fechaFinal;
 
     @Column(name = "FechaCierre")
     private LocalDateTime fechaCierre;

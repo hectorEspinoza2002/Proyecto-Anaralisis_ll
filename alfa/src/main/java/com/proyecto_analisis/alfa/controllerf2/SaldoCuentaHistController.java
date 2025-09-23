@@ -27,13 +27,13 @@ public class SaldoCuentaHistController {
     private SaldoCuentaHistService saldoHistService;
 
     // Listar todos
-    @GetMapping("/list")
+    @GetMapping("/list_saldo_cuenta_hist")
     public List<SaldoCuentaHist> listarTodos() {
         return saldoHistService.findAll();
     }
 
     // Obtener por ID compuesto
-    @GetMapping("/{anio}/{mes}/{idSaldoCuenta}")
+    @GetMapping("/list_saldo_cuenta_hist/{anio}/{mes}/{idSaldoCuenta}")
     public ResponseEntity<SaldoCuentaHist> obtenerPorId(
             @PathVariable Integer anio,
             @PathVariable Integer mes,

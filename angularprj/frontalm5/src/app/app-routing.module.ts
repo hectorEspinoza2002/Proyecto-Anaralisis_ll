@@ -34,9 +34,21 @@ import { PerfilComponent } from './component/perfil/perfil.component';
 import { EditopcionesComponent } from './component/editopciones/editopciones.component';
 import { AddroleopcionComponent } from './component/addroleopcion/addroleopcion.component';
 import { EditroleopcionComponent } from './component/editroleopcion/editroleopcion.component';
+import { ListpersonaComponent } from './componentf2/listpersona/listpersona.component';
+import { ListdocumentopersonaComponent } from './componentf2/listdocumentopersona/listdocumentopersona.component';
+import { ListestadocivilComponent } from './componentf2/listestadocivil/listestadocivil.component';
+import { ListmovimientocuentaComponent } from './componentf2/listmovimientocuenta/listmovimientocuenta.component';
+import { ListperiodocierremesComponent } from './componentf2/listperiodocierremes/listperiodocierremes.component';
+import { ListsaldocuentaComponent } from './componentf2/listsaldocuenta/listsaldocuenta.component';
+import { ListstatuscuentaComponent } from './componentf2/liststatuscuenta/liststatuscuenta.component';
+import { ListtipodocumentoComponent } from './componentf2/listtipodocumento/listtipodocumento.component';
+import { ListtipomovimientocxcComponent } from './componentf2/listtipomovimientocxc/listtipomovimientocxc.component';
+import { ListtiposaldocuentaComponent } from './componentf2/listtiposaldocuenta/listtiposaldocuenta.component';
+import { ListsaldocuentahistComponent } from './componentf2/listsaldocuentahist/listsaldocuentahist.component';
 
 const routes: Routes = [
 
+  //f1
   {    path: "listrolopcion", component:ListroleopcionComponent },
   {    path: "listopcion", component:ListopcionComponent  },
   {    path: "listmenu", component:ListmenuComponent  },
@@ -48,6 +60,19 @@ const routes: Routes = [
   {    path: "listgenero", component:ListgeneroComponent },
   {    path: "listusuarios", component:ListusuarioComponent  },
   {    path: "listrolopcion", component:ListroleopcionComponent  },
+
+  {    path: "listpersona", component:ListpersonaComponent  },
+  {    path: "listdocumentopersona", component:ListdocumentopersonaComponent  },
+  {    path: "listestadocivil", component:ListestadocivilComponent  },
+  {    path: "listmovimientocuenta", component:ListmovimientocuentaComponent  },
+  {    path: "listperiodocierremes", component:ListperiodocierremesComponent  },
+  {    path: "listsaldocuenta", component:ListsaldocuentaComponent  },
+  {    path: "liststatuscuenta", component:ListstatuscuentaComponent  },
+  {    path: "listtipodocumento", component:ListtipodocumentoComponent  },
+  {    path: "listtipomovimientocxc", component:ListtipomovimientocxcComponent  },
+  {    path: "listtiposaldocuenta", component:ListtiposaldocuentaComponent  },
+  {    path: "listsaldocuentahist", component:ListsaldocuentahistComponent  },
+
 
   {    path: "perfil", component:PerfilComponent },
 
@@ -62,6 +87,7 @@ const routes: Routes = [
   {    path: "addstatususuario", component:AddstatususuarioComponent  },
   {    path: "addroleopcion", component:AddroleopcionComponent  },
 
+
   {    path: "editusuario", component:EditusuarioComponent },
   {    path: "editstatususuario", component:EditstatususuarioComponent },
   {    path: "editgenero", component:EditgeneroComponent },
@@ -72,6 +98,7 @@ const routes: Routes = [
   {    path: "editempresa", component:EditempresaComponent },
   {    path: "editopcion", component:EditopcionesComponent },
   {    path: "editroleopcion", component:EditroleopcionComponent },
+
 
   {    path: "menu", component:MenuComponent  },
   {    path: "principal", component: PrincipalComponent  },

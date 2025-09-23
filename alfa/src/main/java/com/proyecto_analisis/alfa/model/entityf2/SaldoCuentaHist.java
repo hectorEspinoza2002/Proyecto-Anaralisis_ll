@@ -6,9 +6,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
@@ -23,30 +20,25 @@ public class SaldoCuentaHist {
 
     @EmbeddedId
     private SaldoCuentaHistId id;
-
+    
+    /*
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("anio")
     @MapsId("mes")
+    @JoinColumns({
+        @JoinColumn(name = "Anio", referencedColumnName = "Anio"),
+        @JoinColumn(name = "Mes", referencedColumnName = "Mes")
+    })
+         */
+    
+    @MapsId
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumns({
-        @JoinColumn(name = "Anio", referencedColumnName = "Anio", insertable = false, updatable = false),
-        @JoinColumn(name = "Mes", referencedColumnName = "Mes", insertable = false, updatable = false)
+        @JoinColumn(name = "Anio", referencedColumnName = "Anio"),
+        @JoinColumn(name = "Mes", referencedColumnName = "Mes")
     })
 
     private PeriodoCierreMes periodo;
-
-    /*
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "Anio")
-    private PeriodoCierreMes anioPCM;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "Mes")
-    private PeriodoCierreMes mesPCM;
-     
-
-    @Column(name = "IdSaldoCuenta")
-    private Integer saldoCuenta;
-    */
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdPersona")

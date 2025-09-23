@@ -39,6 +39,17 @@ import { EditusuarioComponent } from './component/editusuario/editusuario.compon
 import { PerfilComponent } from './component/perfil/perfil.component';
 import { AddroleopcionComponent } from './component/addroleopcion/addroleopcion.component';
 import { EditroleopcionComponent } from './component/editroleopcion/editroleopcion.component';
+import { ListdocumentopersonaComponent } from './componentf2/listdocumentopersona/listdocumentopersona.component';
+import { ListestadocivilComponent } from './componentf2/listestadocivil/listestadocivil.component';
+import { ListmovimientocuentaComponent } from './componentf2/listmovimientocuenta/listmovimientocuenta.component';
+import { ListperiodocierremesComponent } from './componentf2/listperiodocierremes/listperiodocierremes.component';
+import { ListpersonaComponent } from './componentf2/listpersona/listpersona.component';
+import { ListsaldocuentaComponent } from './componentf2/listsaldocuenta/listsaldocuenta.component';
+import { ListsaldocuentahistComponent } from './componentf2/listsaldocuentahist/listsaldocuentahist.component';
+import { ListstatuscuentaComponent } from './componentf2/liststatuscuenta/liststatuscuenta.component';
+import { ListtipodocumentoComponent } from './componentf2/listtipodocumento/listtipodocumento.component';
+import { ListtipomovimientocxcComponent } from './componentf2/listtipomovimientocxc/listtipomovimientocxc.component';
+import { ListtiposaldocuentaComponent } from './componentf2/listtiposaldocuenta/listtiposaldocuenta.component';
 
 
 @NgModule({
@@ -79,6 +90,17 @@ import { EditroleopcionComponent } from './component/editroleopcion/editroleopci
     PerfilComponent,
     AddroleopcionComponent,
     EditroleopcionComponent,
+    ListdocumentopersonaComponent,
+    ListestadocivilComponent,
+    ListmovimientocuentaComponent,
+    ListperiodocierremesComponent,
+    ListpersonaComponent,
+    ListsaldocuentaComponent,
+    ListsaldocuentahistComponent,
+    ListstatuscuentaComponent,
+    ListtipodocumentoComponent,
+    ListtipomovimientocxcComponent,
+    ListtiposaldocuentaComponent,
   ],
   imports: [
     BrowserModule,

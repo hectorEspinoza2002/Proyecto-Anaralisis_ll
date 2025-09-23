@@ -30,7 +30,7 @@ public class SaldoCuentaController {
         return saldoService.findAll();
     }
 
-    @GetMapping("/list_tipo_saldo_cuenta/{id}")
+    @GetMapping("/list_saldo_cuenta/{id}")
     public Optional<SaldoCuenta> obtenerPorId(@PathVariable Integer id) {
         return saldoService.findById(id);
     }
