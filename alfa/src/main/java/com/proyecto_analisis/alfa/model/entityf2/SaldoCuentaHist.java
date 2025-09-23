@@ -3,6 +3,7 @@ package com.proyecto_analisis.alfa.model.entityf2;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -11,21 +12,24 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "periodo_cierre_mes")
+@Table(name = "saldo_cuenta_hist")
 @Data
 public class SaldoCuentaHist {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EmbeddedId
+    private SaldoCuentaHistId id;
 
-    @ManyToOne
+    @MapsId("anio")
+    @MapsId("mes")
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumns({
-        @JoinColumn(name = "Anio", referencedColumnName = "Anio"),
-        @JoinColumn(name = "Mes", referencedColumnName = "Mes")
+        @JoinColumn(name = "Anio", referencedColumnName = "Anio", insertable = false, updatable = false),
+        @JoinColumn(name = "Mes", referencedColumnName = "Mes", insertable = false, updatable = false)
     })
 
     private PeriodoCierreMes periodo;
@@ -38,10 +42,11 @@ public class SaldoCuentaHist {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Mes")
     private PeriodoCierreMes mesPCM;
-     */
+     
 
     @Column(name = "IdSaldoCuenta")
     private Integer saldoCuenta;
+    */
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdPersona")
