@@ -53,6 +53,4 @@ export class EditestadocivilComponent implements OnInit, AfterViewInit{
     Cancel(){
       this.router.navigate(["listestadocivil"]);
     }
-
-
 }

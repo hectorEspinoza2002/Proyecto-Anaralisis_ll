@@ -55,6 +55,8 @@ import { EditstatuscuentaComponent } from './componentf2/editstatuscuenta/editst
 import { EdittipodocumentoComponent } from './componentf2/edittipodocumento/edittipodocumento.component';
 import { EdittipomovimientocxcComponent } from './componentf2/edittipomovimientocxc/edittipomovimientocxc.component';
 import { EdittiposaldocuentaComponent } from './componentf2/edittiposaldocuenta/edittiposaldocuenta.component';
+import { AddpersonaComponent } from './componentf2/addpersona/addpersona.component';
+import { EditpersonaComponent } from './componentf2/editpersona/editpersona.component';
 
 const routes: Routes = [
 
@@ -102,6 +104,7 @@ const routes: Routes = [
   {    path: "addtipodocumento", component:AddtipodocumentoComponent  },
   {    path: "addtipomovimientocxc", component:AddtipomovimientocxcComponent  },
   {    path: "addtiposaldocuenta", component:AddtiposaldocuentaComponent  },
+  {    path: "addpersona", component:AddpersonaComponent  },
 
   {    path: "editusuario", component:EditusuarioComponent },
   {    path: "editstatususuario", component:EditstatususuarioComponent },
@@ -119,6 +122,7 @@ const routes: Routes = [
   {    path: "edittipodocumento", component:EdittipodocumentoComponent },
   {    path: "edittipomovimientocxc", component:EdittipomovimientocxcComponent },
   {    path: "edittiposaldocuenta", component:EdittiposaldocuentaComponent },
+  {    path: "editpersona", component:EditpersonaComponent },
 
   {    path: "menu", component:MenuComponent  },
   {    path: "principal", component: PrincipalComponent  },

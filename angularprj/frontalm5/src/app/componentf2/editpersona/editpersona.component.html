@@ -1,0 +1,177 @@
+<div class="container col-md-6 mt-4">
+  <div class="card shadow-lg border-0 rounded-3">
+    <div class="card-header bg-primary text-white text-center rounded-top">
+      <h3 class="mb-0">Modificar Persona</h3>
+    </div>
+
+    <div class="card-body">
+      <form #rolForm="ngForm" novalidate>
+        <!-- ID Rol -->
+        <div class="mb-3">
+          <label for="idPersona" class="form-label fw-bold">ID</label>
+          <input
+            [(ngModel)]="persona.idPersona"
+            type="text"
+            name="idPersona"
+            id="idPersona"
+            #myFocus
+            class="form-control"
+            placeholder="ID"
+            required
+            disabled
+          />
+        </div>
+
+        <div class="row">
+          <!-- Nombre -->
+          <div class="col-md-6 mb-3">
+            <label for="nombre" class="form-label fw-bold">Nombre</label>
+            <input
+              [(ngModel)]="persona.nombre"
+              type="text"
+              name="nombre"
+              id="nombre"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese Nombre"
+              required
+            />
+          </div>
+
+          <!-- Apellido -->
+          <div class="col-md-6 mb-3">
+            <label for="apellido" class="form-label fw-bold">Apellido</label>
+            <input
+              [(ngModel)]="persona.apellido"
+              type="text"
+              name="apellido"
+              id="apellido"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese Apellido"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Fecha Nacimiento -->
+          <div class="col-md-6 mb-3">
+            <label for="fechaNacimiento" class="form-label fw-bold"
+              >Fecha Nacimiento</label
+            >
+            <input
+              [(ngModel)]="persona.fechaNacimiento"
+              type="text"
+              name="fechaNacimiento"
+              id="fechaNacimiento"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese Fecha Nacimiento"
+              required
+            />
+          </div>
+
+          <!-- Telefono -->
+          <div class="col-md-6 mb-3">
+            <label for="telefono" class="form-label fw-bold">Telefono</label>
+            <input
+              [(ngModel)]="persona.telefono"
+              type="text"
+              name="telefono"
+              id="telefono"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese Telefono"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Genero -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-bold">Género *</label>
+            <select
+              [(ngModel)]="selectedGenero"
+              name="genero"
+              class="form-select"
+              required
+            >
+              <option [ngValue]="null">Seleccione género</option>
+              <option *ngFor="let g of genero" [ngValue]="g.idGenero">
+                {{ g.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Estado Civil -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-bold">Estado Civil *</label>
+            <select
+              [(ngModel)]="selectedGenero"
+              name="idEstadoCivil"
+              class="form-select"
+              required
+            >
+              <option [ngValue]="null">Seleccione Estado Civil</option>
+              <option *ngFor="let g of estado" [ngValue]="g.idEstadoCivil">
+                {{ g.nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Direccion -->
+          <div class="col-md-6 mb-3">
+            <label for="direccion" class="form-label fw-bold">Dirección</label>
+            <input
+              [(ngModel)]="persona.direccion"
+              type="text"
+              name="direccion"
+              id="direccion"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese Direccion"
+              required
+            />
+          </div>
+
+          <!-- Correo -->
+          <div class="col-md-6 mb-3">
+            <label for="correoElectronico" class="form-label fw-bold"
+              >Correo Electronico</label
+            >
+            <input
+              [(ngModel)]="persona.correoElectronico"
+              type="text"
+              name="correoElectronico"
+              id="correoElectronico"
+              #myFocus
+              class="form-control"
+              placeholder="Ingrese Correo Electronico"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-success me-2"
+            (click)="editRol(persona)"
+            [disabled]="!rolForm.form.valid"
+          >
+            <i class="bi bi-save"></i> Guardar
+          </button>
+
+          <button type="button" class="btn btn-danger" (click)="Cancel()">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

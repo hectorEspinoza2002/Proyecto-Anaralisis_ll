@@ -97,9 +97,7 @@ export class EditusuarioComponent implements OnInit, AfterViewInit {
       this.selectedSucursal &&
       this.selectedRol
     ) {
-      user.idStatusUsuario = {
-        idStatusUsuario: this.selectedStatus,
-      } as StatusUsuario;
+      user.idStatusUsuario = {idStatusUsuario: this.selectedStatus} as StatusUsuario;
       user.idGenero = { idGenero: this.selectedGenero } as Genero;
       user.idSucursal = { idSucursal: this.selectedSucursal } as Sucursal;
       user.idRole = { idRole: this.selectedRol } as Role;
@@ -120,40 +118,6 @@ export class EditusuarioComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
-  /*
-  editUser(user: Usuario): void {
-    if (
-      this.selectedStatus &&
-      this.selectedGenero &&
-      this.selectedSucursal &&
-      this.selectedRol
-    ) {
-      user.idStatusUsuario = {
-        idStatusUsuario: this.selectedStatus,
-      } as unknown as StatusUsuario;
-      user.idGenero = { idGenero: this.selectedGenero } as unknown as Genero;
-      user.idSucursal = {
-        idSucursal: this.selectedSucursal,
-      } as unknown as Sucursal;
-      user.idRole = { idRole: this.selectedRol } as unknown as Role;
-    }
-
-    if (!user.password || user.password.trim() === '') {
-      delete (user as any).password;
-    }
-
-    const id = localStorage.getItem('id');
-    if (id) {
-      this.userService.editUsuario(id, user).subscribe((result) => {
-        this.usuario = result;
-        this.router.navigate(['listusuarios']);
-        alert(user.nombre + ' modificado!');
-        this.resetForm();
-      });
-    }
-  }
-    */
 
   Cancelar() {
     this.router.navigate(['listusuarios']);

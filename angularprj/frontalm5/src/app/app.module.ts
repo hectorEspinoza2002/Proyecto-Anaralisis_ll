@@ -60,6 +60,8 @@ import { AddtipomovimientocxcComponent } from './componentf2/addtipomovimientocx
 import { AddtipodocumentoComponent } from './componentf2/addtipodocumento/addtipodocumento.component';
 import { AddestadocivilComponent } from './componentf2/addestadocivil/addestadocivil.component';
 import { AddstatuscuentaComponent } from './componentf2/addstatuscuenta/addstatuscuenta.component';
+import { AddpersonaComponent } from './componentf2/addpersona/addpersona.component';
+import { EditpersonaComponent } from './componentf2/editpersona/editpersona.component';
 
 
 @NgModule({
@@ -121,6 +123,8 @@ import { AddstatuscuentaComponent } from './componentf2/addstatuscuenta/addstatu
     AddtipodocumentoComponent,
     AddestadocivilComponent,
     AddstatuscuentaComponent,
+    AddpersonaComponent,
+    EditpersonaComponent,
   ],
   imports: [
     BrowserModule,

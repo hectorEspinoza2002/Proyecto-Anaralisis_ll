@@ -1,0 +1,94 @@
+<div class="container col-md-10">
+  <div class="card shadow-lg border-0 rounded-3">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Crear Nueva Persona</h2>
+    </div>
+
+    <div class="card-body">
+      <form #usuarioForm="ngForm" class="needs-validation" novalidate>
+
+        <!-- Datos básicos -->
+        <h5 class="text-secondary mb-3">Datos Básicos</h5>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nombre *</label>
+            <input [(ngModel)]="persona.nombre" name="nombre" class="form-control" required />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Apellido *</label>
+            <input [(ngModel)]="persona.apellido" name="apellido" class="form-control" required />
+          </div>
+        </div>
+
+        <!-- Selectores -->
+        <h5 class="text-secondary mt-4 mb-3">Asignaciones</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Estado Civil *</label>
+            <select [(ngModel)]="selectedEstadoCivil" name="idEstadoCivil" class="form-select" required>
+              <option [ngValue]="null">Seleccione status</option>
+              <option *ngFor="let st of estadoC" [ngValue]="st.idEstadoCivil">
+                {{ st.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Género *</label>
+            <select [(ngModel)]="selectedGenero" name="genero" class="form-select" required>
+              <option [ngValue]="null">Seleccione género</option>
+              <option *ngFor="let g of genero" [ngValue]="g.idGenero">
+                {{ g.nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Fecha -->
+        <h5 class="text-secondary mt-4 mb-3">Información Personal</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha Nacimiento *</label>
+            <input [(ngModel)]="persona.fechaNacimiento" name="fechaNacimiento" type="date" class="form-control" required />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Direccion *</label>
+            <input [(ngModel)]="persona.direccion" name="direccion" class="form-control" required />
+          </div>
+        </div>
+
+        <!-- Contacto -->
+        <h5 class="text-secondary mt-4 mb-3">Contacto</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Correo Electrónico *</label>
+            <input [(ngModel)]="persona.correoElectronico" name="correo" type="email" class="form-control" required />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Teléfono Móvil</label>
+            <input [(ngModel)]="persona.telefono" name="telefono" class="form-control" />
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-end mt-4">
+          <button (click)="Cancelar()" type="button" class="btn btn-outline-danger me-2">
+            Cancelar
+          </button>
+          <button
+            (click)="guardar(persona)"
+            type="button"
+            class="btn btn-success"
+            [disabled]="!usuarioForm.form.valid"
+          >
+            Guardar Persona
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
