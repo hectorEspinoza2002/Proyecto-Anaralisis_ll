@@ -31,8 +31,8 @@ public class TipoMovimientoCxcController {
     }
 
     @GetMapping("/list_tipo_movimiento_cxc/{id}")
-    public Optional<TipoMovimientoCxc> obtenerPorId(@PathVariable Integer tmcxcId) {
-        return tipoMovCxcService.findById(tmcxcId);
+    public Optional<TipoMovimientoCxc> obtenerPorId(@PathVariable Integer id) {
+        return tipoMovCxcService.findById(id);
     }
 
     @PostMapping("/create_tipo_movimiento_cxc")

@@ -29,7 +29,7 @@ export class ListtiposaldocuentaComponent implements OnInit{
 
   select(st: TipoSaldoCuenta): void {
       localStorage.setItem('id', st.idTipoSaldoCuenta.toString().valueOf());
-      this.router.navigate(['editempresa']);
+      this.router.navigate(['edittiposaldocuenta']);
     }
 
     delete(stc: TipoSaldoCuenta) {

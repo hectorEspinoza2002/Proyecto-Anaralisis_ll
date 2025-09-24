@@ -29,7 +29,7 @@ export class ListstatuscuentaComponent implements OnInit {
 
   select(st: StatusCuenta): void {
     localStorage.setItem('id', st.idStatusCuenta.toString().valueOf());
-    this.router.navigate(['editempresa']);
+    this.router.navigate(['editstatuscuenta']);
   }
 
   delete(stc: StatusCuenta) {

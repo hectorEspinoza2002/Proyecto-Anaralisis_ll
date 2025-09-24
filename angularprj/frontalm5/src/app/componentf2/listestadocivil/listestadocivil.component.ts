@@ -31,7 +31,7 @@ export class ListestadocivilComponent implements OnInit {
 
   select(st: EstadoCivil): void {
     localStorage.setItem('id', st.idEstadoCivil.toString().valueOf());
-    this.router.navigate(['editempresa']);
+    this.router.navigate(['editestadocivil']);
   }
 
   delete(estado: EstadoCivil) {

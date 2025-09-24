@@ -1,0 +1,46 @@
+<div class="container col-md-6 mt-4">
+  <div class="card shadow-lg border-0 rounded-3">
+    <!-- Header -->
+    <div class="card-header bg-primary text-white text-center rounded-top">
+      <h3 class="mb-0">Agregar Tipo Documento</h3>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body">
+      <form>
+        <!-- Nombre del Rol -->
+        <div class="form-group mb-3">
+          <label for="nombre" class="form-label fw-bold">Nombre del Tipo Documento:</label>
+          <input
+            [(ngModel)]="tdoc.nombre"
+            type="text"
+            name="nombre"
+            id="nombre"
+            class="form-control"
+            placeholder="Ingrese el nombre del Tipo Documento"
+            required
+          />
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button
+            (click)="guardar(tdoc)"
+            type="button"
+            class="btn btn-outline-success me-2"
+          >
+            Guardar
+          </button>
+
+          <button
+            (click)="Cancelar()"
+            type="button"
+            class="btn btn-outline-danger"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

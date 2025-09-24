@@ -29,7 +29,7 @@ export class ListtipodocumentoComponent implements OnInit{
 
   select(st: TipoDocumento): void {
       localStorage.setItem('id', st.idTipoDocumento.toString().valueOf());
-      this.router.navigate(['editempresa']);
+      this.router.navigate(['edittipodocumento']);
     }
 
     delete(stc: TipoDocumento) {

@@ -45,6 +45,16 @@ import { ListtipodocumentoComponent } from './componentf2/listtipodocumento/list
 import { ListtipomovimientocxcComponent } from './componentf2/listtipomovimientocxc/listtipomovimientocxc.component';
 import { ListtiposaldocuentaComponent } from './componentf2/listtiposaldocuenta/listtiposaldocuenta.component';
 import { ListsaldocuentahistComponent } from './componentf2/listsaldocuentahist/listsaldocuentahist.component';
+import { AddestadocivilComponent } from './componentf2/addestadocivil/addestadocivil.component';
+import { AddstatuscuentaComponent } from './componentf2/addstatuscuenta/addstatuscuenta.component';
+import { AddtipodocumentoComponent } from './componentf2/addtipodocumento/addtipodocumento.component';
+import { AddtipomovimientocxcComponent } from './componentf2/addtipomovimientocxc/addtipomovimientocxc.component';
+import { AddtiposaldocuentaComponent } from './componentf2/addtiposaldocuenta/addtiposaldocuenta.component';
+import { EditestadocivilComponent } from './componentf2/editestadocivil/editestadocivil.component';
+import { EditstatuscuentaComponent } from './componentf2/editstatuscuenta/editstatuscuenta.component';
+import { EdittipodocumentoComponent } from './componentf2/edittipodocumento/edittipodocumento.component';
+import { EdittipomovimientocxcComponent } from './componentf2/edittipomovimientocxc/edittipomovimientocxc.component';
+import { EdittiposaldocuentaComponent } from './componentf2/edittiposaldocuenta/edittiposaldocuenta.component';
 
 const routes: Routes = [
 
@@ -87,6 +97,11 @@ const routes: Routes = [
   {    path: "addstatususuario", component:AddstatususuarioComponent  },
   {    path: "addroleopcion", component:AddroleopcionComponent  },
 
+  {    path: "addestadocivil", component:AddestadocivilComponent  },
+  {    path: "addstatuscuenta", component:AddstatuscuentaComponent  },
+  {    path: "addtipodocumento", component:AddtipodocumentoComponent  },
+  {    path: "addtipomovimientocxc", component:AddtipomovimientocxcComponent  },
+  {    path: "addtiposaldocuenta", component:AddtiposaldocuentaComponent  },
 
   {    path: "editusuario", component:EditusuarioComponent },
   {    path: "editstatususuario", component:EditstatususuarioComponent },
@@ -99,6 +114,11 @@ const routes: Routes = [
   {    path: "editopcion", component:EditopcionesComponent },
   {    path: "editroleopcion", component:EditroleopcionComponent },
 
+  {    path: "editestadocivil", component:EditestadocivilComponent },
+  {    path: "editstatuscuenta", component:EditstatuscuentaComponent },
+  {    path: "edittipodocumento", component:EdittipodocumentoComponent },
+  {    path: "edittipomovimientocxc", component:EdittipomovimientocxcComponent },
+  {    path: "edittiposaldocuenta", component:EdittiposaldocuentaComponent },
 
   {    path: "menu", component:MenuComponent  },
   {    path: "principal", component: PrincipalComponent  },

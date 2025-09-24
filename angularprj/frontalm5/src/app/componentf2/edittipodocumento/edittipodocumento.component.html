@@ -1,0 +1,60 @@
+<div class="container col-md-6 mt-4">
+  <div class="card shadow-lg border-0 rounded-3">
+    <div class="card-header bg-primary text-white text-center rounded-top">
+      <h3 class="mb-0">Modificar Tipo Documento</h3>
+    </div>
+
+    <div class="card-body">
+      <form #rolForm="ngForm" novalidate>
+        <!-- ID Rol -->
+        <div class="mb-3">
+          <label for="idRole" class="form-label fw-bold">ID de Tipo Documento</label>
+          <input
+            [(ngModel)]="tipoDoc.idTipoDocumento"
+            type="text"
+            name="idRole"
+            id="idRole" #myFocus
+            class="form-control"
+            placeholder="ID"
+            required
+            disabled
+          />
+        </div>
+
+        <!-- Nombre Rol -->
+        <div class="mb-3">
+          <label for="nombre" class="form-label fw-bold">Nombre de Tipo Documento</label>
+          <input
+            [(ngModel)]="tipoDoc.nombre"
+            type="text"
+            name="nombre"
+            id="nombre" #myFocus
+            class="form-control"
+            placeholder="Ingrese nombre de Tipo Documento"
+            required
+          />
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-success me-2"
+            (click)="editRol(tipoDoc)"
+            [disabled]="!rolForm.form.valid"
+          >
+            <i class="bi bi-save"></i> Guardar
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="Cancel()"
+          >
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

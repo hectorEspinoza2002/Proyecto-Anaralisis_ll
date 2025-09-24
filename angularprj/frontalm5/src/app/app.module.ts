@@ -50,6 +50,16 @@ import { ListstatuscuentaComponent } from './componentf2/liststatuscuenta/listst
 import { ListtipodocumentoComponent } from './componentf2/listtipodocumento/listtipodocumento.component';
 import { ListtipomovimientocxcComponent } from './componentf2/listtipomovimientocxc/listtipomovimientocxc.component';
 import { ListtiposaldocuentaComponent } from './componentf2/listtiposaldocuenta/listtiposaldocuenta.component';
+import { EditstatuscuentaComponent } from './componentf2/editstatuscuenta/editstatuscuenta.component';
+import { EditestadocivilComponent } from './componentf2/editestadocivil/editestadocivil.component';
+import { EdittipodocumentoComponent } from './componentf2/edittipodocumento/edittipodocumento.component';
+import { EdittipomovimientocxcComponent } from './componentf2/edittipomovimientocxc/edittipomovimientocxc.component';
+import { EdittiposaldocuentaComponent } from './componentf2/edittiposaldocuenta/edittiposaldocuenta.component';
+import { AddtiposaldocuentaComponent } from './componentf2/addtiposaldocuenta/addtiposaldocuenta.component';
+import { AddtipomovimientocxcComponent } from './componentf2/addtipomovimientocxc/addtipomovimientocxc.component';
+import { AddtipodocumentoComponent } from './componentf2/addtipodocumento/addtipodocumento.component';
+import { AddestadocivilComponent } from './componentf2/addestadocivil/addestadocivil.component';
+import { AddstatuscuentaComponent } from './componentf2/addstatuscuenta/addstatuscuenta.component';
 
 
 @NgModule({
@@ -101,6 +111,16 @@ import { ListtiposaldocuentaComponent } from './componentf2/listtiposaldocuenta/
     ListtipodocumentoComponent,
     ListtipomovimientocxcComponent,
     ListtiposaldocuentaComponent,
+    EditstatuscuentaComponent,
+    EditestadocivilComponent,
+    EdittipodocumentoComponent,
+    EdittipomovimientocxcComponent,
+    EdittiposaldocuentaComponent,
+    AddtiposaldocuentaComponent,
+    AddtipomovimientocxcComponent,
+    AddtipodocumentoComponent,
+    AddestadocivilComponent,
+    AddstatuscuentaComponent,
   ],
   imports: [
     BrowserModule,

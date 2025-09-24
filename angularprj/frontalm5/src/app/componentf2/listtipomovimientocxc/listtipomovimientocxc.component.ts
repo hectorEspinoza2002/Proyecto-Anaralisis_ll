@@ -29,7 +29,7 @@ export class ListtipomovimientocxcComponent implements OnInit {
 
   select(st: TipoMovimientoCxc): void {
     localStorage.setItem('id', st.idTipoMovimientoCXC.toString().valueOf());
-    this.router.navigate(['editempresa']);
+    this.router.navigate(['edittipomovimientocxc']);
   }
 
   delete(tmcxc: TipoMovimientoCxc) {
