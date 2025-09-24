@@ -47,7 +47,7 @@ public class TipoMovimientoCxcController {
         }
     }
 
-    @PutMapping("/update_tipo_movimiento_cxc")
+    @PutMapping("/update_tipo_movimiento_cxc/{id}")
     public TipoMovimientoCxc updateTipoMovimiento(@PathVariable("id") Integer tipoMovId,
             @RequestBody TipoMovimientoCxc updateMov) {
         Optional<TipoMovimientoCxc> optionTipMov = tipoMovCxcService.findById(tipoMovId);

@@ -30,7 +30,7 @@ public class EstadoCivilController {
         return estadoCivilService.findAll();
     }
 
-    @GetMapping("/list_estado_civil")
+    @GetMapping("/list_estado_civil/{id}")
     public Optional<EstadoCivil> obtenerPorId(@PathVariable Integer id){
         return estadoCivilService.findById(id);
     }
