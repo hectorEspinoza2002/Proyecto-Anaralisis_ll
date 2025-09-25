@@ -23,25 +23,39 @@
             <th>Telefono</th>
             <th>Correo</th>
             <th>EstadoCivil</th>
+            <th>T_Doc</th>
             <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let per of personas">
-            <td>{{per.idPersona}}</td>
-            <td>{{per.nombre}}</td>
-            <td>{{per.apellido}}</td>
-            <td>{{per.fechaNacimiento}}</td>
-            <td>{{per.genero.nombre}}</td>
-            <td>{{per.direccion}}</td>
-            <td>{{per.telefono}}</td>
-            <td>{{per.correoElectronico}}</td>
-            <td>{{per.estadoCivil.nombre}}</td>
+            <td>{{ per.idPersona }}</td>
+            <td>{{ per.nombre }}</td>
+            <td>{{ per.apellido }}</td>
+            <td>{{ per.fechaNacimiento }}</td>
+            <td>{{ per.genero.nombre }}</td>
+            <td>{{ per.direccion }}</td>
+            <td>{{ per.telefono }}</td>
+            <td>{{ per.correoElectronico }}</td>
+            <td>{{ per.estadoCivil.nombre }}</td>
             <td>
-              <button *ngIf="puedeCambio" (click)="select(per)" class="btn btn-warning btn-sm me-2">
+              <button class="btn btn-outline-primary ms-2">
+                <i class="bi bi-file-earmark"></i> Ver
+              </button>
+            </td>
+            <td>
+              <button
+                *ngIf="puedeCambio"
+                (click)="select(per)"
+                class="btn btn-warning btn-sm me-2"
+              >
                 <i class="bi bi-pencil-square"></i> Editar
               </button>
-              <button *ngIf="puedeBaja" (click)="delete(per)" class="btn btn-danger btn-sm">
+              <button
+                *ngIf="puedeBaja"
+                (click)="delete(per)"
+                class="btn btn-danger btn-sm"
+              >
                 <i class="bi bi-trash"></i> Borrar
               </button>
             </td>
@@ -51,4 +65,3 @@
     </div>
   </div>
 </div>
-

@@ -66,7 +66,7 @@ export class ListempresaComponent implements OnInit {
     this.router.navigate(['editempresa']);
   }
 
-   generarPdf(): void {
+  generarPdf(): void {
     if (this.empresas && this.empresas.length > 0) {
       this.empresaService.generarPdfEmpresas(this.empresas);
     } else {
@@ -105,4 +105,19 @@ export class ListempresaComponent implements OnInit {
   });
 }*/
 
+  generarExcel(): void {
+    if (this.empresas && this.empresas.length > 0) {
+      this.empresaService.generarExcelEmpresas(this.empresas, 'reporte_empresas');
+    } else {
+      alert('No hay datos para generar el Excel');
+    }
+  }
+
+  generarExcelSimple(): void {
+    if (this.empresas && this.empresas.length > 0) {
+      this.empresaService.generarExcelSimple(this.empresas, 'empresas');
+    } else {
+      alert('No hay datos para generar el Excel');
+    }
+  }
 }
