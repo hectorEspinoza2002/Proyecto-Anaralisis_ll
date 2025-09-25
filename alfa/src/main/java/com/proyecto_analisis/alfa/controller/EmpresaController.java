@@ -104,5 +104,58 @@ public class EmpresaController {
 
         return ResponseEntity.ok(empresa);
     }
+    /*
+     * @GetMapping("/empresas/pdf")
+     * public ResponseEntity<byte[]> descargarPdfEmpresas() {
+     * try {
+     * List<Empresa> empresas = empresaService.findAll();
+     * byte[] pdfBytes = empresaService.generarPdfEmpresas(empresas);
+     * 
+     * HttpHeaders headers = new HttpHeaders();
+     * headers.setContentType(MediaType.APPLICATION_PDF);
+     * headers.setContentDispositionFormData("attachment", "empresas_" +
+     * LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +
+     * ".pdf");
+     * headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+     * 
+     * return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+     * } catch (Exception e) {
+     * return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+     * }
+     * }
+     * 
+     * 
+     * @GetMapping("/empresas/pdf")
+     * public ResponseEntity<byte[]> exportEmpresasPdf() {
+     * try {
+     * List<Empresa> empresas = empresaService.findAll();
+     * 
+     * ByteArrayOutputStream baos = new ByteArrayOutputStream();
+     * Document document = new Document();
+     * PdfWriter.getInstance(document, baos);
+     * document.open();
+     * 
+     * document.add(new Paragraph("Listado de Empresas"));
+     * document.add(new Paragraph(" "));
+     * 
+     * for (Empresa emp : empresas) {
+     * document.add(new Paragraph("ID: " + emp.getIdEmpresa()
+     * + " | Nombre: " + emp.getNombre()
+     * + " | NIT: " + emp.getNit()
+     * + " | Dirección: " + emp.getDireccion()));
+     * }
+     * 
+     * document.close();
+     * 
+     * return ResponseEntity.ok()
+     * .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=empresas.pdf")
+     * .contentType(MediaType.APPLICATION_PDF)
+     * .body(baos.toByteArray());
+     * 
+     * } catch (Exception e) {
+     * return ResponseEntity.status(500).build();
+     * }
+     * }
+     */
 
 }

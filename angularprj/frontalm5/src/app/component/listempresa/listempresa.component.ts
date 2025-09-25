@@ -65,4 +65,44 @@ export class ListempresaComponent implements OnInit {
     localStorage.setItem('id', r.idEmpresa.toString().valueOf());
     this.router.navigate(['editempresa']);
   }
+
+   generarPdf(): void {
+    if (this.empresas && this.empresas.length > 0) {
+      this.empresaService.generarPdfEmpresas(this.empresas);
+    } else {
+      alert('No hay datos para generar el PDF');
+    }
+  }
+  /*
+  descargarPdfBackend(): void {
+    this.empresaService.descargarPdf().subscribe(
+      (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `empresas_${new Date().getTime()}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error => {
+        console.error('Error al descargar PDF:', error);
+        alert('Error al generar el PDF');
+      }
+    );
+  }
+  */
+  /*
+  downloadEmpresasPdf() {
+  this.empresaService.downloadPdf().subscribe((res: Blob) => {
+    const url = window.URL.createObjectURL(res);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'empresas.pdf';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  });
+}*/
+
 }
