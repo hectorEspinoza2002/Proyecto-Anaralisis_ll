@@ -17,6 +17,8 @@ export class ListempresaComponent implements OnInit {
   puedeAlta = false;
   puedeBaja = false;
   puedeCambio = false;
+  puedeExportar = false;
+  puedeImprimir = false;
 
   constructor(
     private empresaService: EmpresaService,
@@ -40,6 +42,8 @@ export class ListempresaComponent implements OnInit {
         this.puedeAlta = permisosEmpresa.alta == 1;
         this.puedeBaja = permisosEmpresa.baja == 1;
         this.puedeCambio = permisosEmpresa.cambio == 1;
+        this.puedeExportar = permisosEmpresa.exportar == 1;
+        this.puedeImprimir = permisosEmpresa.imprimir == 1;
       }
     });
   }
@@ -73,37 +77,6 @@ export class ListempresaComponent implements OnInit {
       alert('No hay datos para generar el PDF');
     }
   }
-  /*
-  descargarPdfBackend(): void {
-    this.empresaService.descargarPdf().subscribe(
-      (blob: Blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `empresas_${new Date().getTime()}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      },
-      error => {
-        console.error('Error al descargar PDF:', error);
-        alert('Error al generar el PDF');
-      }
-    );
-  }
-  */
-  /*
-  downloadEmpresasPdf() {
-  this.empresaService.downloadPdf().subscribe((res: Blob) => {
-    const url = window.URL.createObjectURL(res);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'empresas.pdf';
-    a.click();
-    window.URL.revokeObjectURL(url);
-  });
-}*/
 
   generarExcel(): void {
     if (this.empresas && this.empresas.length > 0) {

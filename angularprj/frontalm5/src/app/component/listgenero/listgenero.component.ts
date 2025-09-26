@@ -16,6 +16,8 @@ export class ListgeneroComponent implements OnInit{
   puedeAlta = false;
   puedeBaja = false;
   puedeCambio = false;
+  puedeExportar = false;
+  puedeImprimir = false;
 
   constructor(private generoService: GeneroService, private router:Router,
     private permisosService: PermisosService
@@ -36,6 +38,8 @@ export class ListgeneroComponent implements OnInit{
         this.puedeAlta = permisosEmpresa.alta == 1;
         this.puedeBaja = permisosEmpresa.baja == 1;
         this.puedeCambio = permisosEmpresa.cambio == 1;
+        this.puedeExportar = permisosEmpresa.exportar == 1;
+        this.puedeImprimir = permisosEmpresa.imprimir == 1;
       }
     });
   }
@@ -58,6 +62,22 @@ export class ListgeneroComponent implements OnInit{
   selectGenero(gr:Genero): void{
     localStorage.setItem("id",gr.idGenero.toString().valueOf());
     this.router.navigate(["editgenero"]);
+  }
+
+  generarPdf(): void {
+    if (this.generos && this.generos.length > 0) {
+      this.generoService.generarPdfGenero(this.generos);
+    } else {
+      alert('No hay datos para generar el PDF');
+    }
+  }
+
+  generarExcelSimple(): void {
+    if (this.generos && this.generos.length > 0) {
+      this.generoService.generarExcelSimple(this.generos, 'generos');
+    } else {
+      alert('No hay datos para generar el Excel');
+    }
   }
 
 }

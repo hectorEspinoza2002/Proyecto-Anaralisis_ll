@@ -16,6 +16,8 @@ export class ListroleComponent implements OnInit{
   puedeAlta = false;
   puedeBaja = false;
   puedeCambio = false;
+  puedeExportar = false;
+  puedeImprimir = false;
 
   constructor(private rolService: RoleService, private router:Router,
     private permisosService: PermisosService
@@ -36,6 +38,8 @@ export class ListroleComponent implements OnInit{
         this.puedeAlta = permisosEmpresa.alta == 1;
         this.puedeBaja = permisosEmpresa.baja == 1;
         this.puedeCambio = permisosEmpresa.cambio == 1;
+        this.puedeExportar = permisosEmpresa.exportar == 1;
+        this.puedeImprimir = permisosEmpresa.imprimir == 1;
       }
     });
   }
@@ -58,6 +62,22 @@ export class ListroleComponent implements OnInit{
   selectRol(r:Role): void{
     localStorage.setItem("id",r.idRole.toString().valueOf());
     this.router.navigate(["editrol"]);
+  }
+
+  generarPdf(): void {
+    if (this.roles && this.roles.length > 0) {
+      this.rolService.generarPdfRol(this.roles);
+    } else {
+      alert('No hay datos para generar el PDF');
+    }
+  }
+
+  generarExcelSimple(): void {
+    if (this.roles && this.roles.length > 0) {
+      this.rolService.generarExcelSimple(this.roles, 'roles');
+    } else {
+      alert('No hay datos para generar el Excel');
+    }
   }
 
 }

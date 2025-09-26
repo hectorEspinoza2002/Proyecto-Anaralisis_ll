@@ -97,24 +97,29 @@ export class EmpresaService {
     doc.save(`empresas_${new Date().getTime()}.pdf`);
   }
 
-  generarExcelEmpresas(empresas: any[], nombreArchivo: string = 'reporte_empresas'): void {
+  generarExcelEmpresas(
+    empresas: any[],
+    nombreArchivo: string = 'reporte_empresas'
+  ): void {
     // Preparar los datos para Excel
-    const datos = empresas.map(empresa => ({
-      'ID': empresa.idEmpresa,
-      'Nombre': empresa.nombre,
-      'NIT': empresa.nit || '',
-      'Dirección': empresa.direccion || '',
+    const datos = empresas.map((empresa) => ({
+      ID: empresa.idEmpresa,
+      Nombre: empresa.nombre,
+      NIT: empresa.nit || '',
+      Dirección: empresa.direccion || '',
       'Mayúsculas Requeridas': empresa.passwordCantidadMayusculas || 0,
       'Minúsculas Requeridas': empresa.passwordCantidadMinusculas || 0,
-      'Caracteres Especiales': empresa.passwordCantidadCaracteresEspeciales || 0,
+      'Caracteres Especiales':
+        empresa.passwordCantidadCaracteresEspeciales || 0,
       'Días Caducidad': empresa.passwordCantidadCaducidadDias || 0,
       'Largo Password': empresa.passwordLargo || 0,
       'Intentos Bloqueo': empresa.passwordIntentosAntesDeBloquear || 0,
       'Números Requeridos': empresa.passwordCantidadNumeros || 0,
       'Preguntas Validar': empresa.passwordCantidadPreguntasValidar || 0,
-      'Fecha Creación': empresa.fechaCreacion ?
-        new Date(empresa.fechaCreacion).toLocaleDateString('es-ES') : '',
-      'Usuario Creación': empresa.usuarioCreacion || ''
+      'Fecha Creación': empresa.fechaCreacion
+        ? new Date(empresa.fechaCreacion).toLocaleDateString('es-ES')
+        : '',
+      'Usuario Creación': empresa.usuarioCreacion || '',
     }));
 
     // Crear libro de trabajo
@@ -125,7 +130,7 @@ export class EmpresaService {
 
     // Ajustar el ancho de las columnas
     const columnWidths = [
-      { wch: 8 },  // ID
+      { wch: 8 }, // ID
       { wch: 25 }, // Nombre
       { wch: 15 }, // NIT
       { wch: 30 }, // Dirección
@@ -138,7 +143,7 @@ export class EmpresaService {
       { wch: 18 }, // Números Requeridos
       { wch: 18 }, // Preguntas Validar
       { wch: 15 }, // Fecha Creación
-      { wch: 20 }  // Usuario Creación
+      { wch: 20 }, // Usuario Creación
     ];
 
     worksheet['!cols'] = columnWidths;
@@ -147,23 +152,29 @@ export class EmpresaService {
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Empresas');
 
     // Generar archivo Excel
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
 
     // Guardar archivo
     const data: Blob = new Blob([excelBuffer], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
     });
 
     saveAs(data, `${nombreArchivo}_${new Date().getTime()}.xlsx`);
   }
 
   // Versión simplificada solo con datos básicos
-  generarExcelSimple(empresas: any[], nombreArchivo: string = 'empresas'): void {
-    const datos = empresas.map(empresa => ({
+  generarExcelSimple(
+    empresas: any[],
+    nombreArchivo: string = 'empresas'
+  ): void {
+    const datos = empresas.map((empresa) => ({
       'ID': empresa.idEmpresa,
       'Nombre Empresa': empresa.nombre,
       'NIT': empresa.nit || '',
-      'Dirección': empresa.direccion || ''
+      'Dirección': empresa.direccion || '',
     }));
 
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
@@ -171,21 +182,22 @@ export class EmpresaService {
 
     // Ajustar anchos de columnas
     worksheet['!cols'] = [
-      { wch: 8 },  // ID
+      { wch: 8 }, // ID
       { wch: 30 }, // Nombre
       { wch: 20 }, // NIT
-      { wch: 40 }  // Dirección
+      { wch: 40 }, // Dirección
     ];
 
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Empresas');
 
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
     const data: Blob = new Blob([excelBuffer], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8',
     });
 
     saveAs(data, `${nombreArchivo}_${new Date().getTime()}.xlsx`);
   }
-
-
 }

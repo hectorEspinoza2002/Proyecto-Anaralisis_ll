@@ -4,25 +4,14 @@
     <h2 class="text-primary m-0">Listado de Empresas</h2>
 
     <div class="d-flex gap-2">
-      <!-- Contenedor para los botones -->
-      <!--
-      <a (click)="generarPdf()" class="btn btn-outline-primary ms-2">
-      <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
-     </a>
-      -->
-     <!--*ngIf="puedeExportar"
-      <button (click)="generarPdf()" class="btn btn-outline-primary ms-2">
-        <i class="bi bi-file-earmark-excel"></i> Exportar EXC
-      </button>
-      -->
 
       <!-- Botón Excel *ngIf="puedeExportar" -->
-      <button  (click)="generarExcel()" class="btn btn-outline-success">
+      <button  *ngIf="puedeExportar" (click)="generarExcel()" class="btn btn-outline-success">
         <i class="bi bi-file-excel"></i> Excel
       </button>
 
       <!--*ngIf="puedeImprimir"-->
-      <button (click)="generarPdf()" class="btn btn-outline-primary ms-2">
+      <button *ngIf="puedeImprimir" (click)="generarPdf()" class="btn btn-outline-primary ms-2">
         <i class="bi bi-file-pdf"></i> Exportar PDF
       </button>
 

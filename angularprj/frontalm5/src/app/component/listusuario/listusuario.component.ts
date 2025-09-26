@@ -16,6 +16,8 @@ export class ListusuarioComponent implements OnInit {
   puedeAlta = false;
   puedeBaja = false;
   puedeCambio = false;
+  puedeExportar = false;
+  puedeImprimir = false;
 
   constructor(private userService: UsuarioService, private router: Router,
     private permisosService: PermisosService
@@ -37,6 +39,8 @@ export class ListusuarioComponent implements OnInit {
         this.puedeAlta = permisosEmpresa.alta == 1;
         this.puedeBaja = permisosEmpresa.baja == 1;
         this.puedeCambio = permisosEmpresa.cambio == 1;
+        this.puedeExportar = permisosEmpresa.exportar == 1;
+        this.puedeImprimir = permisosEmpresa.imprimir == 1;
       }
     });
   }
@@ -68,5 +72,21 @@ export class ListusuarioComponent implements OnInit {
 
   crearNuevoUsuario(): void {
     this.router.navigate(['/addusuarios']);
+  }
+
+  generarPdf(): void {
+    if (this.usuarios && this.usuarios.length > 0) {
+      this.userService.generarPdfUsuarios(this.usuarios);
+    } else {
+      alert('No hay datos para generar el PDF');
+    }
+  }
+
+  generarExcelSimple(): void {
+    if (this.usuarios && this.usuarios.length > 0) {
+      this.userService.generarExcelSimple(this.usuarios, 'usuarios');
+    } else {
+      alert('No hay datos para generar el Excel');
+    }
   }
 }

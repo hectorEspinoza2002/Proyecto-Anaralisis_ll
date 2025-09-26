@@ -16,6 +16,8 @@ export class ListsucursalesComponent implements OnInit{
   puedeAlta = false;
   puedeBaja = false;
   puedeCambio = false;
+  puedeExportar = false;
+  puedeImprimir = false;
 
   constructor(private sucursalService: SucursalService, private router:Router,
     private permisosService: PermisosService
@@ -36,6 +38,8 @@ export class ListsucursalesComponent implements OnInit{
         this.puedeAlta = permisosEmpresa.alta == 1;
         this.puedeBaja = permisosEmpresa.baja == 1;
         this.puedeCambio = permisosEmpresa.cambio == 1;
+        this.puedeExportar = permisosEmpresa.exportar == 1;
+        this.puedeImprimir = permisosEmpresa.imprimir == 1;
       }
     });
   }
@@ -58,6 +62,22 @@ export class ListsucursalesComponent implements OnInit{
   selectSucur(r:Sucursal): void{
     localStorage.setItem("id",r.idSucursal.toString().valueOf());
     this.router.navigate(["editsucursal"])
+  }
+
+  generarPdf(): void {
+    if (this.sucursales && this.sucursales.length > 0) {
+      this.sucursalService.generarPdf(this.sucursales);
+    } else {
+      alert('No hay datos para generar el PDF');
+    }
+  }
+
+  generarExcelSimple(): void {
+    if (this.sucursales && this.sucursales.length > 0) {
+      this.sucursalService.generarExcelSimple(this.sucursales, 'sucursales');
+    } else {
+      alert('No hay datos para generar el Excel');
+    }
   }
 
 }

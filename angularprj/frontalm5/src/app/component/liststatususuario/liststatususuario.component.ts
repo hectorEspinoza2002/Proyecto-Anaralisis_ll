@@ -17,6 +17,9 @@ export class ListstatususuarioComponent implements OnInit {
   puedeBaja = false;
   puedeCambio = false;
 
+  puedeExportar = false;
+  puedeImprimir = false;
+
   constructor(
     private statuService: StatusUsuarioService,
     private router: Router,
@@ -39,6 +42,8 @@ export class ListstatususuarioComponent implements OnInit {
         this.puedeAlta = permisosEmpresa.alta == 1;
         this.puedeBaja = permisosEmpresa.baja == 1;
         this.puedeCambio = permisosEmpresa.cambio == 1;
+        this.puedeExportar = permisosEmpresa.exportar == 1;
+        this.puedeImprimir = permisosEmpresa.imprimir == 1;
       }
     });
   }
@@ -61,5 +66,21 @@ export class ListstatususuarioComponent implements OnInit {
   selectEstatus(s: StatusUsuario): void {
     localStorage.setItem('id', s.idStatusUsuario.toString().valueOf());
     this.router.navigate(['editstatususuario']);
+  }
+
+  generarPdf(): void {
+    if (this.status && this.status.length > 0) {
+      this.statuService.generarPdfStatusUsuario(this.status);
+    } else {
+      alert('No hay datos para generar el PDF');
+    }
+  }
+
+  generarExcelSimple(): void {
+    if (this.status && this.status.length > 0) {
+      this.statuService.generarExcelSimple(this.status, 'status');
+    } else {
+      alert('No hay datos para generar el Excel');
+    }
   }
 }
