@@ -18,7 +18,7 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <!-- Menú Catálogo -->
+          <!-- Menú Catálogo
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCatalogo" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Catálogo
@@ -29,9 +29,9 @@
               <li><a class="dropdown-item" routerLink="/listgenero">Géneros</a></li>
               <li><a class="dropdown-item" routerLink="/liststatususuario">Status</a></li>
             </ul>
-          </li>
+          </li> -->
 
-          <!-- Menú Seguridad -->
+          <!-- Menú Seguridad
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSeguridad" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Seguridad
@@ -44,7 +44,43 @@
               <li><a class="dropdown-item" routerLink="/listopcion">Opciones</a></li>
               <li><a class="dropdown-item" routerLink="/listrolopcion">Rol_Opc</a></li>
             </ul>
+          </li> -->
+
+          <!-- Menú Cuenta Corriente -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCXC" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Seguridad
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownCXC">
+
+              <!-- Submenú Parámetros Generales -->
+              <li class="dropdown-submenu">
+                <!--<a class="dropdown-item dropdown-toggle" href="#">Parámetros Generales</a>-->
+                <a class="dropdown-item dropdown-toggle" >Parámetros Generales</a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" routerLink="/listempresa">Empresa</a></li>
+                  <li><a class="dropdown-item" routerLink="/listsucursal">Sucursales</a></li>
+                  <li><a class="dropdown-item" routerLink="/listgenero">Géneros</a></li>
+                  <li><a class="dropdown-item" routerLink="/liststatususuario">Estatus Usuario</a></li>
+                  <li><a class="dropdown-item" routerLink="/listrole">Roles</a></li>
+                  <li><a class="dropdown-item" routerLink="/listmodulo">Módulos</a></li>
+                  <li><a class="dropdown-item" routerLink="/listmenu">Menús</a></li>
+                  <li><a class="dropdown-item" routerLink="/listopcion">Opciones</a></li>
+                </ul>
+              </li>
+
+              <!-- Submenú Gestión Cuenta Corriente -->
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" >Acciones</a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" routerLink="/listusuarios">Usuarios</a></li>
+                  <li><a class="dropdown-item" routerLink="/listrolopcion">Asignar Opciones a un Role</a></li>
+                </ul>
+              </li>
+            </ul>
           </li>
+
+
 
           <!-- Menú Cuenta Corriente -->
           <li class="nav-item dropdown">
@@ -55,7 +91,8 @@
 
               <!-- Submenú Parámetros Generales -->
               <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#">Parámetros Generales</a>
+                <!--<a class="dropdown-item dropdown-toggle" href="#">Parámetros Generales</a>-->
+                <a class="dropdown-item dropdown-toggle">Parámetros Generales</a>
                 <ul class="dropdown-menu dropdown-menu-dark">
                   <li><a class="dropdown-item" routerLink="/liststatuscuenta">Status de Cuentas</a></li>
                   <li><a class="dropdown-item" routerLink="/listestadocivil">Estado Civil de Personas</a></li>
@@ -66,7 +103,8 @@
 
               <!-- Submenú Gestión Cuenta Corriente -->
               <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#">Gestión Cuenta Corriente</a>
+                <!--<a class="dropdown-item dropdown-toggle" href="#">Gestión Cuenta Corriente</a>-->
+                <a class="dropdown-item dropdown-toggle">Gestión Cuenta Corriente</a>
                 <ul class="dropdown-menu dropdown-menu-dark">
                   <li><a class="dropdown-item" routerLink="/listtiposaldocuenta">Tipos de Cuentas</a></li>
                   <li><a class="dropdown-item" routerLink="/listpersona">Persona</a></li>
@@ -77,7 +115,8 @@
 
               <!-- Submenú Reporte -->
               <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#">Reporte</a>
+                <!--<a class="dropdown-item dropdown-toggle" href="#">Reporte</a>-->
+                <a class="dropdown-item dropdown-toggle">Reporte</a>
                 <ul class="dropdown-menu dropdown-menu-dark">
                   <li><a class="dropdown-item" routerLink="/listsaldocuentahist">Estado de Cuentas</a></li>
                 </ul>
@@ -85,7 +124,8 @@
 
               <!-- Submenú Procesos -->
               <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#">Procesos</a>
+                <!--<a class="dropdown-item dropdown-toggle" href="#">Procesos</a>-->
+                <a class="dropdown-item dropdown-toggle">Procesos</a>
                 <ul class="dropdown-menu dropdown-menu-dark">
                   <li><a class="dropdown-item" routerLink="/listtipomovimientocxc">Grabación de Movimientos</a></li>
                   <li><a class="dropdown-item" routerLink="/listperiodocierremes">Cierre de Mes</a></li>
@@ -110,6 +150,7 @@
           </a>
         </li>
       </ul>
+
     </div>
   </nav>
 </div>
