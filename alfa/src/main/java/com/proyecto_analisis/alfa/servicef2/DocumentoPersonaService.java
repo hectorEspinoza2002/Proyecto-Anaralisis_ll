@@ -14,29 +14,34 @@ public class DocumentoPersonaService {
 
     private final DocumentoPersonaRepository documentoRepo;
 
-    public DocumentoPersonaService(DocumentoPersonaRepository dRepo){
+    public DocumentoPersonaService(DocumentoPersonaRepository dRepo) {
         this.documentoRepo = dRepo;
     }
 
-    public List<DocumentoPersona> findAll(){
+    public List<DocumentoPersona> findAll() {
         return documentoRepo.findAll();
     }
 
-    public Optional<DocumentoPersona> findById(DocumentoPersonaId id){
+    public Optional<DocumentoPersona> findById(DocumentoPersonaId id) {
         return documentoRepo.findById(id);
     }
 
-    public DocumentoPersona guardar(DocumentoPersona dp){
+    public DocumentoPersona guardar(DocumentoPersona dp) {
         return documentoRepo.save(dp);
     }
 
-    public void delete(DocumentoPersonaId dPer){
+    public void delete(DocumentoPersonaId dPer) {
         documentoRepo.deleteById(dPer);
     }
 
     public List<DocumentoPersona> findByTipoDoc(Integer tipoDocumento){
-        return documentoRepo.findByTipoDocumento_IdTipoDocumento(tipoDocumento);
-        //return documentoRepo.findById_TipoDocumento(tipoDocumento);
+    return documentoRepo.findByTipoDocumento_IdTipoDocumento(tipoDocumento);
+    //return documentoRepo.findById_TipoDocumento(tipoDocumento);
     }
+
+    public List<DocumentoPersona> findByPersona(Integer idPersona) {
+    return documentoRepo.findByPersona_IdPersona(idPersona);
+}
+
 
 }

@@ -20,4 +20,7 @@ public interface DocumentoPersonaRepository extends JpaRepository<DocumentoPerso
   Optional<DocumentoPersona> findByTipoDocumento_IdTipoDocumentoAndPersona_IdPersona(Integer idTipoDocumento,
       Integer idPersona);
 
+  List<DocumentoPersona> findByPersona_IdPersona(Integer personaId);
+
+
 }

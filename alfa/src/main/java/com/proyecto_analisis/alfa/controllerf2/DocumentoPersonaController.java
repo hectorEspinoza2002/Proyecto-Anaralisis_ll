@@ -3,6 +3,7 @@ package com.proyecto_analisis.alfa.controllerf2;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proyecto_analisis.alfa.model.entity.LoginRequest;
 import com.proyecto_analisis.alfa.model.entityf2.DocumentoPersona;
 import com.proyecto_analisis.alfa.model.entityf2.DocumentoPersonaId;
+import com.proyecto_analisis.alfa.model.entityf2.TipoDocumento;
 import com.proyecto_analisis.alfa.servicef2.DocumentoPersonaService;
 
 @RestController
@@ -27,11 +29,6 @@ public class DocumentoPersonaController {
 
     @Autowired
     private DocumentoPersonaService docPersonaService;
-
-    /*
-    @Autowired
-    private PersonaService personaService;
-     */
 
     @GetMapping("/list_docuemtos_personas")
     public List<DocumentoPersona> listarTodos() {
@@ -68,7 +65,7 @@ public class DocumentoPersonaController {
 
     @PutMapping("/update_documento_persona/{tipoDocumento}/{persona}")
     public ResponseEntity<?> updateDocPersona(@PathVariable Integer tipoDocumento, @PathVariable Integer persona,
-    @RequestBody DocumentoPersona updateDocPers){
+            @RequestBody DocumentoPersona updateDocPers) {
         DocumentoPersonaId id = new DocumentoPersonaId(tipoDocumento, persona);
         Optional<DocumentoPersona> dpOptional = docPersonaService.findById(id);
 
@@ -80,22 +77,30 @@ public class DocumentoPersonaController {
 
             docPersonaService.guardar(dpers);
 
-            List<DocumentoPersona> permisoActualizado = docPersonaService.findByTipoDoc(tipoDocumento);
-            return ResponseEntity.ok(permisoActualizado);
+            return ResponseEntity.ok(dpers);
+
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/delete_documento_persona/{tipoDocumento}/{persona}")
-    public void deleteDocPersona(@PathVariable Integer tipoDocumento, @PathVariable Integer persona){
-        DocumentoPersonaId id = new DocumentoPersonaId(tipoDocumento,persona);
+    public void deleteDocPersona(@PathVariable Integer tipoDocumento, @PathVariable Integer persona) {
+        DocumentoPersonaId id = new DocumentoPersonaId(tipoDocumento, persona);
         Optional<DocumentoPersona> docOption = docPersonaService.findById(id);
         docOption.ifPresent(d -> docPersonaService.delete(id));
     }
 
-    @GetMapping("/list_documento_persona/documentoPersona/{tipoDocumento}")
-    public List<DocumentoPersona> listarPorTipo(@PathVariable Integer tipoDocumento){
-        return docPersonaService.findByTipoDoc(tipoDocumento);
+    @GetMapping("/list_documento_persona/persona/{idPersona}")
+    public List<DocumentoPersona> listarPorPersona(@PathVariable Integer idPersona) {
+        return docPersonaService.findByPersona(idPersona);
+    }
+
+    @GetMapping("/list_documentos_by_persona/{idPersona}")
+    public List<TipoDocumento> listarTiposPorPersona(@PathVariable Integer idPersona) {
+        List<DocumentoPersona> docs = docPersonaService.findByPersona(idPersona);
+        return docs.stream()
+                .map(DocumentoPersona::getTipoDocumento)
+                .collect(Collectors.toList());
     }
 
 }
