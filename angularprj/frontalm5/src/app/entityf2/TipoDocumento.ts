@@ -1,6 +1,6 @@
 export class TipoDocumento {
 
-  idTipoDocumento!: Number;
+  idTipoDocumento!: number;
   nombre!: String;
   fechaCreacion!: Date;
   usuarioCreacion!: String;

@@ -74,7 +74,8 @@ const routes: Routes = [
   {    path: "listrolopcion", component:ListroleopcionComponent  },
 
   {    path: "listpersona", component:ListpersonaComponent  },
-  {    path: "listdocumentopersona", component:ListdocumentopersonaComponent  },
+  //{    path: "listdocumentopersona", component:ListdocumentopersonaComponent  },
+  { path: 'listdocumentopersona/:idPersona', component: ListdocumentopersonaComponent },
   {    path: "listestadocivil", component:ListestadocivilComponent  },
   {    path: "listmovimientocuenta", component:ListmovimientocuentaComponent  },
   {    path: "listperiodocierremes", component:ListperiodocierremesComponent  },

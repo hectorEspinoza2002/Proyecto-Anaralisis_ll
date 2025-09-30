@@ -1,1 +1,37 @@
-<p>listperiodocierremes works!</p>
+<div class="container mt-4">
+  <h3>Gestión de Cierres de Mes</h3>
+
+  <div *ngIf="mensaje" class="alert alert-danger">{{ mensaje }}</div>
+
+  <table class="table table-bordered table-striped mt-3" *ngIf="periodos.length > 0; else noData">
+    <thead class="table-dark">
+      <tr>
+        <th>Año</th>
+        <th>Mes</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Final</th>
+        <th>Fecha Cierre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of periodos">
+        <!--
+        <td>{{ p.id.anio }}</td>
+        <td>{{ p.id.mes }}</td>-->
+        <td>{{ p.fechaInicio }}</td>
+        <td>{{ p.fechaFinal }}</td>
+        <td>{{ p.fechaCierre || 'Pendiente' }}</td>
+        <td>
+          <!--
+          <button class="btn btn-danger btn-sm" (click)="eliminar(p.id.anio, p.id.mes)">Eliminar</button>-->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noData>
+    <p>No hay periodos de cierre registrados.</p>
+  </ng-template>
+</div>
+

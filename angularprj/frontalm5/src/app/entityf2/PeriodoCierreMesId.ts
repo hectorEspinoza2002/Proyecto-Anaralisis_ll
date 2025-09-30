@@ -1,6 +1,6 @@
-export class PeriodoCierremes {
+export class PeriodoCierreMesId {
 
-  id!: Number;
+  id!: PeriodoCierreMesId;
   fechaInicio!: Date;
   fechaFinal!: Date;
   fechaCierre!: Date;

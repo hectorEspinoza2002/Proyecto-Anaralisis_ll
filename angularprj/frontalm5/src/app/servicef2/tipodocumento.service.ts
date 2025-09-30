@@ -11,8 +11,14 @@ export class TipodocumentoService {
    constructor(private http: HttpClient) {}
   Url = 'http://localhost:9090';
 
+  /*
   getAll(): Observable<any[]> {
     return this.http.get<any[]>(this.Url + '/list_tipo_documentos');
+  }
+    */
+
+  getAll(): Observable<TipoDocumento[]> {
+    return this.http.get<TipoDocumento[]>(this.Url + '/list_tipo_documento');
   }
 
   buscarTipoDocumento(id: String) {
@@ -31,5 +37,9 @@ export class TipodocumentoService {
     return this.http.delete(this.Url + '/delete_tipo_documento/' + td.idTipoDocumento, {
       responseType: 'text',
     });
+  }
+
+  getAllTiposDocumento(): Observable<TipoDocumento[]> {
+    return this.http.get<TipoDocumento[]>(`${this.Url}/list_tipos_documento`);
   }
 }

@@ -38,11 +38,20 @@
             <td>{{ per.telefono }}</td>
             <td>{{ per.correoElectronico }}</td>
             <td>{{ per.estadoCivil.nombre }}</td>
+            <!--
             <td>
-              <button class="btn btn-outline-primary ms-2">
+              <button routerLink="/listdocumentopersona" class="btn btn-outline-primary ms-2">
                 <i class="bi bi-file-earmark"></i> Ver
               </button>
             </td>
+            -->
+            <button
+              (click)="verDocumentos(per.idPersona)"
+              class="btn btn-outline-primary ms-2"
+            >
+              <i class="bi bi-file-earmark"></i> Ver
+            </button>
+
             <td>
               <button
                 *ngIf="puedeCambio"

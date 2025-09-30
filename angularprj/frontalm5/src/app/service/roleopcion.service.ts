@@ -9,11 +9,6 @@ import { Observable } from 'rxjs';
 export class RoleopcionService {
   constructor(private http: HttpClient) {}
   Url = 'http://localhost:9090';
-  /*
-  buscar(id: String) {
-    return this.http.get<RoleOpcion>(this.Url + '/list_roleOp/' + id);
-  }
-    */
 
   getAll(): Observable<any[]> {
     return this.http.get<any[]>(this.Url + '/list_role_opciones');
@@ -22,14 +17,7 @@ export class RoleopcionService {
   listRoleOpciones(): Observable<RoleOpcion[]> {
     return this.http.get<RoleOpcion[]>(this.Url + '/list_role_opciones');
   }
-/*
-  addRoleOpcion(roleOpcion: RoleOpcion): Observable<RoleOpcion> {
-    return this.http.post<RoleOpcion>(
-      this.Url + '/create_role_opcion',
-      roleOpcion
-    );
-  }
-*/
+
   addRoleOpcion(roleOpcion: RoleOpcion): Observable<RoleOpcion> {
   const payload = {
     id: {
@@ -43,15 +31,12 @@ export class RoleopcionService {
     cambio: roleOpcion.cambio ?? false,
     imprimir: roleOpcion.imprimir ?? false,
     exportar: roleOpcion.exportar ?? false,
-    //usuarioCreacion: roleOpcion.usuarioCreacion ?? "hector", // si no hay, asigna un valor por defecto
-    //fechaCreacion: roleOpcion.fechaCreacion ?? new Date()    // opcional, Spring puede manejarlo también
   };
 
   console.log("Payload enviado:", payload); // 👀 Debug
 
   return this.http.post<RoleOpcion>(`${this.Url}/create_role_opcion`, payload);
 }
-
 
   editRoleOpcion(
     idRole: number,
