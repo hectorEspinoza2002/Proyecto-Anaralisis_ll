@@ -2,9 +2,7 @@
 <div *ngIf="router.url !== '/login'">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold text-warning" routerLink="/principal"
-        >Inicio</a
-      >
+      <a class="navbar-brand fw-bold text-warning" routerLink="/principal">Inicio</a>
 
       <button
         class="navbar-toggler"
@@ -22,198 +20,78 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <!-- Menú Catálogo -->
           <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownCatalogo"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCatalogo" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Catálogo
             </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark"
-              aria-labelledby="navbarDropdownCatalogo"
-            >
-              <li>
-                <a class="dropdown-item" routerLink="/listempresa">Empresa</a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/listsucursal"
-                  >Sucursales</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/listgenero">Géneros</a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/liststatususuario"
-                  >Status</a
-                >
-              </li>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownCatalogo">
+              <li><a class="dropdown-item" routerLink="/listempresa">Empresa</a></li>
+              <li><a class="dropdown-item" routerLink="/listsucursal">Sucursales</a></li>
+              <li><a class="dropdown-item" routerLink="/listgenero">Géneros</a></li>
+              <li><a class="dropdown-item" routerLink="/liststatususuario">Status</a></li>
             </ul>
           </li>
 
           <!-- Menú Seguridad -->
           <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownSeguridad"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSeguridad" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Seguridad
             </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark"
-              aria-labelledby="navbarDropdownSeguridad"
-            >
-              <li>
-                <a class="dropdown-item" routerLink="/listusuarios">Usuarios</a>
-              </li>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownSeguridad">
+              <li><a class="dropdown-item" routerLink="/listusuarios">Usuarios</a></li>
               <li><a class="dropdown-item" routerLink="/listrole">Roles</a></li>
-              <li>
-                <a class="dropdown-item" routerLink="/listmodulo">Módulos</a>
-              </li>
+              <li><a class="dropdown-item" routerLink="/listmodulo">Módulos</a></li>
               <li><a class="dropdown-item" routerLink="/listmenu">Menús</a></li>
-              <li>
-                <a class="dropdown-item" routerLink="/listopcion">Opciones</a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/listrolopcion">Rol_Opc</a>
-              </li>
+              <li><a class="dropdown-item" routerLink="/listopcion">Opciones</a></li>
+              <li><a class="dropdown-item" routerLink="/listrolopcion">Rol_Opc</a></li>
             </ul>
           </li>
 
-          <!-- Menú Parametros Generales -->
+          <!-- Menú Cuenta Corriente -->
           <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownSeguridad"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Parametros Generales
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCXC" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Cuenta Corriente por Cobrar
             </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark"
-              aria-labelledby="navbarDropdownSeguridad"
-            >
-              <li>
-                <a class="dropdown-item" routerLink="/liststatuscuenta"
-                  >Status de Cuentas</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/listestadocivil"
-                  >Estado Civil de Personas</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/listtipodocumento"
-                  >Tipo de Documentos</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/listtipomovimientocxc"
-                  >Tipo de Movimientos Cuenta Corriente</a
-                >
-              </li>
-            </ul>
-          </li>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownCXC">
 
-          <!-- Menú Gestion Cuenta Corriente -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownSeguridad"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Gestion Cuenta Corriente
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark"
-              aria-labelledby="navbarDropdownSeguridad"
-            >
-              <li>
-                <a class="dropdown-item" routerLink="/listtiposaldocuenta"
-                  >Tipos de Cuentas</a
-                >
+              <!-- Submenú Parámetros Generales -->
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#">Parámetros Generales</a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" routerLink="/liststatuscuenta">Status de Cuentas</a></li>
+                  <li><a class="dropdown-item" routerLink="/listestadocivil">Estado Civil de Personas</a></li>
+                  <li><a class="dropdown-item" routerLink="/listtipodocumento">Tipo de Documentos</a></li>
+                  <li><a class="dropdown-item" routerLink="/listtipomovimientocxc">Tipo de Movimientos CxC</a></li>
+                </ul>
               </li>
-              <li>
-                <a class="dropdown-item" routerLink="/listpersona">Persona</a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/listpersona"
-                  >Gestion de Cuentas</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/listpersona"
-                  >Consulta de Saldos</a
-                >
-              </li>
-            </ul>
-          </li>
 
-          <!-- Menú Reporte -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownSeguridad"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Reporte
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark"
-              aria-labelledby="navbarDropdownSeguridad"
-            >
-              <li>
-                <a class="dropdown-item" routerLink="/listsaldocuentahist"
-                  >Estado de Cuentas</a
-                >
+              <!-- Submenú Gestión Cuenta Corriente -->
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#">Gestión Cuenta Corriente</a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" routerLink="/listtiposaldocuenta">Tipos de Cuentas</a></li>
+                  <li><a class="dropdown-item" routerLink="/listpersona">Persona</a></li>
+                  <li><a class="dropdown-item" routerLink="/listpersona">Gestión de Cuentas</a></li>
+                  <li><a class="dropdown-item" routerLink="/listpersona">Consulta de Saldos</a></li>
+                </ul>
               </li>
-            </ul>
-          </li>
 
-          <!-- Menú Procesos -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownSeguridad"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Procesos
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark"
-              aria-labelledby="navbarDropdownSeguridad"
-            >
-              <li>
-                <a class="dropdown-item" routerLink="/listtipomovimientocxc"
-                  >Grabacion de Movimientos</a
-                >
+              <!-- Submenú Reporte -->
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#">Reporte</a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" routerLink="/listsaldocuentahist">Estado de Cuentas</a></li>
+                </ul>
               </li>
-              <li>
-                <a class="dropdown-item" routerLink="/listperiodocierremes"
-                  >Cierre de Mes</a
-                >
+
+              <!-- Submenú Procesos -->
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#">Procesos</a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" routerLink="/listtipomovimientocxc">Grabación de Movimientos</a></li>
+                  <li><a class="dropdown-item" routerLink="/listperiodocierremes">Cierre de Mes</a></li>
+                </ul>
               </li>
+
             </ul>
           </li>
         </ul>

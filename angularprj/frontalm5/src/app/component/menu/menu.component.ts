@@ -10,22 +10,7 @@ import { UsuarioService } from '../../service/usuario.service';
 })
 export class MenuComponent {
   constructor(public router: Router, private usuarioService: UsuarioService) {}
-  /*
-  logout() {
-    this.usuarioService.logout().subscribe(
-      (response) => {
-        // Si el logout fue exitoso, redirigimos a la página de login
-        localStorage.removeItem('usuario'); // O el nombre que uses para almacenar el usuario
-        sessionStorage.removeItem('usuario'); // Lo mismo si usas sessionStorage
-        this.router.navigate(['/login']);
-      },
-      (error) => {
-        console.error('Error en el logout', error);
-        // Manejar errores
-      }
-    );
-  }
-*/
+
   logout() {
     this.usuarioService.logout().subscribe(
       (response) => {

@@ -1,8 +1,10 @@
+import { PeriodoCierreMesId } from "./PeriodoCierreMesId";
+
 export class PeriodoCierremes {
 
-  id!: Number;
-  fechaInicio!: Date;
-  fechaFinal!: Date;
-  fechaCierre!: Date;
+  id!: PeriodoCierreMesId;
+  fechaInicio!: String;
+  fechaFinal!: String;
+  fechaCierre!: String;
 
 }
