@@ -49,4 +49,5 @@ export class ListpersonaComponent implements OnInit {
   verDocumentos(idPersona: Number): void {
   this.router.navigate(['/listdocumentopersona', idPersona]);
   }
+
 }
