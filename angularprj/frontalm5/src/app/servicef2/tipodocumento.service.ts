@@ -12,10 +12,6 @@ export class TipodocumentoService {
   Url = 'http://localhost:9090';
 
 
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.Url + '/list_tipo_documentos');
-  }
-
   buscarTipoDocumento(id: String) {
     return this.http.get<TipoDocumento>(this.Url + '/list_tipo_documento/' + id);
   }

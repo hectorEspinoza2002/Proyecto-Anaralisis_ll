@@ -30,11 +30,7 @@ public class DocumentoPersonaController {
     @Autowired
     private DocumentoPersonaService docPersonaService;
 
-    @GetMapping("/list_docuemtos_personas")
-    public List<DocumentoPersona> listarTodos() {
-        return docPersonaService.findAll();
-    }
-
+    // Mandamos el numero de id documento y el numero id de personas para ver que tiene     
     @GetMapping("/list_documento_persona/{tipoDocumento}/{persona}")
     public Optional<DocumentoPersona> obtenerPorId(@PathVariable Integer tipoDocumento, @PathVariable Integer persona) {
         DocumentoPersonaId id = new DocumentoPersonaId(tipoDocumento, persona);
@@ -90,11 +86,13 @@ public class DocumentoPersonaController {
         docOption.ifPresent(d -> docPersonaService.delete(id));
     }
 
+    //Observamos el id de documento y el id de la persona
     @GetMapping("/list_documento_persona/persona/{idPersona}")
     public List<DocumentoPersona> listarPorPersona(@PathVariable Integer idPersona) {
         return docPersonaService.findByPersona(idPersona);
     }
 
+    //Observamos solo el tipo de documento
     @GetMapping("/list_documentos_by_persona/{idPersona}")
     public List<TipoDocumento> listarTiposPorPersona(@PathVariable Integer idPersona) {
         List<DocumentoPersona> docs = docPersonaService.findByPersona(idPersona);
