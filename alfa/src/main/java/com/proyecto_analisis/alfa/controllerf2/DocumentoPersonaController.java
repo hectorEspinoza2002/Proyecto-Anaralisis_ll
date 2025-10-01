@@ -92,6 +92,7 @@ public class DocumentoPersonaController {
         return docPersonaService.findByPersona(idPersona);
     }
 
+    //USAR ESTE
     //Observamos solo el tipo de documento
     @GetMapping("/list_documentos_by_persona/{idPersona}")
     public List<TipoDocumento> listarTiposPorPersona(@PathVariable Integer idPersona) {

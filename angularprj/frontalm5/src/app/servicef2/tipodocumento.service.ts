@@ -11,6 +11,9 @@ export class TipodocumentoService {
    constructor(private http: HttpClient) {}
   Url = 'http://localhost:9090';
 
+  getAll(): Observable<TipoDocumento[]> {
+    return this.http.get<TipoDocumento[]>(`${this.Url}/list_tipo_documentos`);
+  }
 
   buscarTipoDocumento(id: String) {
     return this.http.get<TipoDocumento>(this.Url + '/list_tipo_documento/' + id);
