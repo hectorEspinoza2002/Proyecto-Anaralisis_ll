@@ -5,7 +5,7 @@ import { TipoDocumento } from "./TipoDocumento";
 export class DocumentoPersona {
 
   id!: DocumentoPersonaId;
-  noDocumento!: String;
+  noDocumento!: string;
   fechaCreacion!: Date;
   usuarioCreacion!: String;
   fechaModificacion!: Date;

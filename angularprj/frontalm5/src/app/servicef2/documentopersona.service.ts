@@ -18,7 +18,7 @@ export class DocumentopersonaService {
 
   // Obtener todos los tipos de documento
   getTiposDocumento(): Observable<TipoDocumento[]> {
-    return this.http.get<TipoDocumento[]>(`${this.Url}/list_tipos_documento`); // Asegúrate de tener este endpoint
+    return this.http.get<TipoDocumento[]>(`${this.Url}/list_tipo_documentos`); // Asegúrate de tener este endpoint
   }
 
   // Crear nuevo documento
