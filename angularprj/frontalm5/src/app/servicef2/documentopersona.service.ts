@@ -27,13 +27,13 @@ export class DocumentopersonaService {
   }
 
   // Actualizar documento
-  updateDocumento(tipoDocumentoId: number, personaId: number, documento: any): Observable<any> {
-    return this.http.put(`${this.Url}/update_documento_persona/${tipoDocumentoId}/${personaId}`, documento);
+  updateDocumento(tipoDocumento: number, persona: number, documento: any): Observable<any> {
+    return this.http.put(`${this.Url}/update_documento_persona/${tipoDocumento}/${persona}`, documento);
   }
 
   // Eliminar documento
-  deleteDocumento(tipoDocumentoId: number, personaId: number): Observable<any> {
-    return this.http.delete(`${this.Url}/delete_documento_persona/${tipoDocumentoId}/${personaId}`);
+  deleteDocumento(tipoDocumento: number, persona: number): Observable<any> {
+    return this.http.delete(`${this.Url}/delete_documento_persona/${tipoDocumento}/${persona}`);
   }
 
 }

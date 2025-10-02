@@ -109,14 +109,14 @@
           <div class="col-md-6 mb-3">
             <label class="form-label fw-bold">Estado Civil *</label>
             <select
-              [(ngModel)]="selectedGenero"
+              [(ngModel)]="selectedEstadoCivil"
               name="idEstadoCivil"
               class="form-select"
               required
             >
               <option [ngValue]="null">Seleccione Estado Civil</option>
-              <option *ngFor="let g of estado" [ngValue]="g.idEstadoCivil">
-                {{ g.nombre }}
+              <option *ngFor="let est of estado" [ngValue]="est.idEstadoCivil">
+                {{ est.nombre }}
               </option>
             </select>
           </div>

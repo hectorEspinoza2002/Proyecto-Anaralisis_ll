@@ -11,7 +11,7 @@ import { TipoDocumento } from '../../entityf2/TipoDocumento';
   templateUrl: './listdocumentopersona.component.html',
   styleUrl: './listdocumentopersona.component.css',
 })
-export class ListdocumentopersonaComponent  implements OnInit{
+export class ListdocumentopersonaComponent implements OnInit {
   docPersona: DocumentoPersona[] = [];
   tiposDocumento: TipoDocumento[] = [];
   personaId!: number;
@@ -39,19 +39,28 @@ export class ListdocumentopersonaComponent  implements OnInit{
     this.dPersonaService.getTiposDocumento().subscribe((data) => {
       this.tiposDocumento = data;
     });
-
   }
 
   cargarDocumentos(): void {
-    this.dPersonaService.getDocumentosByPersona(this.personaId).subscribe((data) => {
-      this.docPersona = data;
-    });
+    this.dPersonaService
+      .getDocumentosByPersona(this.personaId)
+      .subscribe((data) => {
+        this.docPersona = data;
+      });
   }
 
   // Guardar o actualizar documento
   guardarDocumento(): void {
     if (!this.selectedTipoDoc || !this.noDocumento) {
       alert('Debe seleccionar tipo de documento y número');
+      return;
+    }
+
+    //validamos la longitud
+    const longitudEsperada =
+      this.documentoLongitudes[this.selectedTipoDoc] || 0;
+    if (longitudEsperada > 0 && this.noDocumento.length !== longitudEsperada) {
+      alert('El documento debe tener exactamente ${longitudEsperada} digitos');
       return;
     }
 
@@ -65,26 +74,31 @@ export class ListdocumentopersonaComponent  implements OnInit{
       persona: { idPersona: this.personaId },
     };
 
-    if (this.editando && this.docSeleccionado) {
+    if (this.editando) {
       this.dPersonaService
-        .updateDocumento(
-          this.docSeleccionado.id.tipoDocumento,
-          this.docSeleccionado.id.persona,
-          nuevoDoc
-        )
+        .updateDocumento(this.selectedTipoDoc, this.personaId, nuevoDoc)
         .subscribe(() => {
           alert('Documento actualizado correctamente');
           this.cargarDocumentos();
           this.resetForm();
         });
     } else {
-      this.dPersonaService.createDocumento(nuevoDoc).subscribe(() => {
-        alert('Documento agregado correctamente');
-        this.cargarDocumentos();
-        this.resetForm();
+      this.dPersonaService.createDocumento(nuevoDoc).subscribe({
+        next: (response) => {
+          alert('Documento guardado correctamente ✅');
+          console.log(response);
+        },
+        error: (err) => {
+          if (err.status === 400) {
+            alert(err.error); // Aquí mostrará "Ya existe esta asignacion"
+          } else {
+            //alert('Error en el servidor ❌');
+          }
+          console.error(err);
+        },
       });
     }
-    }
+  }
 
   // Editar documento
   selectDoc(doc: DocumentoPersona): void {
@@ -118,46 +132,20 @@ export class ListdocumentopersonaComponent  implements OnInit{
   volver(): void {
     this.router.navigate(['/listpersona']);
   }
-  /*
-  docPersona: DocumentoPersona[] = [];
-  tiposDocumento: TipoDocumento[] = [];
-  personaId!: number;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dPersonaService: DocumentopersonaService
-  ) {}
+  documentoLongitudes: { [key: number]: number } = {
+    1: 13, //dpi
+    2: 15, //pasaporte
+    3: 9, //nit
+    4: 13, //licencia
+    5: 13, //igss
+  };
 
-  ngOnInit(): void {
-    // Obtenemos el idPersona de la URL
-    this.personaId = Number(this.route.snapshot.paramMap.get('idPersona'));
+  longitudDocumento: number = 0;
 
-    // Traemos documentos por persona
-    this.dPersonaService.getDocumentosByPersona(this.personaId).subscribe((data) => {
-      this.docPersona = data;
-    });
+  onTipoDocChange() {
+    this.longitudDocumento =
+      this.documentoLongitudes[this.selectedTipoDoc] || 0;
+    this.noDocumento = ''; //limpiamos input al cambiar tipo
   }
-
-  // Eliminar documento
-  deleteDoc(doc: DocumentoPersona): void {
-    if (confirm('¿Seguro que deseas eliminar este documento?')) {
-      this.dPersonaService.deleteDocumento(doc.id.tipoDocumento, doc.id.persona).subscribe(() => {
-        alert('Documento eliminado correctamente');
-        this.docPersona = this.docPersona.filter(d => d !== doc);
-      });
-    }
-  }
-
-  // Regresar al listado de personas
-  volver(): void {
-    this.router.navigate(['/listpersona']);
-  }
-
-  getNombreTipoDocumento(tipoDocumentoId: number): string {
-  const tipo = this.tiposDocumento.find(td => td.idTipoDocumento === tipoDocumentoId);
-  return tipo ? tipo.nombre : '';
-}
-  */
-
 }

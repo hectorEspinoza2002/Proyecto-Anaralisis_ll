@@ -30,7 +30,8 @@ public class DocumentoPersonaController {
     @Autowired
     private DocumentoPersonaService docPersonaService;
 
-    // Mandamos el numero de id documento y el numero id de personas para ver que tiene     
+    // Mandamos el numero de id documento y el numero id de personas para ver que
+    // tiene
     @GetMapping("/list_documento_persona/{tipoDocumento}/{persona}")
     public Optional<DocumentoPersona> obtenerPorId(@PathVariable Integer tipoDocumento, @PathVariable Integer persona) {
         DocumentoPersonaId id = new DocumentoPersonaId(tipoDocumento, persona);
@@ -60,13 +61,18 @@ public class DocumentoPersonaController {
     }
 
     @PutMapping("/update_documento_persona/{tipoDocumento}/{persona}")
-    public ResponseEntity<?> updateDocPersona(@PathVariable Integer tipoDocumento, @PathVariable Integer persona,
+    public ResponseEntity<?> updateDocPersona(
+            @PathVariable Integer tipoDocumento,
+            @PathVariable Integer persona,
             @RequestBody DocumentoPersona updateDocPers) {
+
         DocumentoPersonaId id = new DocumentoPersonaId(tipoDocumento, persona);
         Optional<DocumentoPersona> dpOptional = docPersonaService.findById(id);
 
         if (dpOptional.isPresent()) {
             DocumentoPersona dpers = dpOptional.get();
+
+            // ✅ Solo actualizamos los campos modificables
             dpers.setNoDocumento(updateDocPers.getNoDocumento());
             dpers.setFechaModificacion(LocalDateTime.now());
             dpers.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());
@@ -74,11 +80,10 @@ public class DocumentoPersonaController {
             docPersonaService.guardar(dpers);
 
             return ResponseEntity.ok(dpers);
-
         }
         return ResponseEntity.notFound().build();
     }
-
+    
     @DeleteMapping("/delete_documento_persona/{tipoDocumento}/{persona}")
     public void deleteDocPersona(@PathVariable Integer tipoDocumento, @PathVariable Integer persona) {
         DocumentoPersonaId id = new DocumentoPersonaId(tipoDocumento, persona);
@@ -86,14 +91,14 @@ public class DocumentoPersonaController {
         docOption.ifPresent(d -> docPersonaService.delete(id));
     }
 
-    //Observamos el id de documento y el id de la persona
+    // Observamos el id de documento y el id de la persona
     @GetMapping("/list_documento_persona/persona/{idPersona}")
     public List<DocumentoPersona> listarPorPersona(@PathVariable Integer idPersona) {
         return docPersonaService.findByPersona(idPersona);
     }
 
-    //USAR ESTE
-    //Observamos solo el tipo de documento
+    // USAR ESTE
+    // Observamos solo el tipo de documento
     @GetMapping("/list_documentos_by_persona/{idPersona}")
     public List<TipoDocumento> listarTiposPorPersona(@PathVariable Integer idPersona) {
         List<DocumentoPersona> docs = docPersonaService.findByPersona(idPersona);
