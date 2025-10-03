@@ -55,6 +55,7 @@ public class SaldoCuentaController {
             sc.setStatusCuenta(updateSc.getStatusCuenta());
             sc.setTipoSaldoCuenta(updateSc.getTipoSaldoCuenta());
             sc.setSaldoAnterior(updateSc.getSaldoAnterior());
+            sc.setDebitos(updateSc.getDebitos());
             sc.setCreditos(updateSc.getCreditos());
             sc.setFechaModificacion(LocalDateTime.now());
             sc.setUsuarioModificacion(LoginRequest.getUsuarioLogueado());

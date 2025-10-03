@@ -62,6 +62,8 @@ import { AddestadocivilComponent } from './componentf2/addestadocivil/addestadoc
 import { AddstatuscuentaComponent } from './componentf2/addstatuscuenta/addstatuscuenta.component';
 import { AddpersonaComponent } from './componentf2/addpersona/addpersona.component';
 import { EditpersonaComponent } from './componentf2/editpersona/editpersona.component';
+import { AddsaldocuentaComponent } from './componentf2/addsaldocuenta/addsaldocuenta.component';
+import { EditsaldocuentaComponent } from './componentf2/editsaldocuenta/editsaldocuenta.component';
 
 
 @NgModule({
@@ -125,6 +127,8 @@ import { EditpersonaComponent } from './componentf2/editpersona/editpersona.comp
     AddstatuscuentaComponent,
     AddpersonaComponent,
     EditpersonaComponent,
+    AddsaldocuentaComponent,
+    EditsaldocuentaComponent,
   ],
   imports: [
     BrowserModule,

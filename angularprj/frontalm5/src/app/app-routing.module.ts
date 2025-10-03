@@ -57,6 +57,8 @@ import { EdittipomovimientocxcComponent } from './componentf2/edittipomovimiento
 import { EdittiposaldocuentaComponent } from './componentf2/edittiposaldocuenta/edittiposaldocuenta.component';
 import { AddpersonaComponent } from './componentf2/addpersona/addpersona.component';
 import { EditpersonaComponent } from './componentf2/editpersona/editpersona.component';
+import { EditsaldocuentaComponent } from './componentf2/editsaldocuenta/editsaldocuenta.component';
+import { AddsaldocuentaComponent } from './componentf2/addsaldocuenta/addsaldocuenta.component';
 
 const routes: Routes = [
 
@@ -106,6 +108,7 @@ const routes: Routes = [
   {    path: "addtipomovimientocxc", component:AddtipomovimientocxcComponent  },
   {    path: "addtiposaldocuenta", component:AddtiposaldocuentaComponent  },
   {    path: "addpersona", component:AddpersonaComponent  },
+  {    path: "addsaldocuenta", component:AddsaldocuentaComponent  },
 
   {    path: "editusuario", component:EditusuarioComponent },
   {    path: "editstatususuario", component:EditstatususuarioComponent },
@@ -124,6 +127,7 @@ const routes: Routes = [
   {    path: "edittipomovimientocxc", component:EdittipomovimientocxcComponent },
   {    path: "edittiposaldocuenta", component:EdittiposaldocuentaComponent },
   {    path: "editpersona", component:EditpersonaComponent },
+  {    path: "editsaldocuenta", component:EditsaldocuentaComponent },
 
   {    path: "menu", component:MenuComponent  },
   {    path: "principal", component: PrincipalComponent  },
