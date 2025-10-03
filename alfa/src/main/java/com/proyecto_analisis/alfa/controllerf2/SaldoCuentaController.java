@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,20 +31,21 @@ public class SaldoCuentaController {
         return saldoService.findAll();
     }
 
-    @GetMapping("/list_saldo_cuenta/{id}")
-    public Optional<SaldoCuenta> obtenerPorId(@PathVariable Integer id) {
-        return saldoService.findById(id);
-    }
+    /*
+     * @GetMapping("/list_saldo_cuenta/{id}")
+     * public Optional<SaldoCuenta> obtenerPorId(@PathVariable Integer id) {
+     * return saldoService.findById(id);
+     * }
+     */
 
     @PostMapping("/create_saldo_cuenta")
-    public SaldoCuenta createSaldoCuenta(@RequestBody SaldoCuenta tscId) {
-        if (tscId.getIdSaldoCuenta() != null && saldoService.findById(tscId.getIdSaldoCuenta()).isPresent()) {
-            return null;
-        } else {
-            tscId.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
-            tscId.setFechaCreacion(LocalDateTime.now());
-            return saldoService.guardar(tscId);
-        }
+    public ResponseEntity<?> createSaldoCuenta(@RequestBody SaldoCuenta saldoCuentaId) {
+        saldoCuentaId.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
+        saldoCuentaId.setFechaCreacion(LocalDateTime.now());
+
+        SaldoCuenta s = saldoService.guardar(saldoCuentaId);
+        return ResponseEntity.ok(s);
+
     }
 
     @PutMapping("/update_saldo_cuenta/{id}")
@@ -69,6 +71,11 @@ public class SaldoCuentaController {
     public void deleteSaldoCuenta(@PathVariable("id") Integer saldoId) {
         Optional<SaldoCuenta> optionSaldo = saldoService.findById(saldoId);
         optionSaldo.ifPresent(saldoService::eliminar);
+    }
+
+    @GetMapping("/list_saldo_cuentas/persona/{id}")
+    public Optional<SaldoCuenta> getCuentasByPersona(@PathVariable Integer id) {
+        return saldoService.findById(id);
     }
 
 }

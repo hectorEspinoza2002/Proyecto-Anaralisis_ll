@@ -14,7 +14,9 @@
     <table class="table table-hover table-striped align-middle text-center">
       <thead class="table-dark">
         <tr>
-          <th>Persona</th>
+          <th>Codigo</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
           <th>Status</th>
           <th>Tipo Cuenta</th>
           <th>Saldo Anterior</th>
@@ -26,7 +28,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let c of cuentas">
+          <td>{{ c.persona.idPersona }}</td>
           <td>{{ c.persona.nombre }}</td>
+          <td>{{ c.persona.apellido }}</td>
           <td>{{ c.statusCuenta.nombre }}</td>
           <td>{{ c.tipoSaldoCuenta.nombre }}</td>
           <td>{{ c.saldoAnterior | currency }}</td>

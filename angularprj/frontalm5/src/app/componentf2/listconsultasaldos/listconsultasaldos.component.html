@@ -1,0 +1,63 @@
+<div class="container mt-4">
+  <h3>Consulta de Saldos</h3>
+
+  <!-- Input de búsqueda -->
+  <div class="form-group mb-3">
+    <label class="form-label fw-bold">Buscar Cliente:</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Ingrese ID o Nombre del cliente"
+      [(ngModel)]="personaBusqueda"
+      name="personaBusqueda"
+      (input)="buscarPersona()"
+    />
+
+    <!-- Resultados de búsqueda -->
+    <ul class="list-group mt-2" *ngIf="personasFiltradas.length > 0">
+      <li
+        class="list-group-item list-group-item-action"
+        *ngFor="let p of personasFiltradas"
+        (click)="seleccionarPersona(p)"
+      >
+        {{ p.idPersona }} - {{ p.nombre }} {{ p.apellido }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Datos de la persona -->
+  <div *ngIf="personaSeleccionada" class="mt-4">
+    <h5>Cliente Seleccionado:</h5>
+    <p><strong>ID:</strong> {{ personaSeleccionada.idPersona }}</p>
+    <p><strong>Nombre:</strong> {{ personaSeleccionada.nombre }} {{ personaSeleccionada.apellido }}</p>
+  </div>
+
+  <!-- Tabla de cuentas -->
+  <div *ngIf="cuentas.length > 0" class="mt-4">
+    <h5>Cuentas del Cliente</h5>
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Número de Cuenta</th>
+          <th>Saldo Inicial</th>
+          <th>Cargos</th>
+          <th>Abonos</th>
+          <th>Saldo Final</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cuenta of cuentas">
+          <td>{{ cuenta.idSaldoCuenta }}</td>
+          <td>{{ cuenta.saldoAnterior }}</td>
+          <td>{{ cuenta.debitos }}</td>
+          <td>{{ cuenta.creditos }}</td>
+          <td>{{ (cuenta.saldoAnterior + cuenta.creditos) - cuenta.debitos }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="personaSeleccionada && cuentas.length === 0" class="alert alert-warning mt-4">
+    El cliente no tiene cuentas registradas.
+  </div>
+</div>

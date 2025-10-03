@@ -3,7 +3,7 @@ import { EstadoCivil } from "./EstadoCivil";
 
 export class Persona {
 
-  idPersona!: Number;
+  idPersona!: number;
   nombre!: String;
   apellido!: String;
   fechaNacimiento!: Date;

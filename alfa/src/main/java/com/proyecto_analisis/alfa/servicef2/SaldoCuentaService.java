@@ -33,4 +33,9 @@ public class SaldoCuentaService {
         saldoRepo.delete(saldoCu);
     }
 
+     
+    public List<SaldoCuenta> findByPersona(Integer idPersona) {
+        return saldoRepo.findByPersona_IdPersona(idPersona);
+    }
+
 }

@@ -1,1 +1,185 @@
-<p>addsaldocuenta works!</p>
+<div class="container col-md-6 mt-4">
+  <div class="card shadow-lg border-0 rounded-3">
+    <!-- Header -->
+    <div class="card-header bg-primary text-white text-center rounded-top">
+      <h3 class="mb-0">Agregar Cuenta</h3>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body">
+      <form #cuentaForm="ngForm" novalidate>
+        <!-- Persona
+        <div class="form-group mb-3">
+          <label for="persona" class="form-label fw-bold">Persona:</label>
+          <select
+            [(ngModel)]="selectedPersona"
+            name="persona"
+            id="persona"
+            class="form-select"
+            required
+          >
+            <option [ngValue]="null" disabled>-- Seleccione una persona --</option>
+            <option *ngFor="let p of persona" [ngValue]="p.idPersona">
+              {{ p.nombre }}
+            </option>
+          </select>
+        </div>
+         -->
+
+        <!--
+        <div class="form-group mb-3">
+          <label for="persona" class="form-label fw-bold">Persona:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ingrese ID o nombre de la persona"
+            [(ngModel)]="personaBusqueda"
+            name="personaBusqueda"
+            (input)="buscarPersona()"
+          />-->
+
+        <!-- Resultados
+          <ul class="list-group mt-2" *ngIf="personasFiltradas.length > 0">
+            <li
+              class="list-group-item list-group-item-action"
+              *ngFor="let p of personasFiltradas"
+              (click)="seleccionarPersona(p)"
+            >
+              {{ p.idPersona }} - {{ p.nombre }} {{ p.apellido }}
+            </li>
+          </ul>
+        </div>
+         -->
+
+        <!-- Input de búsqueda -->
+        <div class="form-group mb-3">
+          <label for="persona" class="form-label fw-bold">Persona:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ingrese ID o nombre de la persona"
+            [(ngModel)]="personaBusqueda"
+            name="personaBusqueda"
+            (input)="buscarPersona()"
+          />
+
+          <!-- Resultados -->
+          <ul class="list-group mt-2" *ngIf="personasFiltradas.length > 0">
+            <li
+              class="list-group-item list-group-item-action"
+              *ngFor="let p of personasFiltradas"
+              (click)="seleccionarPersona(p)"
+            >
+              {{ p.idPersona }} - {{ p.nombre }} {{ p.apellido }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Tipo de Cuenta -->
+        <div class="form-group mb-3">
+          <label for="tipo" class="form-label fw-bold">Tipo de Cuenta:</label>
+          <select
+            [(ngModel)]="selectedTipoSaldoCuenta"
+            name="tipo"
+            id="tipo"
+            class="form-select"
+            required
+          >
+            <option [ngValue]="null" disabled>
+              -- Seleccione tipo de cuenta --
+            </option>
+            <option
+              *ngFor="let t of tipoCuenta"
+              [ngValue]="t.idTipoSaldoCuenta"
+            >
+              {{ t.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Status de Cuenta -->
+        <div class="form-group mb-3">
+          <label for="status" class="form-label fw-bold"
+            >Estado de Cuenta:</label
+          >
+          <select
+            [(ngModel)]="selectedStatusCuetna"
+            name="status"
+            id="status"
+            class="form-select"
+            required
+          >
+            <option [ngValue]="null" disabled>
+              -- Seleccione estado de cuenta --
+            </option>
+            <option *ngFor="let s of status" [ngValue]="s.idStatusCuenta">
+              {{ s.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Saldos -->
+        <div class="form-group mb-3">
+          <label for="saldoAnterior" class="form-label fw-bold"
+            >Saldo Anterior:</label
+          >
+          <input
+            [(ngModel)]="saldoCuenta.saldoAnterior"
+            type="number"
+            name="saldoAnterior"
+            id="saldoAnterior"
+            class="form-control"
+            placeholder="Ingrese saldo anterior"
+            required
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="debitos" class="form-label fw-bold">Débitos:</label>
+          <input
+            [(ngModel)]="saldoCuenta.debitos"
+            type="number"
+            name="debitos"
+            id="debitos"
+            class="form-control"
+            placeholder="Ingrese débitos"
+            required
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="creditos" class="form-label fw-bold">Créditos:</label>
+          <input
+            [(ngModel)]="saldoCuenta.creditos"
+            type="number"
+            name="creditos"
+            id="creditos"
+            class="form-control"
+            placeholder="Ingrese créditos"
+            required
+          />
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button
+            (click)="guardar()"
+            type="button"
+            class="btn btn-outline-success me-2"
+            [disabled]="!cuentaForm.form.valid || !selectedPersona"
+          >
+            Guardar
+          </button>
+
+          <button
+            (click)="Cancelar()"
+            type="button"
+            class="btn btn-outline-danger"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

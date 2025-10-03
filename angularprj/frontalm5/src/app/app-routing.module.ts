@@ -59,6 +59,7 @@ import { AddpersonaComponent } from './componentf2/addpersona/addpersona.compone
 import { EditpersonaComponent } from './componentf2/editpersona/editpersona.component';
 import { EditsaldocuentaComponent } from './componentf2/editsaldocuenta/editsaldocuenta.component';
 import { AddsaldocuentaComponent } from './componentf2/addsaldocuenta/addsaldocuenta.component';
+import { ListconsultasaldosComponent } from './componentf2/listconsultasaldos/listconsultasaldos.component';
 
 const routes: Routes = [
 
@@ -76,8 +77,7 @@ const routes: Routes = [
   {    path: "listrolopcion", component:ListroleopcionComponent  },
 
   {    path: "listpersona", component:ListpersonaComponent  },
-  //{    path: "listdocumentopersona", component:ListdocumentopersonaComponent  },
-  { path: 'listdocumentopersona/:idPersona', component: ListdocumentopersonaComponent },
+  {    path: 'listdocumentopersona/:idPersona', component: ListdocumentopersonaComponent },
   {    path: "listestadocivil", component:ListestadocivilComponent  },
   {    path: "listmovimientocuenta", component:ListmovimientocuentaComponent  },
   {    path: "listperiodocierremes", component:ListperiodocierremesComponent  },
@@ -87,6 +87,7 @@ const routes: Routes = [
   {    path: "listtipomovimientocxc", component:ListtipomovimientocxcComponent  },
   {    path: "listtiposaldocuenta", component:ListtiposaldocuentaComponent  },
   {    path: "listsaldocuentahist", component:ListsaldocuentahistComponent  },
+  {    path: "listconsultasaldos", component:ListconsultasaldosComponent  },
 
 
   {    path: "perfil", component:PerfilComponent },

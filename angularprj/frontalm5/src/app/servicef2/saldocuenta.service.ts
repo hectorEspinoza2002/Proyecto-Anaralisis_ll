@@ -13,15 +13,20 @@ export class SaldocuentaService {
   Url = 'http://localhost:9090';
 
 
-  getCuentaById(id: string){
+  getCuentaById(id: number){
     return this.http.get<SaldoCuenta>(`${this.Url}/list_saldo_cuenta/${id}`);
   }
 
 
-  getCuentasByPersona(): Observable<SaldoCuenta[]> {
+  getAllCuentas(): Observable<SaldoCuenta[]> {
     return this.http.get<SaldoCuenta[]>(
       `${this.Url}/list_saldo_cuentas`
     );
+  }
+
+  // ✅ Nuevo: obtener cuentas filtradas por persona
+  getCuentasByPersona(idPersona: number): Observable<SaldoCuenta[]> {
+    return this.http.get<SaldoCuenta[]>(`${this.Url}/list_saldo_cuentas/persona/${idPersona}`);
   }
 
   getTiposSaldoCuenta(): Observable<TipoSaldoCuenta[]> {
@@ -34,8 +39,8 @@ export class SaldocuentaService {
     return this.http.get<StatusCuenta[]>(`${this.Url}/list_status_cuenta`);
   }
 
-  createCuenta(cuenta: any): Observable<any> {
-    return this.http.post(`${this.Url}/create_saldo_cuenta`, cuenta);
+  createCuenta(cuenta: SaldoCuenta) {
+    return this.http.post<SaldoCuenta>(`${this.Url}/create_saldo_cuenta`, cuenta);
   }
 
   updateCuenta(idSaldoCuenta: String, cuenta: SaldoCuenta) {

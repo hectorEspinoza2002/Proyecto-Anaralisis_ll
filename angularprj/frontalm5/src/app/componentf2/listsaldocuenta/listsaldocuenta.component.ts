@@ -22,7 +22,7 @@ export class ListsaldocuentaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.serviceSaldo.getCuentasByPersona().subscribe((data) => {
+    this.serviceSaldo.getAllCuentas().subscribe((data) => {
       this.cuentas = data;
     });
   }
