@@ -74,8 +74,8 @@ public class SaldoCuentaController {
     }
 
     @GetMapping("/list_saldo_cuentas/persona/{id}")
-    public Optional<SaldoCuenta> getCuentasByPersona(@PathVariable Integer id) {
-        return saldoService.findById(id);
+    public List<SaldoCuenta> getCuentasByPersona(@PathVariable Integer id) {
+        return saldoService.findByPersona(id);
     }
 
 }
