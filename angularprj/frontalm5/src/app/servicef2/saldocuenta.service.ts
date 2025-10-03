@@ -13,9 +13,10 @@ export class SaldocuentaService {
   Url = 'http://localhost:9090';
 
 
-  getCuentaById(id: string): Observable<SaldoCuenta[]> {
-    return this.http.get<SaldoCuenta[]>(`${this.Url}/list_saldo_cuenta/${id}`);
+  getCuentaById(id: string){
+    return this.http.get<SaldoCuenta>(`${this.Url}/list_saldo_cuenta/${id}`);
   }
+
 
   getCuentasByPersona(): Observable<SaldoCuenta[]> {
     return this.http.get<SaldoCuenta[]>(
@@ -37,8 +38,8 @@ export class SaldocuentaService {
     return this.http.post(`${this.Url}/create_saldo_cuenta`, cuenta);
   }
 
-  updateCuenta(idSaldoCuenta: number, cuenta: any): Observable<any> {
-    return this.http.put(
+  updateCuenta(idSaldoCuenta: String, cuenta: SaldoCuenta) {
+    return this.http.put<SaldoCuenta>(
       `${this.Url}/update_saldo_cuenta/${idSaldoCuenta}`,
       cuenta
     );
@@ -47,4 +48,5 @@ export class SaldocuentaService {
   deleteCuenta(idSaldoCuenta: number): Observable<any> {
     return this.http.delete(`${this.Url}/delete_saldo_cuenta/${idSaldoCuenta}`);
   }
+
 }

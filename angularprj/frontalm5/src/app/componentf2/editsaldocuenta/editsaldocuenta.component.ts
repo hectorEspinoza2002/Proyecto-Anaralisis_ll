@@ -16,16 +16,14 @@ import { StatuscuentaService } from '../../servicef2/statuscuenta.service';
 export class EditsaldocuentaComponent implements OnInit, AfterViewInit {
   cuenta = new SaldoCuenta();
 
-  selectedTipo!: number;
+  selectedTipo: Number | null = null;
   tipos: TipoSaldoCuenta[] = [];
 
-  selectedStatus!: number;
+  selectedStatus: Number | null = null;
   status: StatusCuenta[] = [];
 
-  @ViewChild('myFocus') myFocus: any;
-
   constructor(
-    private service: SaldocuentaService,
+    private serviceSaldo: SaldocuentaService,
     private router: Router,
     private serviceTipo: TiposaldocuentaService,
     private serviceStatus: StatuscuentaService
@@ -33,27 +31,22 @@ export class EditsaldocuentaComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.cargarDatosIniciales();
-    //this.selectEdit();
+    this.selectEdit();
   }
 
-  //@ViewChild('myFocus') myFocus: any;
+  @ViewChild('myFocus') myFocus: any;
+
 
   ngAfterViewInit(): void {
     this.myFocus.nativeElement.focus();
   }
 
-  cargarDatosIniciales() {
-    this.service.getTiposSaldoCuenta().subscribe(t => this.tipos = t);
-    this.service.getStatusCuenta().subscribe(s => this.status = s);
-  }
-
-
   selectEdit() {
     let id = localStorage.getItem('id');
 
     if (id) {
-      this.service.getCuentaById(id).subscribe((result) => {
-        //this.cuenta = result;
+      this.serviceSaldo.getCuentaById(id).subscribe((result) => {
+        this.cuenta = result;
 
         // precargar selects
         this.selectedTipo = this.cuenta.tipoSaldoCuenta.idTipoSaldoCuenta as number;
@@ -62,30 +55,36 @@ export class EditsaldocuentaComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editCuenta(cuenta: SaldoCuenta) {
-    let id = localStorage.getItem("id");
-    if (id) {
-      // armar payload
-      const payload = {
-        idSaldoCuenta: this.cuenta.idSaldoCuenta,
-        persona: { idPersona: this.cuenta.persona.idPersona },
-        tipoSaldoCuenta: { idTipoSaldoCuenta: this.selectedTipo },
-        statusCuenta: { idStatusCuenta: this.selectedStatus },
-        saldoAnterior: this.cuenta.saldoAnterior,
-        debitos: this.cuenta.debitos,
-        creditos: this.cuenta.creditos
-      };
+  editCuenta(c: SaldoCuenta) {
+    if(this.selectedStatus && this.selectedTipo){
+      c.statusCuenta = {idStatusCuenta: this.selectedStatus} as StatusCuenta;
+      c.tipoSaldoCuenta = {idTipoSaldoCuenta: this.selectedTipo} as TipoSaldoCuenta;
+    }
 
-      this.service.updateCuenta(+id, payload).subscribe(result => {
+    let id = localStorage.getItem('id');
+    if(id){
+      this.serviceSaldo.updateCuenta(id, c).subscribe((result) => {
         this.cuenta = result;
-        alert("Cuenta modificada correctamente!");
-        this.router.navigate(["listsaldocuenta", this.cuenta.persona.idPersona]);
+        this.router.navigate(["/listsaldocuenta"]);
+        alert("Modificacion exitosa");
+        this.resetForm();
       });
     }
   }
 
   Cancel() {
-    this.router.navigate(["listsaldocuenta"]);
+    this.router.navigate(["/listsaldocuenta"]);
+  }
+
+  private resetForm(): void {
+    this.cuenta = new SaldoCuenta();
+    this.selectedStatus = null;
+    this.selectedTipo = null;
+  }
+
+  cargarDatosIniciales() {
+    this.serviceSaldo.getTiposSaldoCuenta().subscribe(t => this.tipos = t);
+    this.serviceSaldo.getStatusCuenta().subscribe(s => this.status = s);
   }
 
 }

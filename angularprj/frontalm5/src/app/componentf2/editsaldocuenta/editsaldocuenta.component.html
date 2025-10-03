@@ -1,1 +1,249 @@
-<p>editsaldocuenta works!</p>
+<div class="container col-md-6 mt-4">
+  <div class="card shadow-lg border-0 rounded-3">
+    <div class="card-header bg-primary text-white text-center rounded-top">
+      <h3 class="mb-0">Modificar Cuenta</h3>
+    </div>
+
+    <div class="card-body">
+      <form #cuentaForm="ngForm" novalidate>
+
+        <!-- ID Cuenta (solo lectura) -->
+        <div class="mb-3">
+          <label for="idCuenta" class="form-label fw-bold">ID de Cuenta</label>
+          <input
+            [(ngModel)]="cuenta.idSaldoCuenta"
+            type="text"
+            name="idCuenta"
+            id="idCuenta"
+            class="form-control"
+            disabled
+          />
+        </div>
+
+        <!-- Persona (solo lectura) -->
+        <div class="mb-3">
+          <label for="persona" class="form-label fw-bold">Persona</label>
+          <input
+            [value]="cuenta.persona.nombre"
+            type="text"
+            id="persona"
+            class="form-control"
+            disabled
+          />
+        </div>
+
+        <!-- Tipo de Cuenta -->
+        <div class="mb-3">
+          <label for="tipoCuenta" class="form-label fw-bold">Tipo de Cuenta</label>
+          <select
+            [(ngModel)]="selectedTipo"
+            name="tipoCuenta"
+            id="tipoCuenta"
+            class="form-select"
+            required
+          >
+            <option [ngValue]="null" disabled>Seleccione...</option>
+            <option *ngFor="let t of tipos" [ngValue]="t.idTipoSaldoCuenta">
+              {{ t.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Status de Cuenta -->
+        <div class="mb-3">
+          <label for="statusCuenta" class="form-label fw-bold">Status</label>
+          <select
+            [(ngModel)]="selectedStatus"
+            name="statusCuenta"
+            id="statusCuenta"
+            class="form-select"
+            required
+          >
+            <option [ngValue]="null" disabled>Seleccione...</option>
+            <option *ngFor="let s of status" [ngValue]="s.idStatusCuenta">
+              {{ s.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Saldo Anterior -->
+        <div class="mb-3">
+          <label for="saldoAnterior" class="form-label fw-bold">Saldo Anterior</label>
+          <input
+            [(ngModel)]="cuenta.saldoAnterior"
+            type="number"
+            name="saldoAnterior"
+            id="saldoAnterior"
+            class="form-control"
+            placeholder="Ingrese saldo anterior"
+            required
+          />
+        </div>
+
+        <!-- Débitos -->
+        <div class="mb-3">
+          <label for="debitos" class="form-label fw-bold">Débitos</label>
+          <input
+            [(ngModel)]="cuenta.debitos"
+            type="number"
+            name="debitos"
+            id="debitos"
+            class="form-control"
+            placeholder="Ingrese débitos"
+            required
+          />
+        </div>
+
+        <!-- Créditos -->
+        <div class="mb-3">
+          <label for="creditos" class="form-label fw-bold">Créditos</label>
+          <input
+            [(ngModel)]="cuenta.creditos"
+            type="number"
+            name="creditos"
+            id="creditos"
+            class="form-control"
+            placeholder="Ingrese créditos"
+            required
+          />
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-success me-2"
+            (click)="editCuenta(cuenta)"
+            [disabled]="!cuentaForm.form.valid"
+          >
+            <i class="bi bi-save"></i> Guardar
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="Cancel()"
+          >
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!--
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-primary">Editar Cuenta</h2>
+  </div>
+</div>
+
+<div class="card shadow-lg border-0 rounded-3">
+  <div class="card-body">
+    <form (ngSubmit)="editCuenta(cuenta)" #formEdit="ngForm">
+      <div class="row g-3">
+-->
+        <!-- Persona (solo lectura)
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Persona</label>
+          <input
+            type="text"
+            class="form-control"
+            [value]="cuenta.persona.nombre"
+            readonly
+          />
+        </div>
+ -->
+        <!-- Tipo de cuenta
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Tipo de Cuenta</label>
+          <select
+            class="form-select"
+            [(ngModel)]="selectedTipo"
+            name="tipoCuenta"
+            required
+          >
+            <option [ngValue]="null" disabled>Seleccione...</option>
+            <option *ngFor="let t of tipos" [ngValue]="t.idTipoSaldoCuenta">
+              {{ t.nombre }}
+            </option>
+          </select>
+        </div>
+ -->
+        <!-- Status
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Status</label>
+          <select
+            class="form-select"
+            [(ngModel)]="selectedStatus"
+            name="statusCuenta"
+            required
+          >
+            <option [ngValue]="null" disabled>Seleccione...</option>
+            <option *ngFor="let s of status" [ngValue]="s.idStatusCuenta">
+              {{ s.nombre }}
+            </option>
+          </select>
+        </div>
+-->
+        <!-- Saldo Anterior
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Saldo Anterior</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="cuenta.saldoAnterior"
+            name="saldoAnterior"
+            required
+          />
+        </div>
+ -->
+        <!-- Débitos
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Débitos</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="cuenta.debitos"
+            name="debitos"
+            required
+          />
+        </div>
+-->
+        <!-- Créditos
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Créditos</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="cuenta.creditos"
+            name="creditos"
+            required
+          />
+        </div>
+
+      </div>
+-->
+      <!-- Botones
+      <div class="d-flex justify-content-end mt-4">
+        <button
+          type="button"
+          class="btn btn-secondary me-2"
+          (click)="Cancel()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="formEdit.invalid"
+        >
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+-->

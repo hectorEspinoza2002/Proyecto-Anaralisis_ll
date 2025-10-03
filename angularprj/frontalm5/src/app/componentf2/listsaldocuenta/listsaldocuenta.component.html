@@ -34,6 +34,12 @@
           <td>{{ c.creditos | currency }}</td>
           <td class="fw-bold">{{ getSaldoActual(c) | currency }}</td>
           <td>
+            <button
+            (click)="verDocumentos(c.idSaldoCuenta)"
+            class="btn btn-outline-primary ms-2"
+          >
+            <i class="bi bi-file-earmark"></i> Ver
+          </button>
             <button class="btn btn-warning btn-sm me-2" (click)="select(c)">
               Editar
             </button>
