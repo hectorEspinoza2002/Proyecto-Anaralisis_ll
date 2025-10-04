@@ -13,10 +13,13 @@ export class SaldocuentaService {
   Url = 'http://localhost:9090';
 
 
-  getCuentaById(id: number){
+  getCuentaById(id: String){
     return this.http.get<SaldoCuenta>(`${this.Url}/list_saldo_cuenta/${id}`);
   }
 
+  getCuentaByIdpers(id: String){
+    return this.http.get<SaldoCuenta>(`${this.Url}/list_saldo_cuenta/${id}`);
+  }
 
   getAllCuentas(): Observable<SaldoCuenta[]> {
     return this.http.get<SaldoCuenta[]>(

@@ -26,7 +26,7 @@ export class ListpersonaComponent implements OnInit {
 
   select(r: Persona): void {
     localStorage.setItem('id', r.idPersona.toString().valueOf());
-    this.router.navigate(['editpersona']);
+    this.router.navigate(['/editpersona']);
   }
 
   delete(pers: Persona) {

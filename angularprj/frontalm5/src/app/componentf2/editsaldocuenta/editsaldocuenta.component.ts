@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SaldoCuenta } from '../../entityf2/SaldoCuenta';
 import { TipoSaldoCuenta } from '../../entityf2/TipoSaldoCuenta';
 import { StatusCuenta } from '../../entityf2/StatusCuenta';
@@ -34,8 +34,9 @@ export class EditsaldocuentaComponent implements OnInit, AfterViewInit {
     this.selectEdit();
   }
 
-  @ViewChild('myFocus') myFocus: any;
+  //@ViewChild('myFocus') myFocus: any;
 
+  @ViewChild('myFocus', { static: false }) myFocus!: ElementRef;
 
   ngAfterViewInit(): void {
     this.myFocus.nativeElement.focus();
@@ -45,12 +46,15 @@ export class EditsaldocuentaComponent implements OnInit, AfterViewInit {
     let id = localStorage.getItem('id');
 
     if (id) {
+
       this.serviceSaldo.getCuentaById(id).subscribe((result) => {
         this.cuenta = result;
 
         // precargar selects
-        this.selectedTipo = this.cuenta.tipoSaldoCuenta.idTipoSaldoCuenta as number;
-        this.selectedStatus = this.cuenta.statusCuenta.idStatusCuenta as number;
+        //this.selectedTipo = this.cuenta.tipoSaldoCuenta.idTipoSaldoCuenta as number;
+        //this.selectedStatus = this.cuenta.statusCuenta.idStatusCuenta as number;
+        this.selectedTipo = result.tipoSaldoCuenta?.idTipoSaldoCuenta ?? null;
+        this.selectedStatus = result.statusCuenta?.idStatusCuenta ?? null;
       });
     }
   }

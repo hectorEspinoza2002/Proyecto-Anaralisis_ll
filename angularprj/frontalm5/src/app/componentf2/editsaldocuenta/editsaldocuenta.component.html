@@ -11,6 +11,7 @@
         <div class="mb-3">
           <label for="idCuenta" class="form-label fw-bold">ID de Cuenta</label>
           <input
+            #myFocus
             [(ngModel)]="cuenta.idSaldoCuenta"
             type="text"
             name="idCuenta"
@@ -21,7 +22,7 @@
         </div>
 
         <!-- Persona (solo lectura) -->
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="cuenta.persona">
           <label for="persona" class="form-label fw-bold">Persona</label>
           <input
             [value]="cuenta.persona.nombre"
@@ -38,7 +39,7 @@
           <select
             [(ngModel)]="selectedTipo"
             name="tipoCuenta"
-            id="tipoCuenta"
+            id="tipoCuenta" #myFocus
             class="form-select"
             required
           >

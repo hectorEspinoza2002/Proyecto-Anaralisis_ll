@@ -33,7 +33,7 @@ export class ListsaldocuentaComponent implements OnInit {
 
   select(sc: SaldoCuenta): void {
     localStorage.setItem('id', sc.idSaldoCuenta.toString().valueOf());
-    this.router.navigate(['editsaldocuenta']);
+    this.router.navigate(['/editsaldocuenta']);
   }
 
   eliminarCuenta(saldoC: SaldoCuenta) {

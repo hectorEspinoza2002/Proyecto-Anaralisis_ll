@@ -31,12 +31,12 @@ public class SaldoCuentaController {
         return saldoService.findAll();
     }
 
-    /*
-     * @GetMapping("/list_saldo_cuenta/{id}")
-     * public Optional<SaldoCuenta> obtenerPorId(@PathVariable Integer id) {
-     * return saldoService.findById(id);
-     * }
-     */
+    
+    @GetMapping("/list_saldo_cuenta/{id}")
+    public Optional<SaldoCuenta> obtenerPorId(@PathVariable Integer id) {
+    return saldoService.findById(id);
+    }
+     
 
     @PostMapping("/create_saldo_cuenta")
     public ResponseEntity<?> createSaldoCuenta(@RequestBody SaldoCuenta saldoCuentaId) {

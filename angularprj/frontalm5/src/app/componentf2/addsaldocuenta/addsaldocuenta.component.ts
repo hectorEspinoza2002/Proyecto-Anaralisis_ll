@@ -134,7 +134,7 @@ export class AddsaldocuentaComponent {
   seleccionarPersona(p: Persona) {
     this.selectedPersona = p.idPersona; // guardas el idPersona real
     this.personaBusqueda = `${p.idPersona} - ${p.nombre} ${p.apellido}`; // lo muestras en el input
-    this.personasFiltradas = []; // limpiar resultados
+    //this.personasFiltradas = []; // limpiar resultados
     console.log("Persona seleccionada:", this.selectedPersona);
   }
 }
