@@ -7,7 +7,7 @@
     <input
       type="text"
       class="form-control"
-      placeholder="Ingrese ID o Nombre del cliente"
+      placeholder="Ingrese Numero de cueta o ID o Nombre del cliente"
       [(ngModel)]="personaBusqueda"
       name="personaBusqueda"
       (input)="buscarPersona()"
@@ -39,6 +39,7 @@
       <thead class="table-dark">
         <tr>
           <th>Número de Cuenta</th>
+          <th>Tipo Cuenta</th>
           <th>Saldo Inicial</th>
           <th>Cargos</th>
           <th>Abonos</th>
@@ -48,10 +49,12 @@
       <tbody>
         <tr *ngFor="let cuenta of cuentas">
           <td>{{ cuenta.idSaldoCuenta }}</td>
+          <td>{{ cuenta.tipoSaldoCuenta.nombre }}</td>
           <td>{{ cuenta.saldoAnterior }}</td>
           <td>{{ cuenta.debitos }}</td>
           <td>{{ cuenta.creditos }}</td>
-          <td>{{ (cuenta.saldoAnterior + cuenta.creditos) - cuenta.debitos }}</td>
+          <td>{{ (cuenta.saldoAnterior + cuenta.debitos) - cuenta.creditos}}</td>
+          <!--<td>{{ (cuenta.saldoAnterior + cuenta.creditos) - cuenta.debitos }}</td>-->
         </tr>
       </tbody>
     </table>

@@ -65,6 +65,8 @@ import { EditpersonaComponent } from './componentf2/editpersona/editpersona.comp
 import { AddsaldocuentaComponent } from './componentf2/addsaldocuenta/addsaldocuenta.component';
 import { EditsaldocuentaComponent } from './componentf2/editsaldocuenta/editsaldocuenta.component';
 import { ListconsultasaldosComponent } from './componentf2/listconsultasaldos/listconsultasaldos.component';
+import { ListestadocuentaComponent } from './componentf2/listestadocuenta/listestadocuenta.component';
+import { ListgrabacionmovimientosComponent } from './componentf2/listgrabacionmovimientos/listgrabacionmovimientos.component';
 
 
 @NgModule({
@@ -131,6 +133,8 @@ import { ListconsultasaldosComponent } from './componentf2/listconsultasaldos/li
     AddsaldocuentaComponent,
     EditsaldocuentaComponent,
     ListconsultasaldosComponent,
+    ListestadocuentaComponent,
+    ListgrabacionmovimientosComponent,
   ],
   imports: [
     BrowserModule,

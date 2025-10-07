@@ -60,6 +60,8 @@ import { EditpersonaComponent } from './componentf2/editpersona/editpersona.comp
 import { EditsaldocuentaComponent } from './componentf2/editsaldocuenta/editsaldocuenta.component';
 import { AddsaldocuentaComponent } from './componentf2/addsaldocuenta/addsaldocuenta.component';
 import { ListconsultasaldosComponent } from './componentf2/listconsultasaldos/listconsultasaldos.component';
+import { ListestadocuentaComponent } from './componentf2/listestadocuenta/listestadocuenta.component';
+import { ListgrabacionmovimientosComponent } from './componentf2/listgrabacionmovimientos/listgrabacionmovimientos.component';
 
 const routes: Routes = [
 
@@ -88,6 +90,8 @@ const routes: Routes = [
   {    path: "listtiposaldocuenta", component:ListtiposaldocuentaComponent  },
   {    path: "listsaldocuentahist", component:ListsaldocuentahistComponent  },
   {    path: "listconsultasaldos", component:ListconsultasaldosComponent  },
+  {    path: "listestadocuenta", component:ListestadocuentaComponent  },
+  {    path: "listgrabacionmovimientos", component:ListgrabacionmovimientosComponent  },
 
 
   {    path: "perfil", component:PerfilComponent },

@@ -33,6 +33,43 @@ export class ListconsultasaldosComponent implements OnInit {
   }
 
   buscarPersona() {
+  const term = this.personaBusqueda.toLowerCase().trim();
+
+  if (term) {
+    // 🔹 Buscar por nombre, apellido o idPersona
+    this.personasFiltradas = this.personas.filter(
+      (p) =>
+        p.nombre.toLowerCase().includes(term) ||
+        p.apellido.toLowerCase().includes(term) ||
+        p.idPersona.toString().includes(term)
+    );
+
+    // 🔹 Si no se encontró ninguna persona, buscar por número de cuenta
+    if (this.personasFiltradas.length === 0 && !isNaN(Number(term))) {
+      const idCuenta = Number(term);
+
+      // Llamar al servicio para buscar cuenta por ID
+      this.saldoCuentaService.getCuentaById(idCuenta.toString()).subscribe({
+        next: (cuenta) => {
+          if (cuenta && cuenta.persona) {
+            this.personasFiltradas = [cuenta.persona];
+          } else {
+            this.personasFiltradas = [];
+          }
+        },
+        error: () => {
+          this.personasFiltradas = [];
+        },
+      });
+    }
+  } else {
+    this.personasFiltradas = [];
+  }
+}
+
+
+  /* si funciona para buscar persona por id y nombre
+  buscarPersona() {
     const term = this.personaBusqueda.toLowerCase();
     if (term) {
       this.personasFiltradas = this.personas.filter(
@@ -45,6 +82,7 @@ export class ListconsultasaldosComponent implements OnInit {
       this.personasFiltradas = [];
     }
   }
+    */
 
   seleccionarPersona(p: Persona) {
     this.personaSeleccionada = p;
