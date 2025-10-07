@@ -16,10 +16,11 @@ import { SaldocuentaService } from '../../servicef2/saldocuenta.service';
   styleUrl: './addsaldocuenta.component.css',
 })
 export class AddsaldocuentaComponent {
-  saldoCuenta = new SaldoCuenta();
+ saldoCuenta = new SaldoCuenta();
 
-  selectedPersona!: number;
+  selectedPersona!: number; // Se guarda el idPersona elegido
   persona: Persona[] = [];
+  filteredPersonas: Persona[] = [];
 
   selectedStatusCuetna!: number;
   status: StatusCuenta[] = [];
@@ -27,10 +28,8 @@ export class AddsaldocuentaComponent {
   selectedTipoSaldoCuenta!: number;
   tipoCuenta: TipoSaldoCuenta[] = [];
 
-  personaBusqueda: string = '';
-  personasFiltradas: Persona[] = [];
-
-  mensaje: string = '';
+  searchTerm: string = ''; // texto que escribe el usuario
+  personaSeleccionadaTexto: string = ''; // texto visible en el input
 
   constructor(
     private saldoCuentaService: SaldocuentaService,
@@ -44,10 +43,43 @@ export class AddsaldocuentaComponent {
     this.cargarDatosIniciales();
   }
 
-  guardar() {
+  cargarDatosIniciales(): void {
+    this.personaService.getAll().subscribe({
+      next: (p) => {
+        this.persona = p;
+        this.filteredPersonas = p;
+      },
+    });
 
-    if(!this.seleccionarPersona){
-      alert('Debes seleccionar una persona del listado');
+    this.tipoService.getAll().subscribe({
+      next: (sc) => (this.tipoCuenta = sc),
+    });
+
+    this.statusService.getAll().subscribe({
+      next: (stt) => (this.status = stt),
+    });
+  }
+
+  filtrarPersonas() {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredPersonas = this.persona.filter(
+      (p) =>
+        p.nombre.toLowerCase().includes(term) ||
+        p.apellido.toLowerCase().includes(term) ||
+        p.idPersona.toString().includes(term)
+    );
+  }
+
+  seleccionarPersona(p: Persona) {
+    this.selectedPersona = p.idPersona;
+    this.personaSeleccionadaTexto = `${p.idPersona} - ${p.nombre} ${p.apellido}`;
+    this.searchTerm = ''; // limpia el filtro
+    this.filteredPersonas = []; // oculta sugerencias
+  }
+
+  guardar() {
+    if (!this.selectedPersona) {
+      alert('Debe seleccionar una persona');
       return;
     }
 
@@ -61,30 +93,14 @@ export class AddsaldocuentaComponent {
       idTipoSaldoCuenta: this.selectedTipoSaldoCuenta,
     } as unknown as TipoSaldoCuenta;
 
-    console.log('Persona:', this.selectedPersona);
-    console.log('Status:', this.selectedStatusCuetna);
-    console.log('Tipo:', this.selectedTipoSaldoCuenta);
-
-    if (
-      this.selectedPersona &&
-      this.selectedStatusCuetna &&
-      this.selectedTipoSaldoCuenta
-    ) {
-      this.saldoCuentaService.createCuenta(this.saldoCuenta).subscribe({
-        next: (result) => {
-          if (result != null) {
-            alert('Cuenta ingresada correctamente!');
-            this.router.navigate(['/listsaldocuenta']);
-            this.resetForm();
-          }
-        },
-        error: (err) => {
-          alert('Error al crear la cuenta: ' + err);
-        },
-      });
-    } else {
-      alert('Faltan datos!');
-    }
+    this.saldoCuentaService.createCuenta(this.saldoCuenta).subscribe({
+      next: () => {
+        alert('Cuenta ingresada correctamente!');
+        this.router.navigate(['/listsaldocuenta']);
+        this.resetForm();
+      },
+      error: (err) => alert('Error al crear la cuenta: ' + err),
+    });
   }
 
   resetForm(): void {
@@ -92,49 +108,11 @@ export class AddsaldocuentaComponent {
     this.selectedPersona = null!;
     this.selectedStatusCuetna = null!;
     this.selectedTipoSaldoCuenta = null!;
-  }
-
-  cargarDatosIniciales(): void {
-    this.personaService.getAll().subscribe({
-      next: (p) => {
-        this.persona = p;
-      },
-    });
-    //this.saldoCuentaService.getTiposSaldoCuenta().subscribe({
-    this.tipoService.getAll().subscribe({
-      next: (sc) => {
-        this.tipoCuenta = sc;
-      },
-    });
-    this.statusService.getAll().subscribe({
-      next: (stt) => {
-        this.status = stt;
-      },
-    });
+    this.personaSeleccionadaTexto = '';
   }
 
   Cancelar() {
     this.router.navigate(['/listsaldocuenta']);
   }
 
-  buscarPersona() {
-    const term = this.personaBusqueda.toLowerCase();
-    if (term) {
-      this.personasFiltradas = this.persona.filter(
-        (p) =>
-          p.nombre.toLowerCase().includes(term) ||
-          p.apellido.toLowerCase().includes(term) ||
-          p.idPersona.toString().includes(term)
-      );
-    } else {
-      this.personasFiltradas = [];
-    }
-  }
-
-  seleccionarPersona(p: Persona) {
-    this.selectedPersona = p.idPersona; // guardas el idPersona real
-    this.personaBusqueda = `${p.idPersona} - ${p.nombre} ${p.apellido}`; // lo muestras en el input
-    //this.personasFiltradas = []; // limpiar resultados
-    console.log("Persona seleccionada:", this.selectedPersona);
-  }
 }

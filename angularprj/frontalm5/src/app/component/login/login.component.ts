@@ -53,7 +53,7 @@ export class LoginComponent {
               this.permisosService.actualizarPermisos(response.permisos);
             }
 
-            alert('Login exitoso');
+            alert('Login exitoso, Bienvenido: '+this.usuario.idUsuario);
             this.router.navigate(['/principal']);
           } else {
             // 3️⃣ Mostrar mensaje que devuelve el backend
