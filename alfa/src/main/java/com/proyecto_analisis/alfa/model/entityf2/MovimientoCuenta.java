@@ -26,11 +26,11 @@ public class MovimientoCuenta {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdSaldoCuenta")
-    private SaldoCuenta idSaldoCuenta;
+    private SaldoCuenta saldoCuenta;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdTipoMovimientoCXC")
-    private TipoMovimientoCxc idTipoMovimientoCXC;
+    private TipoMovimientoCxc tipoMovimientoCXC;
 
     @Column(name = "FechaMovimiento")
     private LocalDateTime fechaMovimiento;

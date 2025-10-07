@@ -83,15 +83,9 @@ export class AddsaldocuentaComponent {
       return;
     }
 
-    this.saldoCuenta.persona = {
-      idPersona: this.selectedPersona,
-    } as unknown as Persona;
-    this.saldoCuenta.statusCuenta = {
-      idStatusCuenta: this.selectedStatusCuetna,
-    } as unknown as StatusCuenta;
-    this.saldoCuenta.tipoSaldoCuenta = {
-      idTipoSaldoCuenta: this.selectedTipoSaldoCuenta,
-    } as unknown as TipoSaldoCuenta;
+    this.saldoCuenta.persona = {idPersona: this.selectedPersona, } as unknown as Persona;
+    this.saldoCuenta.statusCuenta = { idStatusCuenta: this.selectedStatusCuetna, } as unknown as StatusCuenta;
+    this.saldoCuenta.tipoSaldoCuenta = { idTipoSaldoCuenta: this.selectedTipoSaldoCuenta,} as unknown as TipoSaldoCuenta;
 
     this.saldoCuentaService.createCuenta(this.saldoCuenta).subscribe({
       next: () => {

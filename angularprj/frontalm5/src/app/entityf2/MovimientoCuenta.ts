@@ -1,16 +1,19 @@
+import { SaldoCuenta } from "./SaldoCuenta";
+import { TipoMovimientoCxc } from "./TipoMovimientoCxc";
+
 export class MovimientoCuenta {
 
-  idMovimientoCuenta!: Number;
-  idSaldoCuenta!: Number;
-  idTipoMovimientoCXC!: Number;
+  idMovimientoCuenta!: number;
+  saldoCuenta!: SaldoCuenta;
+  tipoMovimientoCXC!: TipoMovimientoCxc;
   fechaMovimiento!: Date;
-  valorMovimiento!: Number;
-  valorMovimientoPagado!: Number;
-  generadoAutomaticamente!: Number;
-  descripcion!: String;
+  valorMovimiento!: number;
+  valorMovimientoPagado!: number;
+  generadoAutomaticamente!: boolean;
+  descripcion!: string;
   fechaCreacion!: Date;
-  usuarioCreacion!: String;
+  usuarioCreacion!: string;
   fechaModificacion!: Date;
-  usuarioModificacion!: String;
+  usuarioModificacion!: string;
 
 }

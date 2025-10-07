@@ -1,1 +1,61 @@
-<p>listestadocuenta works!</p>
+<div class="estado-cuenta-container">
+
+  <h2>📄 Estado de Cuenta</h2>
+
+  <!-- Buscador
+  <div class="busqueda-container">
+    <input
+      type="text"
+      placeholder="Buscar por nombre, idCliente o idCuenta..."
+      [formControl]="searchControl"
+      [disabled]="cargando"
+    />
+
+    <button (click)="limpiarBusqueda()" [disabled]="!searchControl.value">❌ Limpiar</button>
+
+    <ul *ngIf="filteredCuentas.length > 0" class="resultados-lista">
+      <li *ngFor="let cuenta of filteredCuentas" (click)="seleccionarCuenta(cuenta)">
+        {{ cuenta.nombreCompleto }} - {{ cuenta.tipoCuenta }} (Cuenta #{{ cuenta.idCuenta }})
+      </li>
+    </ul>
+  </div>
+ -->
+  <!-- Datos de la cuenta seleccionada
+  <div *ngIf="selectedCuenta" class="cuenta-info">
+    <h3>{{ cuentaSeleccionadaTexto }}</h3>
+    <button (click)="obtenerEstadoCuenta()" [disabled]="cargando">🔍 Consultar</button>
+  </div>
+ -->
+  <!-- Tabla de movimientos
+  <table *ngIf="selectedCuenta?.movimientos?.length">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Tipo Movimiento</th>
+        <th>Documento</th>
+        <th>Cargo</th>
+        <th>Abono</th>
+        <th>Saldo Acumulado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mov of selectedCuenta.movimientos">
+        <td>{{ mov.fechaMovimiento | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ mov.tipoMovimiento }}</td>
+        <td>{{ mov.documentoReferencia }}</td>
+        <td>{{ mov.cargo | number:'1.2-2' }}</td>
+        <td>{{ mov.abono | number:'1.2-2' }}</td>
+        <td>{{ mov.saldoAcumulado | number:'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="selectedCuenta && !selectedCuenta.movimientos?.length && !cargando">
+    ⚠️ No se encontraron movimientos para esta cuenta.
+  </p>
+
+  <p *ngIf="cargando">⏳ Cargando...</p>
+
+</div>
+
+ -->
