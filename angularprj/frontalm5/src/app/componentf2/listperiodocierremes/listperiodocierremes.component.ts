@@ -101,6 +101,21 @@ export class ListperiodocierremesComponent implements OnInit{
     });
   }
 
+  cerrarMes(anio: number, mes: number): void {
+  if (confirm(`¿Desea realizar el cierre del mes ${mes}/${anio}?`)) {
+    this.pcmService.cerrarMes(anio, mes).subscribe({
+      next: (mensaje) => {
+        alert(mensaje);
+        this.cargarPeriodos();
+      },
+      error: (err) => {
+        alert('❌ Error al cerrar el mes: ' + err.message);
+      }
+    });
+  }
+}
+
+
 
   /*
   periodos: PeriodoCierremes[] = [];

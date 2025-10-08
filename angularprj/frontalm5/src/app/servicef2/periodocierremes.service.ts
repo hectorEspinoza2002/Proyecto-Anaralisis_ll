@@ -30,4 +30,9 @@ export class PeriodocierremesService {
   delete(anio: number, mes: number): Observable<void> {
     return this.http.delete<void>(`${this.Url}/delete_periodo_cierre_mes/${anio}/${mes}`);
   }
+
+  cerrarMes(anio: number, mes: number): Observable<string> {
+    return this.http.post(`${this.Url}/cerrar-mes/${anio}/${mes}`, {}, { responseType: 'text' });
+  }
+
 }

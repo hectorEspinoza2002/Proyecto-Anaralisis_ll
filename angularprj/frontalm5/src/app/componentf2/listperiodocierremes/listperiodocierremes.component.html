@@ -37,6 +37,11 @@
               </ng-template>
             </td>
             <td>
+              <button (click)="cerrarMes(p.id.anio, p.id.mes)"
+                  class="btn btn-warning btn-sm me-2"
+                  [disabled]="p.fechaCierre">
+                <i class="bi bi-lock-fill"></i> Cerrar Mes
+              </button>
               <button (click)="eliminar(p.id.anio, p.id.mes)" class="btn btn-danger btn-sm">
                 <i class="bi bi-trash"></i> Eliminar
               </button>
