@@ -14,11 +14,11 @@
     <table class="table table-hover table-striped align-middle text-center">
       <thead class="table-dark">
         <tr>
-          <th>Codigo</th>
+          <th>ID</th>
           <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Status</th>
+          <th>No. Cuenta</th>
           <th>Tipo Cuenta</th>
+          <th>Status</th>
           <th>Saldo Anterior</th>
           <th>Débitos</th>
           <th>Créditos</th>
@@ -29,10 +29,10 @@
       <tbody>
         <tr *ngFor="let c of cuentas">
           <td>{{ c.persona.idPersona }}</td>
-          <td>{{ c.persona.nombre }}</td>
-          <td>{{ c.persona.apellido }}</td>
-          <td>{{ c.statusCuenta.nombre }}</td>
+          <td>{{ c.persona.nombre }} {{ c.persona.apellido }}</td>
+          <td>{{ c.idSaldoCuenta }}</td>
           <td>{{ c.tipoSaldoCuenta.nombre }}</td>
+          <td>{{ c.statusCuenta.nombre }}</td>
           <td>{{ c.saldoAnterior | currency }}</td>
           <td>{{ c.debitos | currency }}</td>
           <td>{{ c.creditos | currency }}</td>

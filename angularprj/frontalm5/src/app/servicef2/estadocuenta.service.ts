@@ -1,9 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Empresa } from '../entity/empresa';
-import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -11,42 +8,7 @@ import { saveAs } from 'file-saver';
 @Injectable({
   providedIn: 'root',
 })
-export class EmpresaService {
-  constructor(private http: HttpClient) {}
-  Url = 'http://localhost:9090';
-
-  getReglasEmpresa(idSucursal: number): Observable<any> {
-    return this.http.get<any>(this.Url + '/empresa/reglas/' + idSucursal);
-  }
-
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.Url + '/list_empresas');
-  }
-
-  searchEmpresa(id: String) {
-    return this.http.get<Empresa>(this.Url + '/list_empresas/' + id);
-  }
-
-  editEmpresa(id: String, updateEmp: Empresa) {
-    return this.http.put<Empresa>(
-      this.Url + '/update_empresa/' + id,
-      updateEmp
-    );
-  }
-
-  addEmpresa(emp: Empresa) {
-    return this.http.post<Empresa>(this.Url + '/create_empresa', emp);
-  }
-
-  deleteEmpresa(emp: Empresa) {
-    return this.http.delete(this.Url + '/delete_empresa/' + emp.idEmpresa, {
-      responseType: 'text',
-    });
-  }
-
-  getEmpresaPorSucursal(idSucursal: number): Observable<any> {
-    return this.http.get<any>(`${this.Url}/empresa_por_sucursal/${idSucursal}`);
-  }
+export class EstadocuentaService {
 
   generarPdfEmpresas(empresas: any[], titulo: string = 'Reporte de Empresas') {
     const doc = new jsPDF();
@@ -167,10 +129,10 @@ export class EmpresaService {
     nombreArchivo: string = 'empresas'
   ): void {
     const datos = empresas.map((empresa) => ({
-      'ID': empresa.idEmpresa,
+      ID: empresa.idEmpresa,
       'Nombre Empresa': empresa.nombre,
-      'NIT': empresa.nit || '',
-      'Dirección': empresa.direccion || '',
+      NIT: empresa.nit || '',
+      Dirección: empresa.direccion || '',
     }));
 
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();

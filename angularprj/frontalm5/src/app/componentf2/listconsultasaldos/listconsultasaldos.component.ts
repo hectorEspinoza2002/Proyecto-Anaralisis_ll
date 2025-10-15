@@ -67,23 +67,6 @@ export class ListconsultasaldosComponent implements OnInit {
   }
 }
 
-
-  /* si funciona para buscar persona por id y nombre
-  buscarPersona() {
-    const term = this.personaBusqueda.toLowerCase();
-    if (term) {
-      this.personasFiltradas = this.personas.filter(
-        (p) =>
-          p.nombre.toLowerCase().includes(term) ||
-          p.apellido.toLowerCase().includes(term) ||
-          p.idPersona.toString().includes(term)
-      );
-    } else {
-      this.personasFiltradas = [];
-    }
-  }
-    */
-
   seleccionarPersona(p: Persona) {
     this.personaSeleccionada = p;
     this.personaBusqueda = `${p.idPersona} - ${p.nombre} ${p.apellido}`;

@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <!-- Encabezado -->
+  <!-- Título -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="text-primary m-0">Gestión de Cierres de Mes</h2>
     <button class="btn btn-success" (click)="mostrarFormulario = !mostrarFormulario">
@@ -10,56 +10,62 @@
   <!-- Mensaje de error -->
   <div *ngIf="mensaje" class="alert alert-danger">{{ mensaje }}</div>
 
-  <!-- Card que envuelve la tabla -->
-  <div class="card shadow-lg border-0 rounded-3">
+  <!-- Combo para seleccionar periodo -->
+  <div class="card shadow-lg border-0 rounded-3 mb-4">
     <div class="card-body">
-      <table class="table table-hover table-striped align-middle text-center" *ngIf="periodos.length > 0; else noData">
-        <thead class="table-dark">
-          <tr>
-            <th>Año</th>
-            <th>Mes</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Final</th>
-            <th>Fecha Cierre</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let p of periodos">
-            <td>{{ p.id.anio }}</td>
-            <td>{{ p.id.mes }}</td>
-            <td>{{ p.fechaInicio }}</td>
-            <td>{{ p.fechaFinal }}</td>
-            <td>
-              <span *ngIf="p.fechaCierre; else pendiente">{{ p.fechaCierre }}</span>
-              <ng-template #pendiente>
-                <span class="badge bg-warning text-dark">Pendiente</span>
-              </ng-template>
-            </td>
-            <td>
-              <button (click)="cerrarMes(p.id.anio, p.id.mes)"
-                  class="btn btn-warning btn-sm me-2"
-                  [disabled]="p.fechaCierre">
-                <i class="bi bi-lock-fill"></i> Cerrar Mes
-              </button>
-              <button (click)="eliminar(p.id.anio, p.id.mes)" class="btn btn-danger btn-sm">
-                <i class="bi bi-trash"></i> Eliminar
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Si no hay registros -->
-      <ng-template #noData>
-        <div class="text-center py-3">
-          <p class="text-muted">No hay periodos de cierre registrados.</p>
+      <div class="row align-items-end g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Seleccionar Periodo</label>
+          <select
+            class="form-select"
+            [(ngModel)]="periodoSeleccionado"
+            name="periodoSeleccionado"
+          >
+            <option [ngValue]="null">-- Seleccione un periodo --</option>
+            <option *ngFor="let p of periodos" [ngValue]="p">
+              {{ p.id.anio }} - {{ meses[p.id.mes - 1].nombre }}
+              ({{ p.fechaCierre ? 'Cerrado' : 'Pendiente' }})
+            </option>
+          </select>
         </div>
-      </ng-template>
+
+        <div class="col-md-3" *ngIf="periodoSeleccionado">
+          <label class="form-label fw-bold">Estado</label>
+          <div>
+            <span *ngIf="periodoSeleccionado.fechaCierre; else pendiente" class="badge bg-success">
+              Cerrado el {{ periodoSeleccionado.fechaCierre }}
+            </span>
+            <ng-template #pendiente>
+              <span class="badge bg-warning text-dark">Pendiente</span>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="col-md-3 text-end">
+          <button
+            class="btn btn-warning me-2"
+            (click)="cerrarMes(periodoSeleccionado)"
+            [disabled]="!periodoSeleccionado || periodoSeleccionado.fechaCierre"
+          >
+            <i class="bi bi-lock-fill"></i> Cerrar Mes
+          </button>
+
+          <!--
+          <button
+            class="btn btn-danger"
+            (click)="eliminar(periodoSeleccionado)"
+            [disabled]="!periodoSeleccionado"
+          >
+            <i class="bi bi-trash"></i> Eliminar
+          </button>
+          -->
+
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Formulario debajo de la tabla -->
+  <!-- Formulario para nuevo periodo -->
   <div *ngIf="mostrarFormulario" class="card mt-4 shadow-lg border-0 rounded-3">
     <div class="card-header bg-primary text-white">
       <h5 class="m-0">Nuevo Periodo</h5>
@@ -71,34 +77,57 @@
           <div class="col-md-3">
             <label class="form-label">Año</label>
             <select class="form-select" [(ngModel)]="nuevo.id.anio" name="anio">
-              <option *ngFor="let a of anios" [value]="a">{{a}}</option>
+              <option *ngFor="let a of anios" [value]="a">{{ a }}</option>
             </select>
           </div>
 
           <!-- Mes -->
           <div class="col-md-3">
             <label class="form-label">Mes</label>
-            <select class="form-select" [(ngModel)]="nuevo.id.mes" name="mes" (change)="calcularFechas()">
-              <option *ngFor="let m of meses" [value]="m.value">{{m.nombre}}</option>
+            <select
+              class="form-select"
+              [(ngModel)]="nuevo.id.mes"
+              name="mes"
+              (change)="calcularFechas()"
+            >
+              <option *ngFor="let m of meses" [value]="m.value">{{ m.nombre }}</option>
             </select>
           </div>
 
           <!-- Fecha Inicio -->
           <div class="col-md-3">
             <label class="form-label">Fecha Inicio</label>
-            <input class="form-control" type="date" [(ngModel)]="nuevo.fechaInicio" name="fechaInicio" readonly>
+            <input
+              class="form-control"
+              type="date"
+              [(ngModel)]="nuevo.fechaInicio"
+              name="fechaInicio"
+              readonly
+            />
           </div>
 
           <!-- Fecha Final -->
           <div class="col-md-3">
             <label class="form-label">Fecha Final</label>
-            <input class="form-control" type="date" [(ngModel)]="nuevo.fechaFinal" name="fechaFinal" readonly>
+            <input
+              class="form-control"
+              type="date"
+              [(ngModel)]="nuevo.fechaFinal"
+              name="fechaFinal"
+              readonly
+            />
           </div>
         </div>
 
         <!-- Botones -->
         <div class="d-flex justify-content-end mt-4">
-          <button class="btn btn-secondary me-2" type="button" (click)="mostrarFormulario=false">Cancelar</button>
+          <button
+            class="btn btn-secondary me-2"
+            type="button"
+            (click)="mostrarFormulario = false"
+          >
+            Cancelar
+          </button>
           <button class="btn btn-primary" type="submit">
             <i class="bi bi-save"></i> Guardar
           </button>
@@ -107,62 +136,3 @@
     </div>
   </div>
 </div>
-
-
-
-<!-- Lista de Periodos
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Año</th>
-      <th>Mes</th>
-      <th>Fecha Inicio</th>
-      <th>Fecha Final</th>
-      <th>Fecha Cierre</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let p of periodos">
-      <td>{{ p.id.anio }}</td>
-      <td>{{ p.id.mes }}</td>
-      <td>{{ p.fechaInicio }}</td>
-      <td>{{ p.fechaFinal }}</td>
-      <td>{{ p.fechaCierre || '-' }}</td>
-    </tr>
-  </tbody>
-</table>
--->
-<!-- Botón para mostrar formulario
-<button class="btn btn-success" (click)="mostrarFormulario = !mostrarFormulario">
-  <i class="bi bi-plus-circle"></i> Nuevo Periodo
-</button>-->
-
-<!-- Formulario debajo
-<div *ngIf="mostrarFormulario" class="mt-3 p-3 border rounded bg-light">
-  <form (ngSubmit)="crearPeriodo()">
-    <div class="row">
-      <div class="col-md-3">
-        <label>Año</label>
-        <select class="form-control" [(ngModel)]="nuevo.id.anio" name="anio">
-          <option *ngFor="let a of anios" [value]="a">{{a}}</option>
-        </select>
-      </div>
-      <div class="col-md-3">
-        <label>Mes</label>
-        <select class="form-control" [(ngModel)]="nuevo.id.mes" name="mes" (change)="calcularFechas()">
-          <option *ngFor="let m of meses" [value]="m.value">{{m.nombre}}</option>
-        </select>
-      </div>
-      <div class="col-md-3">
-        <label>Fecha Inicio</label>
-        <input class="form-control" type="date" [(ngModel)]="nuevo.fechaInicio" name="fechaInicio" readonly>
-      </div>
-      <div class="col-md-3">
-        <label>Fecha Final</label>
-        <input class="form-control" type="date" [(ngModel)]="nuevo.fechaFinal" name="fechaFinal" readonly>
-      </div>
-    </div>
-    <button class="btn btn-primary mt-3" type="submit">Guardar</button>
-  </form>
-</div>
--->

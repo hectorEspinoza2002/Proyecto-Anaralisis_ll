@@ -16,6 +16,10 @@ export class MovimientocuentaService {
     return this.http.get<MovimientoCuenta[]>(`${this.Url}/list_movimiento_cuenta`);
   }
 
+  buscarMovimientoCuenta(id: String){
+    return this.http.get<MovimientoCuenta>(this.Url+'/list_movimiento_cuenta/'+id);
+  }
+
   createMovimiento(mov: MovimientoCuenta): Observable<MovimientoCuenta> {
     return this.http.post<MovimientoCuenta>(`${this.Url}/create_movimiento_cuenta`, mov);
   }

@@ -55,7 +55,7 @@ public class PeriodoCierreMesController {
     public ResponseEntity<String> cerrarMes(@PathVariable int anio, @PathVariable int mes) {
         try {
             periodoCierreService.cerrarMes(anio, mes);
-            return ResponseEntity.ok("✅ Cierre del mes realizado exitosamente.");
+            return ResponseEntity.ok(" Cierre del mes realizado exitosamente.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("❌ Error al realizar el cierre: " + e.getMessage());

@@ -28,6 +28,118 @@ export class ListmovimientocuentaComponent implements OnInit {
   searchCuenta: string = '';
   cuentaSeleccionadaTexto: string = '';
 
+  // 🟩 Nueva propiedad para mostrar saldo
+  saldoActual: number | null = null;
+
+  constructor(
+    private movimientoService: MovimientocuentaService,
+    private saldoService: SaldocuentaService,
+    private tipoService: TipomovimientocxcService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.cargarDatos();
+  }
+
+  cargarDatos(): void {
+    this.saldoService.getAllCuentas().subscribe({
+      next: (data) => {
+        this.cuentas = data;
+        this.filteredCuentas = data;
+      },
+    });
+
+    this.tipoService.getAll().subscribe({
+      next: (data) => (this.tiposMovimiento = data),
+    });
+  }
+
+  filtrarCuentas(): void {
+    const term = this.searchCuenta.toLowerCase();
+    this.filteredCuentas = this.cuentas.filter(
+      (c) =>
+        c.idSaldoCuenta.toString().includes(term) ||
+        c.tipoSaldoCuenta.nombre.toLowerCase().includes(term) ||
+        (c.persona?.nombre?.toLowerCase().includes(term) ||
+          c.persona?.apellido?.toLowerCase().includes(term))
+    );
+  }
+
+  seleccionarCuenta(c: SaldoCuenta): void {
+    const estado = c.statusCuenta?.nombre || '';
+
+    if (estado !== 'Cuenta Activa' && estado !== 'Cuenta activa') {
+      alert(`⚠️ La cuenta #${c.idSaldoCuenta} está "${c.statusCuenta.nombre}" y no puede recibir movimientos.`);
+      this.selectedCuenta = null!;
+      this.cuentaSeleccionadaTexto = '';
+      this.searchCuenta = '';
+      this.filteredCuentas = [];
+      this.saldoActual = null; // reset saldo
+      return;
+    }
+
+    // ✅ Si está activa
+    this.selectedCuenta = c.idSaldoCuenta;
+    this.cuentaSeleccionadaTexto = `${c.idSaldoCuenta} - ${c.tipoSaldoCuenta.nombre} - ${c.persona.nombre} ${c.persona.apellido}`;
+    this.searchCuenta = '';
+    this.filteredCuentas = [];
+
+    // 🧮 Calcular saldo actual (SaldoAnterior + Créditos - Débitos)
+    const saldo = (c.saldoAnterior ?? 0) + (c.creditos ?? 0) - (c.debitos ?? 0);
+    this.saldoActual = saldo;
+  }
+
+  guardarMovimiento(): void {
+    if (!this.selectedCuenta || !this.selectedTipoMovimiento || !this.movimiento.valorMovimiento) {
+      alert('Por favor completa todos los campos requeridos.');
+      return;
+    }
+
+    this.movimiento.saldoCuenta = { idSaldoCuenta: this.selectedCuenta } as unknown as SaldoCuenta;
+    this.movimiento.tipoMovimientoCXC = { idTipoMovimientoCXC: this.selectedTipoMovimiento } as unknown as TipoMovimientoCxc;
+
+    this.movimientoService.createMovimiento(this.movimiento).subscribe({
+      next: () => {
+        alert('Movimiento registrado correctamente.');
+        this.router.navigate(['/listmovimientocuenta']);
+        this.resetForm();
+      },
+      error: (err) => {
+        alert('Error al registrar movimiento: ' + err.message);
+      },
+    });
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/listmovimientocuenta']);
+  }
+
+  resetForm(): void {
+    this.movimiento = new MovimientoCuenta();
+    this.selectedCuenta = null!;
+    this.selectedTipoMovimiento = null!;
+    this.movimiento.valorMovimiento = null!;
+    this.movimiento.descripcion = '';
+    this.cuentaSeleccionadaTexto = '';
+    this.saldoActual = null;
+  }
+
+  /*---------------------------------- v2 ------------------------------------------------- */
+/*
+  movimiento = new MovimientoCuenta();
+
+  cuentas: SaldoCuenta[] = [];
+  filteredCuentas: SaldoCuenta[] = [];
+
+  tiposMovimiento: TipoMovimientoCxc[] = [];
+
+  selectedCuenta!: number;
+  selectedTipoMovimiento!: number;
+
+  searchCuenta: string = '';
+  cuentaSeleccionadaTexto: string = '';
+
   constructor(
     private movimientoService: MovimientocuentaService,
     private saldoService: SaldocuentaService,
@@ -118,6 +230,8 @@ export class ListmovimientocuentaComponent implements OnInit {
     this.movimiento.descripcion = '';
     this.cuentaSeleccionadaTexto = '';
   }
+*/
+/*-------------------------------------------v1------------------------------------------------------------*/
 
   /* Si funcion el buscador, sin validacion del status cuenta
   movimiento = new MovimientoCuenta();

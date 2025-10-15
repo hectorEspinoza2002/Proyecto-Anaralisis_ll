@@ -31,15 +31,10 @@ public class MovimientoCuentaController {
         return movimientoService.findAll();
     }
 
-    /*
     @GetMapping("/list_movimiento_cuenta/{id}")
-    public ResponseEntity<MovimientoCuenta> create(@RequestBody MovimientoCuenta mc) {
-        mc.setFechaCreacion(LocalDateTime.now());
-        mc.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
-        MovimientoCuenta saved = movimientoService.guardar(mc);
-        return ResponseEntity.ok(saved);
+    public Optional<MovimientoCuenta> obtenerPorId(@PathVariable Integer id) {
+        return movimientoService.findById(id);
     }
-         */
 
     @PostMapping("/create_movimiento_cuenta")
     public ResponseEntity<MovimientoCuenta> create(@RequestBody MovimientoCuenta mc) {
