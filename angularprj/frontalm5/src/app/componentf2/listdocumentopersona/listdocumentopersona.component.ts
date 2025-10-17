@@ -130,7 +130,7 @@ export class ListdocumentopersonaComponent implements OnInit {
 
   // Regresar
   volver(): void {
-    this.router.navigate(['/listpersona']);
+    this.router.navigate(['/listsaldocuenta']);
   }
 
   documentoLongitudes: { [key: number]: number } = {

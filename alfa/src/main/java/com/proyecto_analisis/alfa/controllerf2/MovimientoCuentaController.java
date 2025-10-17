@@ -41,7 +41,8 @@ public class MovimientoCuentaController {
         mc.setFechaMovimiento(LocalDateTime.now());
         mc.setFechaCreacion(LocalDateTime.now());
         mc.setUsuarioCreacion(LoginRequest.getUsuarioLogueado());
-        MovimientoCuenta saved = movimientoService.guardar(mc);
+        //MovimientoCuenta saved = movimientoService.guardar(mc);
+        MovimientoCuenta saved = movimientoService.registrarMovimiento(mc);
         return ResponseEntity.ok(saved);
     }
 
@@ -77,5 +78,7 @@ public class MovimientoCuentaController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    
 
 }

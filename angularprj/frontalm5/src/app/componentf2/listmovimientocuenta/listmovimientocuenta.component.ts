@@ -11,10 +11,9 @@ import { TipoMovimientoCxc } from '../../entityf2/TipoMovimientoCxc';
   selector: 'app-listmovimientocuenta',
   standalone: false,
   templateUrl: './listmovimientocuenta.component.html',
-  styleUrl: './listmovimientocuenta.component.css'
+  styleUrl: './listmovimientocuenta.component.css',
 })
 export class ListmovimientocuentaComponent implements OnInit {
-
   movimiento = new MovimientoCuenta();
 
   cuentas: SaldoCuenta[] = [];
@@ -61,8 +60,8 @@ export class ListmovimientocuentaComponent implements OnInit {
       (c) =>
         c.idSaldoCuenta.toString().includes(term) ||
         c.tipoSaldoCuenta.nombre.toLowerCase().includes(term) ||
-        (c.persona?.nombre?.toLowerCase().includes(term) ||
-          c.persona?.apellido?.toLowerCase().includes(term))
+        c.persona?.nombre?.toLowerCase().includes(term) ||
+        c.persona?.apellido?.toLowerCase().includes(term)
     );
   }
 
@@ -70,7 +69,9 @@ export class ListmovimientocuentaComponent implements OnInit {
     const estado = c.statusCuenta?.nombre || '';
 
     if (estado !== 'Cuenta Activa' && estado !== 'Cuenta activa') {
-      alert(`⚠️ La cuenta #${c.idSaldoCuenta} está "${c.statusCuenta.nombre}" y no puede recibir movimientos.`);
+      alert(
+        `⚠️ La cuenta #${c.idSaldoCuenta} está "${c.statusCuenta.nombre}" y no puede recibir movimientos.`
+      );
       this.selectedCuenta = null!;
       this.cuentaSeleccionadaTexto = '';
       this.searchCuenta = '';
@@ -91,14 +92,53 @@ export class ListmovimientocuentaComponent implements OnInit {
   }
 
   guardarMovimiento(): void {
-    if (!this.selectedCuenta || !this.selectedTipoMovimiento || !this.movimiento.valorMovimiento) {
+    console.log('Movimiento enviado:', this.movimiento);
+
+    if (
+      !this.selectedCuenta ||
+      !this.selectedTipoMovimiento ||
+      !this.movimiento.valorMovimiento
+    ) {
       alert('Por favor completa todos los campos requeridos.');
       return;
     }
 
-    this.movimiento.saldoCuenta = { idSaldoCuenta: this.selectedCuenta } as unknown as SaldoCuenta;
-    this.movimiento.tipoMovimientoCXC = { idTipoMovimientoCXC: this.selectedTipoMovimiento } as unknown as TipoMovimientoCxc;
+    this.movimiento.saldoCuenta = {
+      idSaldoCuenta: this.selectedCuenta,
+    } as unknown as SaldoCuenta;
+    this.movimiento.tipoMovimientoCXC = {
+      idTipoMovimientoCXC: this.selectedTipoMovimiento,
+    } as unknown as TipoMovimientoCxc;
 
+    this.movimientoService.createMovimiento(this.movimiento).subscribe({
+      next: () => {
+        alert('Movimiento registrado correctamente.');
+
+        // 🔄 Actualizar saldo mostrado
+        if (this.selectedCuenta && this.saldoActual !== null) {
+          const tipo = this.tiposMovimiento.find(
+            (t) => t.idTipoMovimientoCXC === this.selectedTipoMovimiento
+          );
+          const valor = this.movimiento.valorMovimiento ?? 0;
+
+          if (tipo?.operacionCuentaCorriente === 1) {
+            // CARGO → aumenta débito → saldo disminuye
+            this.saldoActual -= valor;
+          } else if (tipo?.operacionCuentaCorriente === 2) {
+            // ABONO → aumenta crédito → saldo aumenta
+            this.saldoActual += valor;
+          }
+        }
+
+        this.resetForm();
+        this.router.navigate(['/listmovimientocuenta']);
+      },
+      error: (err) => {
+        alert('Error al registrar movimiento: ' + err.message);
+      },
+    });
+
+    /*
     this.movimientoService.createMovimiento(this.movimiento).subscribe({
       next: () => {
         alert('Movimiento registrado correctamente.');
@@ -109,6 +149,7 @@ export class ListmovimientocuentaComponent implements OnInit {
         alert('Error al registrar movimiento: ' + err.message);
       },
     });
+    */
   }
 
   cancelar(): void {
@@ -126,7 +167,7 @@ export class ListmovimientocuentaComponent implements OnInit {
   }
 
   /*---------------------------------- v2 ------------------------------------------------- */
-/*
+  /*
   movimiento = new MovimientoCuenta();
 
   cuentas: SaldoCuenta[] = [];
@@ -231,7 +272,7 @@ export class ListmovimientocuentaComponent implements OnInit {
     this.cuentaSeleccionadaTexto = '';
   }
 */
-/*-------------------------------------------v1------------------------------------------------------------*/
+  /*-------------------------------------------v1------------------------------------------------------------*/
 
   /* Si funcion el buscador, sin validacion del status cuenta
   movimiento = new MovimientoCuenta();
@@ -389,5 +430,4 @@ export class ListmovimientocuentaComponent implements OnInit {
     this.movimiento.valorMovimiento = null!;
     this.movimiento.descripcion = '';
   }*/
-
 }
