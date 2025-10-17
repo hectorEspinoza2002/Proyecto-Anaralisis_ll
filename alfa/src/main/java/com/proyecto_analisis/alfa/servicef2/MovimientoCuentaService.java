@@ -57,9 +57,11 @@ public class MovimientoCuentaService {
                     movimiento.getSaldoCuenta().getIdSaldoCuenta());
             System.out.println("🔹 Estado cuenta: " + estado);
 
+            /*
             if (!estado.equalsIgnoreCase("Cuenta Activa")) {
                 throw new RuntimeException("La cuenta no está activa y no puede recibir movimientos.");
             }
+                 */
 
             // 2️⃣ Obtener tipo de movimiento (para saber si suma o resta)
             int operacion = jdbcTemplate.queryForObject(
