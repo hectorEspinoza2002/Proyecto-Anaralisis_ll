@@ -57,4 +57,8 @@ export class SaldocuentaService {
     return this.http.delete(`${this.Url}/delete_saldo_cuenta/${idSaldoCuenta}`);
   }
 
+  getMovimientosPorCuenta(idCuenta: number): Observable<any[]> {
+  return this.http.get<any[]>(`${this.Url}/movimientos/${idCuenta}`);
+}
+
 }

@@ -60,16 +60,22 @@
           <td>{{ cuenta.creditos }}</td>
           <td>{{ cuenta.saldoAnterior + cuenta.debitos - cuenta.creditos }}</td>
           <!--<td>{{ (cuenta.saldoAnterior + cuenta.creditos) - cuenta.debitos }}</td>-->
-
-          <!-- Botón PDF *ngIf="puedeExportar" -->
           <td>
-            <button *ngIf="puedeImprimir" (click)="generarPdf()" class="btn btn-outline-danger ms-2">
-              <i class="bi bi-file-pdf"></i> Exportar PDF
+            <button
+              *ngIf="puedeImprimir"
+              (click)="generarPdf(cuenta)"
+              class="btn btn-outline-danger btn-sm"
+            >
+              <i class="bi bi-file-pdf"></i> PDF
             </button>
           </td>
-          <!-- Botón Excel *ngIf="puedeExportar" -->
           <td>
-            <button  *ngIf="puedeExportar" (click)="generarExcel()" class="btn btn-outline-success">
+            <!---->
+            <button
+              *ngIf="puedeExportar"
+              (click)="generarExcel(cuenta)"
+              class="btn btn-outline-success btn-sm"
+            >
               <i class="bi bi-file-excel"></i> Excel
             </button>
           </td>

@@ -31,4 +31,9 @@ export class MovimientocuentaService {
   deleteMovimiento(id: number): Observable<void> {
     return this.http.delete<void>(`${this.Url}/delete_movimiento_cuenta/${id}`);
   }
+
+  getMovimientosPorCuenta(idCuenta: number): Observable<any[]> {
+  return this.http.get<any[]>(`${this.Url}/movimientos/${idCuenta}`);
+}
+
 }

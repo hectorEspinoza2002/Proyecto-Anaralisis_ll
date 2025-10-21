@@ -3,6 +3,11 @@ import { Persona } from '../../entityf2/Persona';
 import { SaldoCuenta } from '../../entityf2/SaldoCuenta';
 import { PersonaService } from '../../servicef2/persona.service';
 import { SaldocuentaService } from '../../servicef2/saldocuenta.service';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-listestadocuenta',
@@ -86,32 +91,182 @@ export class ListestadocuentaComponent implements OnInit {
     });
   }
 
-  generarPdf(): void {
-    /*
-    if (this.empresas && this.empresas.length > 0) {
-      this.empresaService.generarPdfEmpresas(this.empresas);
-    } else {
-      alert('No hay datos para generar el PDF');
-    }
-      */
+  generarPdf(cuenta: SaldoCuenta): void {
+    this.saldoCuentaService
+      .getMovimientosPorCuenta(cuenta.idSaldoCuenta)
+      .subscribe({
+        next: (movimientos) => this.exportarPdf(cuenta, movimientos),
+        error: () => alert('❌ Error al obtener movimientos'),
+      });
   }
 
-  generarExcel(): void {
-    /*
-    if (this.empresas && this.empresas.length > 0) {
-      this.empresaService.generarExcelEmpresas(this.empresas, 'reporte_empresas');
-    } else {
-      alert('No hay datos para generar el Excel');
-    }
-      */
+  generarExcel(cuenta: SaldoCuenta): void {
+    this.saldoCuentaService
+      .getMovimientosPorCuenta(cuenta.idSaldoCuenta)
+      .subscribe({
+        next: (movimientos) => this.exportarExcel(cuenta, movimientos),
+        error: () => alert('❌ Error al obtener movimientos'),
+      });
+  }
+  /*----------------------------------------------------------*/
+
+  exportarPdf(cuenta: any, movimientos: any[]): void {
+    const doc = new jsPDF();
+    const cliente = this.personaSeleccionada!;
+    const fechaEmision = new Date().toLocaleDateString();
+
+    // 🧭 Encabezado
+    doc.setFontSize(14);
+    doc.text('ESTADO DE CUENTA', 80, 10);
+
+    doc.setFontSize(11);
+    doc.text(`Cliente: ${cliente.nombre} ${cliente.apellido}`, 14, 25);
+    doc.text(`Cuenta: ${cuenta.idSaldoCuenta}`, 14, 32);
+    doc.text(`Fecha de Emisión: ${fechaEmision}`, 14, 39);
+    doc.text(
+      `Período: Desde ${cuenta.fechaDesde ?? '__/__/____'}  Hasta ${
+        cuenta.fechaHasta ?? '__/__/____'
+      }`,
+      14,
+      46
+    );
+
+    // 🧮 Tabla de movimientos
+    const body: any[] = [];
+    let saldoAcumulado = cuenta.saldoAnterior || 0;
+    let totalCargos = 0;
+    let totalAbonos = 0;
+
+    movimientos.forEach((m) => {
+      // ✅ Cálculo correcto: saldo = saldo anterior + abonos - cargos
+      saldoAcumulado = saldoAcumulado + m.abonos - m.cargos;
+      totalCargos += m.cargos;
+      totalAbonos += m.abonos;
+
+      body.push([
+        new Date(m.fechaMovimiento).toLocaleDateString(),
+        m.tipoMovimiento || '',
+        m.descripcion || '',
+        `Q${m.cargos.toFixed(2)}`,
+        `Q${m.abonos.toFixed(2)}`,
+        `Q${saldoAcumulado.toFixed(2)}`,
+      ]);
+    });
+
+    autoTable(doc, {
+      head: [
+        [
+          'Fecha',
+          'Tipo Movimiento',
+          'Descripción',
+          'Cargo (Q)',
+          'Abono (Q)',
+          'Saldo Acumulado (Q)',
+        ],
+      ],
+      body,
+      startY: 55,
+      styles: { fontSize: 9, cellPadding: 2 },
+      headStyles: { fillColor: [220, 220, 220], textColor: 0 },
+      columnStyles: {
+        0: { cellWidth: 25 }, // Fecha
+        1: { cellWidth: 30 }, // Tipo
+        2: { cellWidth: 50 }, // Descripción
+        3: { halign: 'right' },
+        4: { halign: 'right' },
+        5: { halign: 'right' },
+      },
+    });
+
+    // 🧾 Totales
+    const yFinal = (doc as any).lastAutoTable.finalY + 10;
+    doc.setFontSize(11);
+    doc.text(`Total Cargos: Q${totalCargos.toFixed(2)}`, 14, yFinal);
+    doc.text(`Total Abonos: Q${totalAbonos.toFixed(2)}`, 80, yFinal);
+    doc.text(`Saldo Final: Q${saldoAcumulado.toFixed(2)}`, 150, yFinal);
+
+    // 📄 Guardar PDF
+    doc.save(`EstadoCuenta_${cliente.nombre}_${cuenta.idSaldoCuenta}.pdf`);
   }
 
-  generarExcelSimple(): void {
-    /*
-    if (this.empresas && this.empresas.length > 0) {
-      this.empresaService.generarExcelSimple(this.empresas, 'empresas');
-    } else {
-      alert('No hay datos para generar el Excel');
-    }*/
+  exportarExcel(cuenta: any, movimientos: any[]): void {
+    const cliente = this.personaSeleccionada!;
+    const fechaEmision = new Date().toLocaleDateString();
+
+    // 🧮 Datos principales
+    let saldoAcumulado = cuenta.saldoAnterior || 0;
+    let totalCargos = 0;
+    let totalAbonos = 0;
+
+    const dataMovimientos = movimientos.map((m) => {
+      saldoAcumulado = saldoAcumulado + m.abonos - m.cargos;
+      totalCargos += m.cargos;
+      totalAbonos += m.abonos;
+
+      return {
+        'Fecha Movimiento': new Date(m.fechaMovimiento).toLocaleDateString(),
+        'Tipo Movimiento': m.tipoMovimiento || '',
+        Descripción: m.descripcion || '',
+        'Cargo (Q)': m.cargos,
+        'Abono (Q)': m.abonos,
+        'Saldo Acumulado (Q)': saldoAcumulado,
+      };
+    });
+
+    // 🧾 Encabezado (igual que en el PDF)
+    const encabezado = [
+      [`ESTADO DE CUENTA`],
+      [],
+      [`Nombre del Cliente: ${cliente.nombre} ${cliente.apellido}`],
+      [`Número de Cuenta: ${cuenta.idSaldoCuenta}`],
+      [`Fecha de Emisión: ${fechaEmision}`],
+      [
+        `Período: Desde ${cuenta.fechaDesde ?? '__/__/____'}  Hasta ${
+          cuenta.fechaHasta ?? '__/__/____'
+        }`,
+      ],
+      [],
+      ['Detalle de Movimientos:'],
+    ];
+
+    // 🧮 Totales al final
+    const totales = [
+      [],
+      [`Total Cargos: Q${totalCargos.toFixed(2)}`],
+      [`Total Abonos: Q${totalAbonos.toFixed(2)}`],
+      [`Saldo Final: Q${saldoAcumulado.toFixed(2)}`],
+    ];
+
+    /* 🧩 Convertir los movimientos a hoja
+    const wsMovimientos = XLSX.utils.json_to_sheet(dataMovimientos, {
+      origin: -1,
+    });
+    */
+
+    // 🧱 Combinar encabezado + movimientos + totales
+    const wsEncabezado = XLSX.utils.aoa_to_sheet(encabezado);
+    XLSX.utils.sheet_add_json(wsEncabezado, dataMovimientos, { origin: -1 });
+    XLSX.utils.sheet_add_aoa(wsEncabezado, totales, { origin: -1 });
+
+    // 📘 Crear libro y agregar hoja
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, wsEncabezado, 'Estado de Cuenta');
+
+    // 🎨 (Opcional) Ajustar ancho de columnas
+    const colWidths = [
+      { wch: 15 }, // Fecha
+      { wch: 25 }, // Tipo
+      { wch: 45 }, // Descripción
+      { wch: 12 }, // Cargo
+      { wch: 12 }, // Abono
+      { wch: 18 }, // Saldo acumulado
+    ];
+    wsEncabezado['!cols'] = colWidths;
+
+    // 💾 Guardar archivo
+    XLSX.writeFile(
+      wb,
+      `EstadoCuenta_${cliente.nombre}_${cuenta.idSaldoCuenta}.xlsx`
+    );
   }
 }

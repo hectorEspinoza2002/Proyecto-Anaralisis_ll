@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto_analisis.alfa.model.entity.LoginRequest;
 import com.proyecto_analisis.alfa.model.entityf2.MovimientoCuenta;
+import com.proyecto_analisis.alfa.model.entityf2.MovimientoCuentaDTO;
 import com.proyecto_analisis.alfa.servicef2.MovimientoCuentaService;
 
 @RestController
@@ -25,6 +28,9 @@ public class MovimientoCuentaController {
 
     @Autowired
     private MovimientoCuentaService movimientoService;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/list_movimiento_cuenta")
     public List<MovimientoCuenta> listarTodos() {
@@ -78,6 +84,27 @@ public class MovimientoCuentaController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/movimientos/{idCuenta}")
+public ResponseEntity<List<MovimientoCuentaDTO>> obtenerMovimientosPorCuenta(@PathVariable int idCuenta) {
+    String sql = """
+        SELECT 
+            mc.IdMovimientoCuenta,
+            mc.FechaMovimiento,
+            tmc.Nombre AS TipoMovimiento,
+            mc.Descripcion,
+            CASE WHEN tmc.OperacionCuentaCorriente = 1 THEN mc.ValorMovimiento ELSE 0 END AS Cargos,
+            CASE WHEN tmc.OperacionCuentaCorriente = 2 THEN mc.ValorMovimiento ELSE 0 END AS Abonos
+        FROM MOVIMIENTO_CUENTA mc
+        INNER JOIN TIPO_MOVIMIENTO_CXC tmc ON mc.IdTipoMovimientoCXC = tmc.IdTipoMovimientoCXC
+        WHERE mc.IdSaldoCuenta = ?
+        ORDER BY mc.FechaMovimiento ASC
+    """;
+
+    List<MovimientoCuentaDTO> movimientos = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(MovimientoCuentaDTO.class), idCuenta);
+    return ResponseEntity.ok(movimientos);
+}
+
 
     
 
