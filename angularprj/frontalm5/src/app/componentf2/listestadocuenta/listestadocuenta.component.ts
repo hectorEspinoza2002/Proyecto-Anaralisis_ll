@@ -112,62 +112,71 @@ export class ListestadocuentaComponent implements OnInit {
   /*------------------------------------------------------------ */
 
   exportarPdf(cuenta: any, movimientos: any[]): void {
-  const doc = new jsPDF();
-  const cliente = this.personaSeleccionada!;
-  const fechaEmision = new Date().toLocaleDateString();
+    const doc = new jsPDF();
+    const cliente = this.personaSeleccionada!;
+    const fechaEmision = new Date().toLocaleDateString();
 
-  // 🧭 Encabezado
-  doc.setFontSize(14);
-  doc.text('ESTADO DE CUENTA', 80, 10);
+    // 📅 Determinar periodo (si no viene desde la cuenta)
+    const fechaDesde = cuenta.fechaDesde
+      ? new Date(cuenta.fechaDesde)
+      : new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const fechaHasta = cuenta.fechaHasta
+      ? new Date(cuenta.fechaHasta)
+      : new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
 
-  doc.setFontSize(11);
-  doc.text(`Cliente: ${cliente.nombre} ${cliente.apellido}`, 14, 25);
-  doc.text(`Cuenta: ${cuenta.idSaldoCuenta}`, 14, 32);
-  doc.text(`Fecha de Emisión: ${fechaEmision}`, 14, 39);
-
-  // 🗓️ Periodo
-  const fechaDesde = cuenta.fechaDesde ? new Date(cuenta.fechaDesde) : null;
-  const fechaHasta = cuenta.fechaHasta ? new Date(cuenta.fechaHasta) : null;
-  doc.text(
-    `Período: Desde ${cuenta.fechaDesde ?? '__/__/____'}  Hasta ${
-      cuenta.fechaHasta ?? '__/__/____'
-    }`,
-    14,
-    46
-  );
-
-  // 🧮 Filtrar movimientos por el período
-  let movimientosFiltrados = movimientos;
-  if (fechaDesde && fechaHasta) {
-    movimientosFiltrados = movimientos.filter((m) => {
-      const fecha = new Date(m.fechaMovimiento);
-      return fecha >= fechaDesde && fecha <= fechaHasta;
+    // 🔍 Filtrar movimientos dentro del periodo
+    const movimientosFiltrados = movimientos.filter((m) => {
+      const fechaMov = new Date(m.fechaMovimiento);
+      return fechaMov >= fechaDesde && fechaMov <= fechaHasta;
     });
-  }
 
-  const body: any[] = [];
-  let saldoAcumulado = cuenta.saldoAnterior || 0;
-  let totalCargos = 0;
-  let totalAbonos = 0;
+    // 🧮 Variables de control
+    const body: any[] = [];
+    let saldoAcumulado = cuenta.saldoAnterior || 0;
+    let totalCargos = 0;
+    let totalAbonos = 0;
 
-  // Si no hay movimientos en el periodo, mostramos solo el saldo
-  if (movimientosFiltrados.length === 0) {
-    doc.text('No existen movimientos en este período.', 14, 60);
-  } else {
-    movimientosFiltrados.forEach((m) => {
-      saldoAcumulado = saldoAcumulado + m.abonos - m.cargos;
-      totalCargos += m.cargos;
-      totalAbonos += m.abonos;
+    // 🔹 Encabezado
+    doc.setFontSize(14);
+    doc.text('ESTADO DE CUENTA', 80, 10);
 
+    doc.setFontSize(11);
+    doc.text(`Cliente: ${cliente.nombre} ${cliente.apellido}`, 14, 25);
+    doc.text(`Cuenta: ${cuenta.idSaldoCuenta}`, 14, 32);
+    doc.text(`Fecha de Emisión: ${fechaEmision}`, 14, 39);
+    doc.text(
+      `Período: Desde ${fechaDesde.toLocaleDateString()}  Hasta ${fechaHasta.toLocaleDateString()}`,
+      14,
+      46
+    );
+
+    // 🧮 Si hay movimientos en el periodo
+    if (movimientosFiltrados.length > 0) {
+      movimientosFiltrados.forEach((m) => {
+        saldoAcumulado += m.abonos - m.cargos;
+        totalCargos += m.cargos;
+        totalAbonos += m.abonos;
+
+        body.push([
+          new Date(m.fechaMovimiento).toLocaleDateString(),
+          m.tipoMovimiento || '',
+          m.descripcion || '',
+          `Q${m.cargos.toFixed(2)}`,
+          `Q${m.abonos.toFixed(2)}`,
+          `Q${saldoAcumulado.toFixed(2)}`,
+        ]);
+      });
+    } else {
+      // ⚠️ Sin movimientos del periodo
       body.push([
-        new Date(m.fechaMovimiento).toLocaleDateString(),
-        m.tipoMovimiento || '',
-        m.descripcion || '',
-        `Q${m.cargos.toFixed(2)}`,
-        `Q${m.abonos.toFixed(2)}`,
+        '',
+        'Sin movimientos en el período.',
+        '',
+        '',
+        '',
         `Q${saldoAcumulado.toFixed(2)}`,
       ]);
-    });
+    }
 
     autoTable(doc, {
       head: [
@@ -193,198 +202,109 @@ export class ListestadocuentaComponent implements OnInit {
         5: { halign: 'right' },
       },
     });
+
+    // 🧾 Totales
+    const yFinal = (doc as any).lastAutoTable.finalY + 10;
+    doc.setFontSize(11);
+    doc.text(`Total Cargos: Q${totalCargos.toFixed(2)}`, 14, yFinal);
+    doc.text(`Total Abonos: Q${totalAbonos.toFixed(2)}`, 80, yFinal);
+    doc.text(`Saldo Final: Q${saldoAcumulado.toFixed(2)}`, 150, yFinal);
+
+    // 💾 Guardar
+    doc.save(`EstadoCuenta_${cliente.nombre}_${cuenta.idSaldoCuenta}.pdf`);
   }
 
-  // 🧾 Totales
-  const yFinal = (doc as any).lastAutoTable?.finalY
-    ? (doc as any).lastAutoTable.finalY + 10
-    : 70;
-  doc.setFontSize(11);
-  doc.text(`Total Cargos: Q${totalCargos.toFixed(2)}`, 14, yFinal);
-  doc.text(`Total Abonos: Q${totalAbonos.toFixed(2)}`, 80, yFinal);
-  doc.text(`Saldo Final: Q${saldoAcumulado.toFixed(2)}`, 150, yFinal);
+  exportarExcel(cuenta: any, movimientos: any[]): void {
+    const cliente = this.personaSeleccionada!;
+    const fechaEmision = new Date().toLocaleDateString();
 
-  doc.save(`EstadoCuenta_${cliente.nombre}_${cuenta.idSaldoCuenta}.pdf`);
-}
+    const fechaDesde = cuenta.fechaDesde ? new Date(cuenta.fechaDesde) : null;
+    const fechaHasta = cuenta.fechaHasta ? new Date(cuenta.fechaHasta) : null;
 
-exportarExcel(cuenta: any, movimientos: any[]): void {
-  const cliente = this.personaSeleccionada!;
-  const fechaEmision = new Date().toLocaleDateString();
+    // 🧮 Filtrar movimientos por el período
+    let movimientosFiltrados = movimientos;
+    if (fechaDesde && fechaHasta) {
+      movimientosFiltrados = movimientos.filter((m) => {
+        const fecha = new Date(m.fechaMovimiento);
+        return fecha >= fechaDesde && fecha <= fechaHasta;
+      });
+    }
 
-  const fechaDesde = cuenta.fechaDesde ? new Date(cuenta.fechaDesde) : null;
-  const fechaHasta = cuenta.fechaHasta ? new Date(cuenta.fechaHasta) : null;
+    let saldoAcumulado = cuenta.saldoAnterior || 0;
+    let totalCargos = 0;
+    let totalAbonos = 0;
 
-  // 🧮 Filtrar movimientos por el período
-  let movimientosFiltrados = movimientos;
-  if (fechaDesde && fechaHasta) {
-    movimientosFiltrados = movimientos.filter((m) => {
-      const fecha = new Date(m.fechaMovimiento);
-      return fecha >= fechaDesde && fecha <= fechaHasta;
-    });
-  }
-
-  let saldoAcumulado = cuenta.saldoAnterior || 0;
-  let totalCargos = 0;
-  let totalAbonos = 0;
-
-  const dataMovimientos = movimientosFiltrados.map((m) => {
-    saldoAcumulado = saldoAcumulado + m.abonos - m.cargos;
-    totalCargos += m.cargos;
-    totalAbonos += m.abonos;
-
-    return {
-      'Fecha Movimiento': new Date(m.fechaMovimiento).toLocaleDateString(),
-      'Tipo Movimiento': m.tipoMovimiento || '',
-      Descripción: m.descripcion || '',
-      'Cargo (Q)': m.cargos,
-      'Abono (Q)': m.abonos,
-      'Saldo Acumulado (Q)': saldoAcumulado,
-    };
-  });
-
-  const encabezado = [
-    [`ESTADO DE CUENTA`],
-    [],
-    [`Nombre del Cliente: ${cliente.nombre} ${cliente.apellido}`],
-    [`Número de Cuenta: ${cuenta.idSaldoCuenta}`],
-    [`Fecha de Emisión: ${fechaEmision}`],
-    [
-      `Período: Desde ${cuenta.fechaDesde ?? '__/__/____'}  Hasta ${
-        cuenta.fechaHasta ?? '__/__/____'
-      }`,
-    ],
-    [],
-    ['Detalle de Movimientos:'],
-  ];
-
-  const totales = [
-    [],
-    [`Total Cargos: Q${totalCargos.toFixed(2)}`],
-    [`Total Abonos: Q${totalAbonos.toFixed(2)}`],
-    [`Saldo Final: Q${saldoAcumulado.toFixed(2)}`],
-  ];
-
-  const ws = XLSX.utils.aoa_to_sheet(encabezado);
-  if (dataMovimientos.length > 0) {
-    XLSX.utils.sheet_add_json(ws, dataMovimientos, { origin: -1 });
-  } else {
-    XLSX.utils.sheet_add_aoa(ws, [['No existen movimientos en este período']], {
-      origin: -1,
-    });
-  }
-  XLSX.utils.sheet_add_aoa(ws, totales, { origin: -1 });
-
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Estado de Cuenta');
-
-  ws['!cols'] = [
-    { wch: 15 },
-    { wch: 25 },
-    { wch: 45 },
-    { wch: 12 },
-    { wch: 12 },
-    { wch: 18 },
-  ];
-
-  XLSX.writeFile(
-    wb,
-    `EstadoCuenta_${cliente.nombre}_${cuenta.idSaldoCuenta}.xlsx`
-  );
-}
-
-
-
-
-  /*--------------------------v2--------------------------------*/
-  /*
-
-  exportarPdf(cuenta: any, movimientos: any[]): void {
-  const doc = new jsPDF();
-  const cliente = this.personaSeleccionada!;
-  const fechaEmision = new Date().toLocaleDateString();
-
-  // 📅 Determinar periodo (si no viene desde la cuenta)
-  const fechaDesde = cuenta.fechaDesde
-    ? new Date(cuenta.fechaDesde)
-    : new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-  const fechaHasta = cuenta.fechaHasta
-    ? new Date(cuenta.fechaHasta)
-    : new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
-
-  // 🔍 Filtrar movimientos dentro del periodo
-  const movimientosFiltrados = movimientos.filter((m) => {
-    const fechaMov = new Date(m.fechaMovimiento);
-    return fechaMov >= fechaDesde && fechaMov <= fechaHasta;
-  });
-
-  // 🧮 Variables de control
-  const body: any[] = [];
-  let saldoAcumulado = cuenta.saldoAnterior || 0;
-  let totalCargos = 0;
-  let totalAbonos = 0;
-
-  // 🔹 Encabezado
-  doc.setFontSize(14);
-  doc.text('ESTADO DE CUENTA', 80, 10);
-
-  doc.setFontSize(11);
-  doc.text(`Cliente: ${cliente.nombre} ${cliente.apellido}`, 14, 25);
-  doc.text(`Cuenta: ${cuenta.idSaldoCuenta}`, 14, 32);
-  doc.text(`Fecha de Emisión: ${fechaEmision}`, 14, 39);
-  doc.text(
-    `Período: Desde ${fechaDesde.toLocaleDateString()}  Hasta ${fechaHasta.toLocaleDateString()}`,
-    14,
-    46
-  );
-
-  // 🧮 Si hay movimientos en el periodo
-  if (movimientosFiltrados.length > 0) {
-    movimientosFiltrados.forEach((m) => {
-      saldoAcumulado += m.abonos - m.cargos;
+    const dataMovimientos = movimientosFiltrados.map((m) => {
+      saldoAcumulado = saldoAcumulado + m.abonos - m.cargos;
       totalCargos += m.cargos;
       totalAbonos += m.abonos;
 
-      body.push([
-        new Date(m.fechaMovimiento).toLocaleDateString(),
-        m.tipoMovimiento || '',
-        m.descripcion || '',
-        `Q${m.cargos.toFixed(2)}`,
-        `Q${m.abonos.toFixed(2)}`,
-        `Q${saldoAcumulado.toFixed(2)}`,
-      ]);
+      return {
+        'Fecha Movimiento': new Date(m.fechaMovimiento).toLocaleDateString(),
+        'Tipo Movimiento': m.tipoMovimiento || '',
+        Descripción: m.descripcion || '',
+        'Cargo (Q)': m.cargos,
+        'Abono (Q)': m.abonos,
+        'Saldo Acumulado (Q)': saldoAcumulado,
+      };
     });
-  } else {
-    // ⚠️ Sin movimientos del periodo
-    body.push(['', 'Sin movimientos en el período.', '', '', '', `Q${saldoAcumulado.toFixed(2)}`]);
+
+    const encabezado = [
+      [`ESTADO DE CUENTA`],
+      [],
+      [`Nombre del Cliente: ${cliente.nombre} ${cliente.apellido}`],
+      [`Número de Cuenta: ${cuenta.idSaldoCuenta}`],
+      [`Fecha de Emisión: ${fechaEmision}`],
+      [
+        `Período: Desde ${cuenta.fechaDesde ?? '__/__/____'}  Hasta ${
+          cuenta.fechaHasta ?? '__/__/____'
+        }`,
+      ],
+      [],
+      ['Detalle de Movimientos:'],
+    ];
+
+    const totales = [
+      [],
+      [`Total Cargos: Q${totalCargos.toFixed(2)}`],
+      [`Total Abonos: Q${totalAbonos.toFixed(2)}`],
+      [`Saldo Final: Q${saldoAcumulado.toFixed(2)}`],
+    ];
+
+    const ws = XLSX.utils.aoa_to_sheet(encabezado);
+    if (dataMovimientos.length > 0) {
+      XLSX.utils.sheet_add_json(ws, dataMovimientos, { origin: -1 });
+    } else {
+      XLSX.utils.sheet_add_aoa(
+        ws,
+        [['No existen movimientos en este período']],
+        {
+          origin: -1,
+        }
+      );
+    }
+    XLSX.utils.sheet_add_aoa(ws, totales, { origin: -1 });
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Estado de Cuenta');
+
+    ws['!cols'] = [
+      { wch: 15 },
+      { wch: 25 },
+      { wch: 45 },
+      { wch: 12 },
+      { wch: 12 },
+      { wch: 18 },
+    ];
+
+    XLSX.writeFile(
+      wb,
+      `EstadoCuenta_${cliente.nombre}_${cuenta.idSaldoCuenta}.xlsx`
+    );
   }
 
-  autoTable(doc, {
-    head: [['Fecha', 'Tipo Movimiento', 'Descripción', 'Cargo (Q)', 'Abono (Q)', 'Saldo Acumulado (Q)']],
-    body,
-    startY: 55,
-    styles: { fontSize: 9, cellPadding: 2 },
-    headStyles: { fillColor: [220, 220, 220], textColor: 0 },
-    columnStyles: {
-      0: { cellWidth: 25 },
-      1: { cellWidth: 30 },
-      2: { cellWidth: 50 },
-      3: { halign: 'right' },
-      4: { halign: 'right' },
-      5: { halign: 'right' },
-    },
-  });
-
-  // 🧾 Totales
-  const yFinal = (doc as any).lastAutoTable.finalY + 10;
-  doc.setFontSize(11);
-  doc.text(`Total Cargos: Q${totalCargos.toFixed(2)}`, 14, yFinal);
-  doc.text(`Total Abonos: Q${totalAbonos.toFixed(2)}`, 80, yFinal);
-  doc.text(`Saldo Final: Q${saldoAcumulado.toFixed(2)}`, 150, yFinal);
-
-  // 💾 Guardar
-  doc.save(`EstadoCuenta_${cliente.nombre}_${cuenta.idSaldoCuenta}.pdf`);
-}
-
+  /*--------------------------v2--------------------------------*/
+  /*
 
 exportarExcel(cuenta: any, movimientos: any[]): void {
   const cliente = this.personaSeleccionada!;
@@ -561,7 +481,7 @@ exportarExcel(cuenta: any, movimientos: any[]): void {
     doc.save(`EstadoCuenta_${cliente.nombre}_${cuenta.idSaldoCuenta}.pdf`);
   }*/
 
-    /*
+  /*
   exportarExcel(cuenta: any, movimientos: any[]): void {
     const cliente = this.personaSeleccionada!;
     const fechaEmision = new Date().toLocaleDateString();
@@ -616,7 +536,7 @@ exportarExcel(cuenta: any, movimientos: any[]): void {
     });
     */
 
-    /*
+  /*
     // 🧱 Combinar encabezado + movimientos + totales
     const wsEncabezado = XLSX.utils.aoa_to_sheet(encabezado);
     XLSX.utils.sheet_add_json(wsEncabezado, dataMovimientos, { origin: -1 });
