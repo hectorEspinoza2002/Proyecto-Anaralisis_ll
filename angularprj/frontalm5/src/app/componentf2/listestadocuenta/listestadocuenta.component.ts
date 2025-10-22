@@ -295,7 +295,7 @@ exportarExcel(cuenta: any, movimientos: any[]): void {
 
 
 
-  /*--------------------------v1--------------------------------*/
+  /*--------------------------v2--------------------------------*/
   /*
 
   exportarPdf(cuenta: any, movimientos: any[]): void {
