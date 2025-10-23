@@ -16,7 +16,7 @@ import { saveAs } from 'file-saver';
   styleUrl: './listestadocuenta.component.css',
 })
 export class ListestadocuentaComponent implements OnInit {
-  personaBusqueda: string = '';
+  /*personaBusqueda: string = '';
   personas: Persona[] = [];
   personasFiltradas: Persona[] = [];
   cuentas: SaldoCuenta[] = [];
@@ -90,6 +90,209 @@ export class ListestadocuentaComponent implements OnInit {
       },
     });
   }
+
+  generarPdf(cuenta: SaldoCuenta): void {
+    this.saldoCuentaService
+      .getMovimientosPorCuenta(cuenta.idSaldoCuenta)
+      .subscribe({
+        next: (movimientos) => this.exportarPdf(cuenta, movimientos),
+        error: () => alert('❌ Error al obtener movimientos'),
+      });
+  }
+
+  generarExcel(cuenta: SaldoCuenta): void {
+    this.saldoCuentaService
+      .getMovimientosPorCuenta(cuenta.idSaldoCuenta)
+      .subscribe({
+        next: (movimientos) => this.exportarExcel(cuenta, movimientos),
+        error: () => alert('❌ Error al obtener movimientos'),
+      });
+  }
+      */
+
+  personaBusqueda: string = '';
+  personas: Persona[] = [];
+  personasFiltradas: Persona[] = [];
+  cuentas: SaldoCuenta[] = [];
+
+  personaSeleccionada?: Persona;
+
+  // permisos
+  puedeAlta = false;
+  puedeBaja = false;
+  puedeCambio = false;
+  puedeExportar = true;
+  puedeImprimir = true;
+
+  constructor(
+    private personaService: PersonaService,
+    private saldoCuentaService: SaldocuentaService
+  ) {}
+
+  ngOnInit(): void {
+    this.personaService.getAll().subscribe({
+      next: (data) => (this.personas = data),
+    });
+  }
+
+  buscarPersona() {
+    const term = this.personaBusqueda.toLowerCase().trim();
+
+    if (term) {
+      this.personasFiltradas = this.personas.filter(
+        (p) =>
+          p.nombre.toLowerCase().includes(term) ||
+          p.apellido.toLowerCase().includes(term) ||
+          p.idPersona.toString().includes(term)
+      );
+
+      if (this.personasFiltradas.length === 0 && !isNaN(Number(term))) {
+        const idCuenta = Number(term);
+        this.saldoCuentaService.getCuentaById(idCuenta.toString()).subscribe({
+          next: (cuenta) => {
+            if (cuenta && cuenta.persona) {
+              this.personasFiltradas = [cuenta.persona];
+            } else {
+              this.personasFiltradas = [];
+            }
+          },
+          error: () => (this.personasFiltradas = []),
+        });
+      }
+    } else {
+      this.personasFiltradas = [];
+    }
+  }
+
+  seleccionarPersona(p: Persona) {
+    this.personaSeleccionada = p;
+    this.personaBusqueda = `${p.idPersona} - ${p.nombre} ${p.apellido}`;
+    this.personasFiltradas = [];
+
+    this.saldoCuentaService.getCuentasByPersona(p.idPersona).subscribe({
+      next: (result) => {
+        this.cuentas = result;
+
+        // 🔹 Para cada cuenta, traer sus movimientos
+        this.cuentas.forEach((cuenta) => {
+          this.saldoCuentaService
+            .getMovimientosPorCuenta(cuenta.idSaldoCuenta)
+            .subscribe({
+              next: (movimientos) => {
+                cuenta['movimientos'] = movimientos;
+              },
+            });
+        });
+      },
+    });
+  }
+/*
+  calcularSaldoHasta(cuenta: SaldoCuenta, index: number): number {
+    if (!cuenta.movimientos || cuenta.movimientos.length === 0) {
+      return cuenta.saldoAnterior || 0;
+    }
+
+    let saldo = cuenta.saldoAnterior || 0;
+    for (let i = 0; i <= index; i++) {
+      const mov = cuenta.movimientos[i];
+      // ✅ Los cargos suman, los abonos restan
+      saldo += (mov.cargos || 0) - (mov.abonos || 0);
+    }
+    return saldo;
+  }
+
+  // 🔹 Total de cargos (suman saldo)
+  getTotalCargos(): number {
+    return (
+      this.cuentas?.reduce(
+        (total, c) =>
+          total +
+          (c.movimientos?.reduce((t, m) => t + (m.cargos || 0), 0) || 0),
+        0
+      ) || 0
+    );
+  }
+
+  // 🔹 Total de abonos (restan saldo)
+  getTotalAbonos(): number {
+    return (
+      this.cuentas?.reduce(
+        (totalCuentas, c) =>
+          totalCuentas +
+          (c.movimientos?.reduce(
+            (t: number, m: any) => t + (m.abonos || 0), 0) || 0), 0) || 0
+    );
+  }
+
+  // 🔹 Saldo final por cuenta
+  getSaldoFinalPorCuenta(cuenta: any): number {
+    const saldoAnterior = cuenta.saldoAnterior || 0;
+    const totalCargos =
+      cuenta.movimientos?.reduce((t: number, m: any) => t + (m.cargos || 0), 0) || 0;
+    const totalAbonos =
+      cuenta.movimientos?.reduce((t: number, m: any) => t + (m.abonos || 0), 0) || 0;
+
+    // ✅ Cargos suman, abonos restan
+    return saldoAnterior + totalCargos - totalAbonos;
+  }
+
+  */
+  // Calcula el saldo acumulado hasta un movimiento dado
+  calcularSaldoHasta(cuenta: SaldoCuenta, index: number): number {
+    if (!cuenta.movimientos || cuenta.movimientos.length === 0) {
+      return cuenta.saldoAnterior || 0;
+    }
+
+    let saldo = cuenta.saldoAnterior || 0;
+    for (let i = 0; i <= index; i++) {
+      const mov = cuenta.movimientos[i];
+      saldo += (mov.abonos || 0) - (mov.cargos || 0);
+    }
+    return saldo;
+  }
+
+  getTotalCargos(): number {
+    return (
+      this.cuentas?.reduce(
+        (total, c) =>
+          total +
+          (c.movimientos?.reduce((t, m) => t + (m.cargos || 0), 0) || 0),
+        0
+      ) || 0
+    );
+  }
+
+  getTotalAbonos(): number {
+    // Suma los abonos de todas las cuentas y sus movimientos
+    return (
+      this.cuentas?.reduce(
+        (totalCuentas, c) =>
+          totalCuentas +
+          (c.movimientos?.reduce(
+            (t: number, m: any) => t + (m.abonos || 0),
+            0
+          ) || 0),
+        0
+      ) || 0
+    );
+  }
+
+  getSaldoFinalPorCuenta(cuenta: any): number {
+    const saldoAnterior = cuenta.saldoAnterior || 0;
+    const totalAbonos =
+      cuenta.movimientos?.reduce(
+        (t: number, m: any) => t + (m.abonos || 0),
+        0
+      ) || 0;
+    const totalCargos =
+      cuenta.movimientos?.reduce(
+        (t: number, m: any) => t + (m.cargos || 0),
+        0
+      ) || 0;
+
+    return saldoAnterior + totalAbonos - totalCargos;
+  }
+
 
   generarPdf(cuenta: SaldoCuenta): void {
     this.saldoCuentaService

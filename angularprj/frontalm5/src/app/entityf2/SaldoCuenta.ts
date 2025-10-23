@@ -16,4 +16,6 @@ export class SaldoCuenta {
   fechaModificacion!: Date;
   usuarioModificacion!: Date;
 
+  movimientos!: any[];
+
 }
