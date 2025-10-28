@@ -49,6 +49,7 @@ public class MovimientoCuentaService {
             System.out.println("➡️ IdSaldoCuenta: " + movimiento.getSaldoCuenta().getIdSaldoCuenta());
             System.out.println("➡️ IdTipoMovimientoCXC: " + movimiento.getTipoMovimientoCXC().getIdTipoMovimientoCXC());
             System.out.println("➡️ ValorMovimiento: " + movimiento.getValorMovimiento());
+            System.out.println("Usuario creacion: "+movimiento.getUsuarioCreacion());
 
             // 1️⃣ Validar cuenta activa
             String estado = jdbcTemplate.queryForObject(
@@ -77,14 +78,15 @@ public class MovimientoCuentaService {
                             ValorMovimiento, ValorMovimientoPagado, GeneradoAutomaticamente,
                             Descripcion, FechaCreacion, UsuarioCreacion
                         )
-                        VALUES (?, ?, NOW(), ?, 0.00, ?, ?, NOW(), UsuarioCreacion)
+                        VALUES (?, ?, NOW(), ?, 0.00, ?, ?, NOW(), ?)
                     """;
             jdbcTemplate.update(insertMovimiento,
                     movimiento.getSaldoCuenta().getIdSaldoCuenta(),
                     movimiento.getTipoMovimientoCXC().getIdTipoMovimientoCXC(),
                     movimiento.getValorMovimiento(),
                     movimiento.isGeneradoAutomaticamente(),
-                    movimiento.getDescripcion());
+                    movimiento.getDescripcion(),
+                    movimiento.getUsuarioCreacion());
 
             // 4️⃣ Actualizar saldo de la cuenta
             String actualizarSaldo;
@@ -93,7 +95,7 @@ public class MovimientoCuentaService {
                             UPDATE SALDO_CUENTA
                             SET Debitos = Debitos + ?,
                                 FechaModificacion = NOW(),
-                                UsuarioModificacion = UsuarioCreacion
+                                UsuarioModificacion = ?
                             WHERE IdSaldoCuenta = ?
                         """;
             } else { // ABONO → aumenta Crédito
@@ -101,13 +103,14 @@ public class MovimientoCuentaService {
                             UPDATE SALDO_CUENTA
                             SET Creditos = Creditos + ?,
                                 FechaModificacion = NOW(),
-                                UsuarioModificacion = UsuarioCreacion
+                                UsuarioModificacion = ?
                             WHERE IdSaldoCuenta = ?
                         """;
             }
 
             jdbcTemplate.update(actualizarSaldo,
                     movimiento.getValorMovimiento(),
+                    movimiento.getUsuarioCreacion(),
                     movimiento.getSaldoCuenta().getIdSaldoCuenta());
 
             // 5️⃣ Retornar movimiento (puedes consultarlo si deseas)
