@@ -23,20 +23,26 @@
               <button class="btn btn-warning btn-sm me-2" (click)="selectDoc(doc)">
                 <i class="bi bi-pencil-square"></i> Editar
               </button>
+              <!--
               <button class="btn btn-danger btn-sm" (click)="deleteDoc(doc)">
                 <i class="bi bi-trash"></i> Borrar
               </button>
+              -->
             </td>
           </tr>
         </tbody>
       </table>
-
+      <button class="btn btn-success mt-3" (click)="mostrarAgregar()">Agregar Documento</button>
+      <!--
       <button class="btn btn-success mt-3" (click)="resetForm()">Agregar Documento</button>
+      -->
     </div>
   </div>
 
-  <!-- Formulario de agregar/editar -->
+  <!-- Formulario de agregar/editar
   <div class="card shadow-lg border-0 rounded-3" *ngIf="editando || selectedTipoDoc !== null || noDocumento !== ''">
+     -->
+  <div class="card shadow-lg border-0 rounded-3" *ngIf="mostrarFormulario">
     <div class="card-body">
       <h5>{{ editando ? 'Editar Documento' : 'Agregar Documento' }}</h5>
 
@@ -74,7 +80,7 @@
       <button class="btn btn-primary" (click)="guardarDocumento()">
         {{ editando ? 'Actualizar' : 'Guardar' }}
       </button>
-      <button class="btn btn-secondary ms-2" (click)="resetForm()" *ngIf="editando">
+      <button class="btn btn-secondary ms-2" (click)="resetForm()" >
         Cancelar
       </button>
     </div>

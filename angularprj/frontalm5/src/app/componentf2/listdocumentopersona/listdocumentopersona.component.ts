@@ -22,6 +22,9 @@ export class ListdocumentopersonaComponent implements OnInit {
   noDocumento: string = '';
   docSeleccionado!: DocumentoPersona | null;
 
+  mostrarFormulario: boolean = false;
+
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -87,6 +90,8 @@ export class ListdocumentopersonaComponent implements OnInit {
         next: (response) => {
           alert('Documento guardado correctamente ✅');
           console.log(response);
+          this.cargarDocumentos();
+          this.resetForm();
         },
         error: (err) => {
           if (err.status === 400) {
@@ -103,6 +108,7 @@ export class ListdocumentopersonaComponent implements OnInit {
   // Editar documento
   selectDoc(doc: DocumentoPersona): void {
     this.editando = true;
+    this.mostrarFormulario = true;
     this.docSeleccionado = doc;
     this.selectedTipoDoc = doc.tipoDocumento.idTipoDocumento;
     this.noDocumento = doc.noDocumento;
@@ -126,6 +132,7 @@ export class ListdocumentopersonaComponent implements OnInit {
     this.docSeleccionado = null;
     this.selectedTipoDoc = null!;
     this.noDocumento = '';
+    this.mostrarFormulario = false;
   }
 
   // Regresar
@@ -147,5 +154,12 @@ export class ListdocumentopersonaComponent implements OnInit {
     this.longitudDocumento =
       this.documentoLongitudes[this.selectedTipoDoc] || 0;
     this.noDocumento = ''; //limpiamos input al cambiar tipo
+  }
+
+  mostrarAgregar(): void {
+    this.mostrarFormulario = true;
+    this.editando = false;
+    this.selectedTipoDoc = null!;
+    this.noDocumento = '';
   }
 }
