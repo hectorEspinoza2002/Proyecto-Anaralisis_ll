@@ -20,9 +20,14 @@ export class MenuComponent {
         sessionStorage.removeItem('usuario'); // Eliminar el usuario de sessionStorage
         this.router.navigate(['/login']); // Redirigir al login
       },
+      /*
       (error) => {
-        console.error('Error al hacer logout', error);
+        console.error('Error al hacer logout', error);*/
         // Aquí puedes manejar el error si algo falla en el backend o en la conexión
+       ( error)=>{
+          localStorage.removeItem('usuario');
+          sessionStorage.removeItem('usuario');
+          this.router.navigate(['/login']);
       }
     );
   }

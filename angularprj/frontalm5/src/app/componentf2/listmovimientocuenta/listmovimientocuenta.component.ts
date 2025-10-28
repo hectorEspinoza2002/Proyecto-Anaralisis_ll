@@ -6,8 +6,6 @@ import { Router } from '@angular/router';
 import { MovimientoCuenta } from '../../entityf2/MovimientoCuenta';
 import { SaldoCuenta } from '../../entityf2/SaldoCuenta';
 import { TipoMovimientoCxc } from '../../entityf2/TipoMovimientoCxc';
-import { PersonaService } from '../../servicef2/persona.service';
-import { DocumentoPersona } from '../../entityf2/DocumentoPersona';
 import { DocumentopersonaService } from '../../servicef2/documentopersona.service';
 
 @Component({
